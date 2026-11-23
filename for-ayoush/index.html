@@ -4,6 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="color-scheme" content="light dark" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' https: data: blob:; font-src 'self' https: data:; media-src 'self' https: data: blob:; frame-src 'self' https://www.youtube-nocookie.com https://www.youtube.com; child-src 'self' https://www.youtube-nocookie.com https://www.youtube.com; connect-src 'self' https:" />
 <link rel="icon" href="data:," />
 <title>Rakib &amp; Ayoush · For You</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -623,6 +624,12 @@
   .music-lyric-tr{color:var(--faint);font-size:.88rem;font-weight:600;margin:0 auto 4px;max-width:46ch}
   .yt-frame{position:relative;margin:16px auto 4px;max-width:560px;border-radius:18px;overflow:hidden;background:#000;box-shadow:0 16px 34px rgba(156,31,63,.28);aspect-ratio:16/9}
   .yt-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+  .yt-fallback{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+    padding:20px;text-align:center;background:linear-gradient(160deg,var(--surface2),var(--rose-soft))}
+  .yt-fallback[hidden]{display:none}
+  .yt-fallback p{margin:0;font-weight:700;color:var(--rose-deep);max-width:34ch}
+  .yt-fallback .btn{text-decoration:none}
+  .music-note a{color:var(--rose-deep);font-weight:700}
   .music-note{color:var(--faint);font-size:.85rem;font-weight:600;margin:12px 0 0}
 </style>
 
@@ -640,10 +647,14 @@
       <p class="music-artist">Sherine · play it soft, it is a calm one</p>
       <p class="music-lyric" lang="ar" dir="rtl">هقولك تباعاً تباعاً، إيه أسباب غرامي بجمالك</p>
       <p class="music-lyric-tr">"I'll tell you, one by one, the reasons I'm in love with your beauty." That is literally this whole website, sweetie.</p>
-      <div class="yt-frame">
-        <iframe src="https://www.youtube-nocookie.com/embed/-0RUAQAMUac?rel=0&amp;playsinline=1" title="Tebaa'n Tebaa'n by Sherine" loading="lazy" allow="accelerometer; autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <div class="yt-frame" id="ytFrame">
+        <iframe id="ytPlayer" src="https://www.youtube-nocookie.com/embed/-0RUAQAMUac?rel=0&amp;playsinline=1" title="Tebaa'n Tebaa'n by Sherine" loading="lazy" allow="accelerometer; autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <div class="yt-fallback" id="ytFallback" hidden>
+          <p>The player needs internet, and this connection is too weak for it, sweetie. No worries. Open the song on YouTube later, when you are on WiFi:</p>
+          <a class="btn btn-solid" href="https://www.youtube.com/watch?v=-0RUAQAMUac" target="_blank" rel="noopener">Tap to open the song on YouTube</a>
+        </div>
       </div>
-      <p class="music-note">The player is right here, sweetie. Tap the play button on the video, and keep the volume low. It is a calm, soft one.</p>
+      <p class="music-note">The player is right here, sweetie. Tap the play button on the video, and keep the volume low. It is a calm, soft one. If the player ever shows an error instead of the video, <a href="https://www.youtube.com/watch?v=-0RUAQAMUac" target="_blank" rel="noopener">tap here to open the song on YouTube</a>.</p>
     </div>
   </section>
   <!-- PROUD OF HER STUDIES -->
@@ -847,34 +858,71 @@
   function sfxSparkle(){ tone(1318, 0, 0.4, 0.16, "triangle"); tone(1568, 0.08, 0.45, 0.13, "triangle"); tone(2093, 0.16, 0.5, 0.1, "triangle"); }
   function sfxChord(){ tone(523, 0, 0.9, 0.22, "triangle"); tone(659, 0.07, 0.9, 0.2, "triangle"); tone(784, 0.14, 1.1, 0.2, "triangle"); tone(1046, 0.21, 1.2, 0.14, "triangle"); }
 
-  /* ---------- Speaking keypad: soft text to speech ---------- */
-  var speakVoice = null;
-  function pickVoice(){
+  /* ---------- Speaking keypad: soft text to speech, with a chime fallback ---------- */
+  var digitWords = { "1": "I", "4": "Love", "3": "You" };
+  var englishVoice = null, voicesReady = false, speechBroken = false;
+  function loadVoices(){
     if (!("speechSynthesis" in window)) return;
     var vs = [];
     try { vs = window.speechSynthesis.getVoices() || []; } catch(e){ return; }
-    var prefs = ["Samantha", "Google UK English Female", "Microsoft Zira", "Karen", "Moira", "Tessa", "Fiona", "Female"];
-    for (var i = 0; i < prefs.length; i++){
-      for (var j = 0; j < vs.length; j++){
-        if (vs[j].name && vs[j].name.indexOf(prefs[i]) !== -1){ speakVoice = vs[j]; return; }
+    if (!vs.length) return; /* voices not loaded yet. voiceschanged will call us again */
+    voicesReady = true;
+    var en = [];
+    for (var i = 0; i < vs.length; i++){ if (/^en([-_]|$)/i.test(vs[i].lang || "")) en.push(vs[i]); }
+    var pool = en.length ? en : vs;
+    var prefs = ["Samantha", "Google UK English Female", "Microsoft Zira", "Google US English", "Karen", "Moira", "Tessa", "Fiona"];
+    englishVoice = null;
+    for (var p = 0; p < prefs.length && !englishVoice; p++){
+      for (var j = 0; j < pool.length; j++){
+        if (pool[j].name && pool[j].name.indexOf(prefs[p]) !== -1){ englishVoice = pool[j]; break; }
       }
     }
-    for (var k = 0; k < vs.length; k++){ if (/^en/i.test(vs[k].lang || "")){ speakVoice = vs[k]; return; } }
+    if (!englishVoice){
+      for (var k = 0; k < pool.length; k++){ if (pool[k].default){ englishVoice = pool[k]; break; } }
+    }
+    if (!englishVoice) englishVoice = pool[0];
   }
-  if ("speechSynthesis" in window){ pickVoice(); try { window.speechSynthesis.onvoiceschanged = pickVoice; } catch(e){} }
-  function speak(text, clearFirst){
-    if (!("speechSynthesis" in window)) return;
+  if ("speechSynthesis" in window){
+    loadVoices();
     try {
-      if (clearFirst) window.speechSynthesis.cancel();
-      var u = new SpeechSynthesisUtterance(text);
-      if (speakVoice) u.voice = speakVoice;
-      u.rate = 0.88; u.pitch = 1.08; u.volume = 0.9;
-      window.speechSynthesis.speak(u);
+      if (window.speechSynthesis.addEventListener) window.speechSynthesis.addEventListener("voiceschanged", loadVoices);
+      else window.speechSynthesis.onvoiceschanged = loadVoices;
     } catch(e){}
   }
-  var digitWords = { "1": "I", "4": "Love", "3": "You" };
+  /* Speaks from inside the tap handler. Returns false when speech is
+     unavailable, so the caller can play the gentle chime instead. If the
+     utterance errors or never actually starts (silent webviews), a soft
+     chime plays for that press and later presses chime straight away. */
+  function speak(text){
+    if (!("speechSynthesis" in window) || speechBroken) return false;
+    try {
+      var ss = window.speechSynthesis;
+      if (!voicesReady) loadVoices();
+      if (ss.paused){ try { ss.resume(); } catch(e){} }
+      var busy = ss.speaking || ss.pending;
+      if (busy){ try { ss.cancel(); } catch(e){} } /* clear any stuck utterance first */
+      var started = false, failed = false;
+      function fail(){
+        if (failed || started) return;
+        failed = true; speechBroken = true; sfxChime();
+      }
+      var u = new SpeechSynthesisUtterance(text);
+      if (englishVoice) u.voice = englishVoice;
+      u.lang = (englishVoice && englishVoice.lang) || "en-US";
+      u.rate = 0.9; u.pitch = 1.05; u.volume = 1;
+      u.onstart = function(){ started = true; };
+      u.onerror = function(ev){
+        if (ev && (ev.error === "interrupted" || ev.error === "canceled")) return; /* our own cancel() */
+        fail();
+      };
+      var say = function(){ try { ss.speak(u); } catch(e){ fail(); } };
+      if (busy) setTimeout(say, 60); else say(); /* a breath after cancel, or Chrome eats the new utterance */
+      setTimeout(fail, 1000); /* watchdog: no start within 1s means no sound is coming */
+      return true;
+    } catch(e){ speechBroken = true; return false; }
+  }
   function speakDigit(d){
-    if (digitWords[d]) speak(digitWords[d], false);
+    if (digitWords[d]){ if (!speak(digitWords[d])) sfxChime(); }
     else sfxPop();
   }
 
@@ -957,7 +1005,7 @@
     msgEl.textContent = "I love you, Aya.";
     msgEl.classList.add("love-msg");
     sfxChord();
-    speak("I love you, Aya", true);
+    speak("I love you, Aya");
     burst(window.innerWidth / 2, window.innerHeight / 2, 22, true);
     setTimeout(function(){ flowerShower(34, "For you, Ayoush. Roses & jasmine, your favourites"); }, 500);
     setTimeout(function(){
@@ -1192,6 +1240,46 @@
     }
     requestAnimationFrame(step);
   });
+
+  /* ---------- Song player: graceful on weak or no data ----------
+     The countdown only starts when the player is about to scroll into
+     view (she may spend minutes on the lock screen and letter first).
+     If the player does load, the fallback hides again. Offline shows
+     the YouTube link at once; coming back online retries the player. */
+  var ytPlayer = document.getElementById("ytPlayer");
+  var ytFallbackEl = document.getElementById("ytFallback");
+  var ytLoaded = false, ytTimer = null;
+  function showYtFallback(){ if (ytFallbackEl && !ytLoaded) ytFallbackEl.hidden = false; }
+  function hideYtFallback(){ if (ytFallbackEl) ytFallbackEl.hidden = true; }
+  function ytWait(){
+    clearTimeout(ytTimer);
+    ytTimer = setTimeout(function(){ if (!ytLoaded) showYtFallback(); }, 9000);
+  }
+  if (ytPlayer){
+    ytPlayer.addEventListener("load", function(){
+      ytLoaded = true;
+      clearTimeout(ytTimer);
+      hideYtFallback();
+    });
+    ytPlayer.addEventListener("error", showYtFallback);
+    var ytIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (!en.isIntersecting) return;
+        ytIO.disconnect();
+        if (ytLoaded) return;
+        if (navigator.onLine === false) showYtFallback();
+        else ytWait();
+      });
+    }, { rootMargin: "300px" });
+    ytIO.observe(document.getElementById("ytFrame") || ytPlayer);
+    window.addEventListener("offline", function(){ if (!ytLoaded) showYtFallback(); });
+    window.addEventListener("online", function(){
+      if (ytLoaded || !ytFallbackEl || ytFallbackEl.hidden) return;
+      hideYtFallback();
+      ytPlayer.src = ytPlayer.src; /* retry the embed now that data is back */
+      ytWait();
+    });
+  }
 
   })();
 </script>
