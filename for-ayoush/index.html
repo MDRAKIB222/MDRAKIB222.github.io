@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="color-scheme" content="dark" />
+<meta name="color-scheme" content="light" />
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' https: data: blob:; font-src 'self' https: data:; media-src 'self' https: data: blob:; frame-src 'self' https://www.youtube-nocookie.com https://www.youtube.com; child-src 'self' https://www.youtube-nocookie.com https://www.youtube.com; connect-src 'self' https:" />
 <link rel="icon" href="data:," />
 <title>Rakib &amp; Aya · For You</title>
@@ -12,163 +12,269 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Nunito:wght@400;600;700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
   :root{
-    color-scheme: dark;
-    --sky:#0a0d2b; --sky2:#131740; --sky3:#1b2050;
-    --ink:#f1eefc; --muted:#b6b9dd; --faint:#8286b3;
-    --gold:#e8c476; --gold-bright:#f2d68f; --gold-soft:#2c2850;
-    --rose:#ff6b74; --rose-deep:#ff8f96; --rose-soft:#3a1e3d;
-    --card:#171b45; --card-line:#2e3370;
-    --leaf:#7fbf8e;
-    --shadow:0 16px 36px rgba(0,0,0,.5);
-    --card-shadow:0 8px 22px rgba(0,0,0,.35);
-    --star:#cfd2ff; --moon:#f2d68f;
-    --keypad:#1a1e4d; --keypad-line:#343a7d;
+    color-scheme: light;
+    --bg1:#fff5f8; --bg2:#ffe0eb; --bg3:#ffc9da;
+    --ink:#2b0a13; --body:#4d1624; --muted:#8a4356; --faint:#c08a9a;
+    --rose:#d61c2c; --rose-deep:#a30f1e; --pink:#e75480; --pink-deep:#c22a5c; --pink-soft:#ffe0eb;
+    --black:#171013; --black-soft:#2a1a20;
+    --card:#fff8fa; --card-line:#eba7bd;
+    --shadow:0 16px 36px rgba(163,15,30,.16);
+    --card-shadow:0 8px 22px rgba(23,16,19,.12);
+    --keypad:#fff0f5; --keypad-line:#171013;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
-    margin:0; color:var(--ink); line-height:1.65; overflow-x:hidden;
+    margin:0; color:var(--body); line-height:1.65; overflow-x:hidden;
     font-family:"Nunito",system-ui,sans-serif;
-    background:linear-gradient(180deg,var(--sky) 0%,var(--sky2) 46%,var(--sky3) 100%);
+    background:linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 46%,var(--bg3) 100%);
     background-attachment:fixed; min-height:100vh;
   }
   body.locked{overflow:hidden}
   button{font-family:inherit;cursor:pointer;min-height:44px}
-  h1,h2,h3{font-family:"Cormorant Garamond",serif;line-height:1.15;margin:0}
+  h1,h2,h3{font-family:"Cormorant Garamond",serif;line-height:1.15;margin:0;color:var(--ink)}
   .script{font-family:"Pinyon Script",cursive;font-weight:400}
   .wrap{max-width:660px;margin:0 auto;padding:0 20px;position:relative;z-index:2}
   section{padding:44px 0 8px}
 
-  /* Night sky layers */
-  #stars{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-  .star{position:absolute;border-radius:50%;background:var(--star);opacity:.25;animation:twinkle var(--tw,3s) ease-in-out var(--td,0s) infinite}
-  .star.gold{background:var(--gold-bright)}
-  @keyframes twinkle{0%,100%{opacity:.15;transform:scale(.8)}50%{opacity:.95;transform:scale(1.25)}}
-  #fx{position:fixed;inset:0;pointer-events:none;z-index:80;overflow:hidden}
+  /* Warm love-letter tints: every section a different warm shade, never the same as its neighbour */
+  section.tint{position:relative;z-index:0}
+  section.tint::before{content:"";position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:100vw;background:var(--tint,#fff);z-index:-1}
+  .t-hero{--tint:#ffd9e4}.t-notes{--tint:#ffe6ef}.t-letter{--tint:#ffd2e0}
+  .t-beauty{--tint:#ffeaf2}.t-study{--tint:#ffdbe7}.t-song{--tint:#ffcddc}
+  .t-doctor{--tint:#ffe7ef}.t-reasons{--tint:#ffd8e5}.t-machine{--tint:#ffe2ec}
+  .t-garden{--tint:#ffd6e2}.t-bouquet{--tint:#ffd0de}.t-meter{--tint:#ffe9f1}
+  .t-finale{--tint:#ffc9d8}
+  footer{background:#171013}
 
-  /* Flower shower pieces */
-  .fx-fall{position:absolute;top:-64px;opacity:0;will-change:transform,opacity;animation:fxFall var(--dur) linear var(--del) forwards}
-  .fx-fall svg{width:100%;height:100%;display:block;animation:fxSway var(--swayd,1.7s) ease-in-out infinite alternate}
-  @keyframes fxFall{0%{transform:translate(0,0) rotate(0deg);opacity:0}7%{opacity:1}92%{opacity:1}100%{transform:translate(var(--drift),108vh) rotate(var(--spin));opacity:0}}
-  @keyframes fxSway{from{transform:translateX(-8px) rotate(-9deg)}to{transform:translateX(8px) rotate(9deg)}}
+  /* One red rose and one white jasmine, side by side */
+  .pair{display:flex;justify-content:center;align-items:flex-end;gap:8px}
+  .pair svg{width:42px;height:59px}
+  .pair-lock{margin:0 auto 2px}
+  .pair-lock svg{width:48px;height:67px}
+  .pair-gap{margin-bottom:12px}
+
+  /* Varied warm card tints */
+  .mini-cards .mini:nth-child(1){background:#ffdbe7}
+  .mini-cards .mini:nth-child(2){background:#ffe8f1}
+  .mini-cards .mini:nth-child(3){background:#ffcddc}
+  .reasons .reason:nth-child(3n+1){background:#fff4f7}
+  .reasons .reason:nth-child(3n+2){background:#ffe3ec}
+  .reasons .reason:nth-child(3n){background:#ffdfe9}
+  .blooms .bloom:nth-child(odd){background:#fff2f6}
+  .blooms .bloom:nth-child(even){background:#ffe7ef}
+  main .prose{background:#fff8fa}
+  main .study-card{background:#fff5f8}
+  main .machine{background:#fff7fa}
+  main .bouquet-box{background:#fff5f8}
+  main .meter-card{background:#fff7fa}
+
+  /* Bouquet tap message, right under the bouquet */
+  .bouquet-msg{margin:14px 0 8px;min-height:28px;font-weight:800;color:var(--rose-deep);font-size:1.03rem;line-height:1.5}
+  .bouquet-msg.pop{animation:msgPop .45s cubic-bezier(.2,1.6,.4,1)}
+  @keyframes msgPop{0%{transform:scale(.82);opacity:.2}100%{transform:scale(1);opacity:1}}
+
+  /* Falling flower layer */
+  #fx{position:fixed;inset:0;pointer-events:none;z-index:80;overflow:hidden}
+  .shower-flower{position:absolute;top:0;left:0;opacity:0;will-change:transform,opacity;filter:drop-shadow(0 6px 10px rgba(163,15,30,.22))}
+  .shower-flower svg{width:100%;height:100%;display:block;animation:showerSway 1.6s ease-in-out infinite alternate}
+  @keyframes showerSway{from{transform:translateX(-7px)}to{transform:translateX(7px)}}
   .fx-burst{position:absolute;opacity:0;will-change:transform,opacity;animation:fxBurst 1.15s cubic-bezier(.17,.67,.35,1) forwards}
   .fx-burst svg{width:100%;height:100%;display:block}
   @keyframes fxBurst{0%{transform:translate(0,0) rotate(0deg) scale(.35);opacity:0}14%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) rotate(var(--rot)) scale(var(--sc,1));opacity:0}}
 
   /* Toast sits at the very bottom of the screen, never over the hero */
   #toast{position:fixed;left:50%;bottom:16px;transform:translate(-50%,14px);z-index:95;pointer-events:none;
-    background:var(--card);border:1.5px solid var(--gold);color:var(--ink);border-radius:999px;
+    background:var(--card);border:1.5px solid var(--rose);color:var(--ink);border-radius:999px;
     padding:9px 20px;font-weight:700;font-size:.95rem;box-shadow:var(--shadow);opacity:0;transition:opacity .35s,transform .35s;text-align:center;max-width:92vw}
   #toast.show{opacity:1;transform:translate(-50%,0)}
 
   /* ---------- Lock screen ---------- */
-  #lock{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;
-    background:linear-gradient(180deg,var(--sky) 0%,var(--sky2) 60%,var(--sky3) 100%);overflow-y:auto;transition:opacity .7s ease}
+  #lock{position:fixed;inset:0;z-index:100;display:flex;padding:18px;
+    background:linear-gradient(180deg,#ffd9e4 0%,#ffd2e0 52%,#ffc9da 100%);overflow-y:auto;transition:opacity .7s ease}
   #lock.gone{opacity:0;pointer-events:none}
-  .lock-inner{width:100%;max-width:340px;text-align:center;position:relative;padding:12px 0 28px}
-  .lock-moon{width:64px;height:64px;margin:0 auto 4px;filter:drop-shadow(0 0 14px rgba(232,196,118,.55))}
-  .lock-inner h1{font-size:2.6rem;font-weight:600;letter-spacing:.01em}
-  .lock-script{font-size:1.7rem;color:var(--gold);margin-top:2px}
-  .lock-sub{color:var(--muted);font-size:.98rem;margin:10px auto 0;max-width:280px}
-  .hint-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0 4px}
-  .hint-chip{background:var(--card);border:1px solid var(--card-line);border-radius:999px;padding:5px 13px;font-weight:800;font-size:.86rem;color:var(--ink);box-shadow:var(--card-shadow)}
-  .hint-chip b{color:var(--gold);font-family:"Cormorant Garamond",serif;font-size:1.05rem}
+  .lock-inner{width:100%;max-width:380px;height:auto;flex:none;margin:auto;text-align:center;position:relative;padding:38px 24px 30px;
+    background:linear-gradient(180deg,#ffe9f1 0%,#ffd9e4 100%);
+    border:2px solid var(--black);border-radius:28px;
+    box-shadow:0 26px 60px rgba(163,15,30,.25)}
+  .lock-inner::before{content:"";position:absolute;top:0;left:24px;right:24px;height:3px;border-radius:0 0 4px 4px;background:linear-gradient(90deg,var(--rose),var(--pink),var(--rose))}
+  .lock-inner::after{content:"";position:absolute;bottom:0;left:24px;right:24px;height:3px;border-radius:4px 4px 0 0;background:linear-gradient(90deg,var(--rose),var(--pink),var(--rose))}
+  .lock-corner{position:absolute;width:58px;height:44px;z-index:2;display:flex;gap:2px;align-items:flex-end;filter:drop-shadow(0 3px 5px rgba(23,16,19,.25))}
+  .lock-corner svg{width:27px;height:38px;display:block;flex:none}
+  .lock-corner.tl{top:-17px;left:-13px;transform:rotate(-9deg)}
+  .lock-corner.tr{top:-17px;right:-13px;transform:rotate(9deg)}
+
+  .lock-garland{display:flex;justify-content:center;gap:7px;margin-bottom:8px}
+  .lock-garland svg{width:19px;height:27px}
+  /* The 6-7 meme photo, bouncing playfully under the hint */
+  .meme67{display:block;width:184px;max-width:64vw;height:auto;margin:14px auto 6px;border:2px solid var(--black);border-radius:18px;
+    box-shadow:0 12px 26px rgba(23,16,19,.25)}
+  .lock-rule-foot{margin:20px auto 0}
+  .lock-rule-foot svg{width:17px;height:17px}
+  .lock-hearts{position:absolute;inset:0;pointer-events:none;z-index:1}
+  .lock-hearts svg{position:absolute;display:block}
+  .lock-hearts .h1{width:17px;height:17px;top:64px;left:13px}
+  .lock-hearts .h2{width:13px;height:13px;top:88px;right:15px}
+  .lock-hearts .h3{width:14px;height:14px;bottom:128px;left:11px}
+  .lock-hearts .h4{width:18px;height:18px;bottom:104px;right:12px}
+  .lock-rose{width:58px;height:80px;margin:0 auto 2px}
+  .lock-inner h1{font-size:2.35rem;font-weight:600;font-style:italic;letter-spacing:.01em}
+  .lock-script{font-size:2.15rem;color:var(--rose);margin-top:6px;line-height:1.1}
+  .lock-rule{display:flex;align-items:center;gap:10px;justify-content:center;margin:14px auto 0;max-width:230px}
+  .lock-rule::before,.lock-rule::after{content:"";height:1.5px;flex:1;background:linear-gradient(90deg,transparent,var(--black),transparent)}
+  .lock-rule svg{width:15px;height:15px}
+  .lock-sub{color:var(--body);font-size:.99rem;margin:12px auto 0;max-width:320px}
   .dots{display:flex;gap:14px;justify-content:center;margin:20px 0 6px;height:18px}
-  .dot{width:15px;height:15px;border-radius:50%;border:2px solid var(--gold);background:transparent;transition:background .2s,transform .2s}
-  .dot.on{background:var(--gold);transform:scale(1.12)}
+  .dot{width:15px;height:15px;border-radius:50%;border:2px solid var(--black);background:transparent;transition:background .2s,transform .2s}
+  .dot.on{background:var(--rose);transform:scale(1.12)}
   .dots.shake{animation:shake .45s ease}
   @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(4px)}}
-  .lock-msg{min-height:26px;color:var(--rose);font-weight:700;font-size:.94rem;margin:2px 0 8px}
+  .hint-title{font-weight:800;color:var(--ink);margin:14px 0 8px;font-size:.98rem}
+  .hint-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:0 0 4px}
+  .hint-chip{background:var(--pink-soft);border:1.5px solid var(--black);border-radius:999px;padding:5px 13px;font-weight:800;font-size:.86rem;color:var(--ink);box-shadow:var(--card-shadow)}
+  .hint-chip b{color:var(--rose);font-family:"Cormorant Garamond",serif;font-size:1.05rem}
+  .hint-line{color:var(--body);font-size:.95rem;margin:10px auto 0;max-width:300px}
+  .lock-jokes{margin:16px auto 0;max-width:320px}
+  .lock-jokes p{margin:0 0 9px;font-size:.93rem;line-height:1.55;color:var(--body)}
+  .lock-jokes p b{color:var(--rose-deep)}
+  .lock-msg{min-height:26px;color:var(--rose-deep);font-weight:700;font-size:.94rem;margin:8px 0 4px}
   .pad{display:grid;grid-template-columns:repeat(3,74px);gap:12px;justify-content:center;margin-top:6px}
   .key{height:64px;border-radius:50%;border:1.5px solid var(--keypad-line);background:var(--keypad);color:var(--ink);
     font-family:"Cormorant Garamond",serif;font-size:1.65rem;font-weight:600;box-shadow:var(--card-shadow);
     display:flex;align-items:center;justify-content:center;transition:transform .08s,background .15s;-webkit-tap-highlight-color:transparent}
-  .key:active{transform:scale(.93);background:var(--gold-soft)}
-  .key.util{font-family:"Nunito",sans-serif;font-size:1.05rem;font-weight:800;color:var(--muted)}
-  .key.blank{visibility:hidden}
-  #unlockMsg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .5s}
+  .key:active{transform:scale(.93);background:var(--pink-soft)}
+  .key.util{font-family:"Nunito",sans-serif;font-size:.82rem;font-weight:800;color:var(--muted)}
+  .lock-foot{margin-top:22px;color:var(--muted);font-size:.86rem;font-weight:700}
+  #unlockMsg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .5s;
+    background:linear-gradient(180deg,#ffe9f1 0%,#ffd9e4 100%);border-radius:26px;z-index:3;padding:20px}
   #unlockMsg.show{opacity:1}
-  #unlockMsg .big{font-size:3rem;color:var(--gold);line-height:1.1;text-shadow:0 2px 22px rgba(232,196,118,.45)}
-  #unlockMsg .small{color:var(--muted);font-weight:700;margin-top:8px}
+  #unlockMsg .big{font-size:3rem;color:var(--rose);line-height:1.1;text-shadow:0 2px 18px rgba(194,38,51,.25)}
+  #unlockMsg .small{color:var(--body);font-weight:700;margin-top:8px}
   .lock-inner.faded > *:not(#unlockMsg){opacity:0;transition:opacity .3s}
+  .lock-inner.faded::before{opacity:0;transition:opacity .3s}
 
   /* ---------- Hero ---------- */
-  .hero{padding:64px 0 10px;text-align:center;position:relative}
-  .hero-moon{width:92px;height:92px;margin:0 auto 10px;filter:drop-shadow(0 0 20px rgba(232,196,118,.5))}
-  .hero .script{font-size:2rem;color:var(--gold);display:block}
-  .hero h1{font-size:clamp(2.7rem,11vw,4rem);font-weight:600;margin-top:6px}
-  .hero h1 .name{color:var(--rose);font-style:italic}
-  .hero-names{margin-top:12px;font-weight:800;letter-spacing:.14em;font-size:.8rem;color:var(--muted)}
-  .hero-names b{color:var(--gold)}
-  .hero p{color:var(--muted);max-width:440px;margin:14px auto 0;font-size:1.02rem}
+  .hero{padding:56px 0 10px;text-align:center;position:relative}
+  .hero h1{font-size:clamp(1.9rem,7.4vw,2.7rem);font-weight:600;font-style:italic;max-width:520px;margin:0 auto}
+  .hero .script{font-size:clamp(2.4rem,9vw,3.2rem);color:var(--rose);display:block;margin-top:14px;line-height:1.15}
+  .hero-names{margin-top:14px;font-weight:800;letter-spacing:.14em;font-size:.8rem;color:var(--muted)}
+  .hero-names b{color:var(--rose)}
+  .hero p{color:var(--body);max-width:470px;margin:14px auto 0;font-size:1.02rem}
   .hero-flowers{display:flex;justify-content:center;gap:10px;margin-top:22px}
   .hero-flowers svg{width:40px;height:56px}
+  .btn-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+  .btn{border-radius:999px;padding:13px 26px;font-weight:800;font-size:.98rem;transition:transform .12s;text-decoration:none;display:inline-block}
+  .btn:active{transform:scale(.96)}
+  .btn-rose{background:linear-gradient(135deg,var(--rose),var(--pink));color:#fff;border:none;box-shadow:0 10px 24px rgba(194,38,51,.30)}
+  .btn-line{background:transparent;color:var(--rose-deep);border:1.5px solid var(--rose)}
 
   .orn{display:flex;align-items:center;gap:12px;justify-content:center;margin:34px auto 0;max-width:300px}
-  .orn::before,.orn::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+  .orn::before,.orn::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--pink),transparent)}
   .orn svg{width:20px;height:20px}
 
   .sec-head{text-align:center;margin-bottom:20px}
-  .sec-head .script{font-size:1.8rem;color:var(--gold);display:block}
+  .sec-head .script{font-size:1.8rem;color:var(--rose);display:block}
   .sec-head h2{font-size:2.1rem;font-weight:600;margin-top:2px}
-  .sec-head p{color:var(--muted);margin:8px auto 0;max-width:430px;font-size:.97rem}
+  .sec-head p{color:var(--body);margin:8px auto 0;max-width:440px;font-size:.97rem}
 
-  /* ---------- Letter ---------- */
+  /* ---------- Sticky notes ---------- */
+  .notes{display:grid;gap:16px}
+  @media (min-width:560px){.notes{grid-template-columns:1fr 1fr}}
+  .note{border-radius:6px 6px 14px 14px;padding:26px 20px 16px;position:relative;box-shadow:0 10px 20px rgba(158,27,41,.12)}
+  .note::before{content:"";position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-2deg);width:86px;height:20px;background:rgba(231,84,128,.45);border-radius:2px}
+  .note p{margin:0;font-size:1rem;line-height:1.6;color:var(--ink)}
+  .note .sig{display:block;text-align:right;font-family:"Pinyon Script",cursive;font-size:1.55rem;color:var(--rose);margin-top:8px;line-height:1.1}
+  .note.n1{background:#ffd9e5;transform:rotate(-1.4deg)}
+  .note.n2{background:#ffeef5;transform:rotate(1.2deg)}
+  .note.n3{background:#ffd0de;transform:rotate(1deg)}
+  .note.n4{background:#ffe6ef;transform:rotate(-1.2deg)}
+
+  /* ---------- Letter and prose cards ---------- */
   .letter{background:var(--card);border:1px solid var(--card-line);border-radius:18px;box-shadow:var(--card-shadow);padding:28px 24px 22px;position:relative}
-  .letter::before{content:"";position:absolute;top:0;left:24px;right:24px;height:3px;border-radius:0 0 4px 4px;background:linear-gradient(90deg,var(--rose),var(--gold),var(--rose))}
-  .letter p{font-family:"Cormorant Garamond",serif;font-size:1.32rem;line-height:1.55;margin:0 0 12px;font-weight:500}
+  .letter::before{content:"";position:absolute;top:0;left:24px;right:24px;height:3px;border-radius:0 0 4px 4px;background:linear-gradient(90deg,var(--rose),var(--pink),var(--rose))}
+  .letter p{font-family:"Cormorant Garamond",serif;font-size:1.3rem;line-height:1.55;margin:0 0 12px;font-weight:500;color:var(--ink)}
   .letter .sign{text-align:right;margin:4px 0 0}
   .letter .sign .script{font-size:2.1rem;color:var(--rose)}
-
-  /* ---------- Week ---------- */
-  .week{display:grid;gap:12px}
-  @media (min-width:560px){.week{grid-template-columns:1fr 1fr}}
-  .day{background:var(--card);border:1px solid var(--card-line);border-radius:16px;box-shadow:var(--card-shadow);padding:16px 18px 14px}
-  .day.today{border-color:var(--gold);box-shadow:0 0 0 1.5px var(--gold),var(--card-shadow)}
-  .day h3{font-size:1.45rem;font-weight:700;display:flex;align-items:baseline;justify-content:space-between;gap:8px}
-  .day h3 .tag{font-family:"Nunito",sans-serif;font-size:.68rem;font-weight:800;letter-spacing:.1em;color:var(--gold);border:1px solid var(--gold);border-radius:999px;padding:2px 9px;white-space:nowrap}
-  .cls{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px dashed var(--card-line)}
-  .cls:first-of-type{border-top:none}
-  .cls .sub{font-weight:700;font-size:.96rem}
-  .cls .time{color:var(--gold);font-weight:800;font-size:.85rem;white-space:nowrap;padding-top:2px}
-  .free-note{color:var(--muted);font-size:.95rem;padding-top:8px}
-  .week-note{text-align:center;color:var(--muted);font-weight:700;margin-top:16px;font-size:.95rem}
-  .week-note b{color:var(--gold)}
+  .prose{background:var(--card);border:1px solid var(--card-line);border-radius:18px;box-shadow:var(--card-shadow);padding:26px 24px 14px}
+  .prose p{font-family:"Cormorant Garamond",serif;font-size:1.28rem;line-height:1.55;margin:0 0 12px;font-weight:500;color:var(--ink)}
+  .mini-cards{display:grid;gap:12px;margin-top:14px}
+  @media (min-width:560px){.mini-cards{grid-template-columns:repeat(3,1fr)}}
+  .mini{background:var(--pink-soft);border:1px solid var(--card-line);border-radius:14px;padding:16px 16px 8px}
+  .mini p{font-size:.96rem;line-height:1.6;margin:0 0 8px;color:var(--ink)}
+  .study-card{background:var(--card);border:1px solid var(--card-line);border-radius:18px;box-shadow:var(--card-shadow);padding:24px;text-align:center}
+  .study-card p{margin:0;font-size:1.05rem;line-height:1.7;color:var(--ink)}
+  .study-card .coffee{font-family:"Cormorant Garamond",serif;font-size:1.5rem;font-weight:700;color:var(--rose-deep);display:block;margin:10px 0}
 
   /* ---------- Song ---------- */
-  .song-frame{border-radius:18px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--card-line);background:#000;aspect-ratio:16/9}
+  .song-frame{border-radius:18px;overflow:hidden;box-shadow:var(--shadow);border:2px solid var(--black);background:#000;aspect-ratio:16/9}
   .song-frame iframe{width:100%;height:100%;border:0;display:block}
-  .song-cap{text-align:center;color:var(--muted);margin-top:12px;font-size:.95rem}
-  .song-cap .script{font-size:1.5rem;color:var(--rose);display:block}
+  .song-cap{text-align:center;color:var(--body);margin-top:14px;font-size:.97rem;max-width:470px;margin-left:auto;margin-right:auto}
+  .song-cap .script{font-size:1.6rem;color:var(--rose);display:block}
+  .song-arabic{font-size:1.3rem;color:var(--ink);margin-top:14px;line-height:1.9}
 
   /* ---------- Doctor reminder ---------- */
-  .doctor{background:var(--card);border:1px solid var(--card-line);border-left:4px solid var(--gold);border-radius:14px;box-shadow:var(--card-shadow);padding:18px 20px;display:flex;gap:14px;align-items:flex-start}
-  .doctor svg{width:34px;height:44px;flex:none;margin-top:2px}
-  .doctor p{margin:0;font-size:1rem;line-height:1.6}
-  .doctor .d-head{font-family:"Cormorant Garamond",serif;font-size:1.3rem;font-weight:700;display:block;margin-bottom:4px}
+  .doctor{background:var(--card);border:1px solid var(--card-line);border-left:4px solid var(--black);border-radius:14px;box-shadow:var(--card-shadow);padding:18px 20px;display:flex;gap:14px;align-items:flex-start}
+  .doctor-pair{display:flex;gap:3px;flex:none;margin-top:2px;align-items:flex-end}
+  .doctor-pair svg{width:26px;height:37px}
+  .doctor p{margin:0;font-size:1rem;line-height:1.6;color:var(--ink)}
 
-  /* ---------- Garden and finale ---------- */
-  .garden{background:linear-gradient(180deg,transparent, var(--sky2));border:1px solid var(--card-line);border-radius:20px;box-shadow:var(--card-shadow);padding:10px 10px 0;overflow:hidden}
-  .garden svg.scene{width:100%;height:auto;display:block}
-  .garden-btn{display:block;margin:22px auto 4px;background:linear-gradient(135deg,var(--rose),var(--rose-deep));color:#fff;border:none;
-    border-radius:999px;padding:14px 30px;font-weight:800;font-size:1rem;box-shadow:0 10px 24px rgba(194,38,51,.35);transition:transform .12s}
-  .garden-btn:active{transform:scale(.96)}
-  .garden-hint{text-align:center;color:var(--muted);font-size:.92rem;margin-top:8px}
+  /* ---------- Reasons ---------- */
+  .reasons{display:grid;gap:12px}
+  @media (min-width:560px){.reasons{grid-template-columns:1fr 1fr}}
+  .reason{background:var(--card);border:1px solid var(--card-line);border-radius:16px;box-shadow:var(--card-shadow);padding:18px 18px 10px;display:flex;gap:14px;align-items:flex-start}
+  .reason .rnum{font-family:"Cormorant Garamond",serif;font-size:1.9rem;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--rose),var(--pink));border-radius:50%;width:42px;height:42px;flex:none;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(194,38,51,.28)}
+  .reason p{margin:0 0 8px;font-size:.98rem;line-height:1.62;color:var(--ink)}
+
+  /* ---------- Note machine ---------- */
+  .machine{background:var(--card);border:1px solid var(--card-line);border-radius:18px;box-shadow:var(--card-shadow);padding:24px 22px;text-align:center}
+  .machine-display{border:1.5px dashed var(--pink);border-radius:14px;background:#fff0f5;min-height:96px;display:flex;align-items:center;justify-content:center;padding:16px 18px;margin-bottom:18px}
+  .machine-display p{margin:0;font-size:1.05rem;line-height:1.6;color:var(--ink)}
+  .machine-display .placeholder{color:var(--muted);font-weight:700}
+
+  /* ---------- Bloom garden ---------- */
+  .bloom-intro{text-align:center;max-width:460px;margin:0 auto 18px;font-size:1rem;line-height:1.65;color:var(--ink)}
+  .bloom-count{text-align:center;font-weight:800;color:var(--rose-deep);margin:0 0 16px;font-size:.98rem}
+  .blooms{display:grid;gap:14px}
+  .bloom{display:block;width:100%;text-align:center;background:var(--card);border:1.5px solid var(--card-line);border-radius:18px;box-shadow:var(--card-shadow);padding:20px 18px 16px;transition:border-color .3s;color:var(--ink)}
+  .bloom.open{border-color:var(--rose)}
+  .bloom svg{width:64px;height:90px;display:block;margin:0 auto}
+  .bloom.open svg{animation:bloomPop .55s cubic-bezier(.2,1.6,.4,1)}
+  @keyframes bloomPop{0%{transform:scale(.45)}100%{transform:scale(1)}}
+  .bloom-tap{display:block;margin-top:8px;font-weight:800;color:var(--pink);font-size:1rem}
+  .bloom-always{display:block;margin-top:8px;font-weight:800;color:var(--pink);font-size:1rem}
+  .bloom-note{display:block;margin-top:8px;font-size:1.02rem;line-height:1.6;color:var(--ink)}
+
+  /* ---------- Bouquet ---------- */
+  .bouquet-box{background:var(--card);border:1px solid var(--card-line);border-radius:18px;box-shadow:var(--card-shadow);padding:22px 18px 8px;text-align:center}
+  .bouquet-flowers{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;gap:2px 6px;min-height:110px;margin-bottom:14px}
+  .bouquet-flowers svg{width:46px;height:64px;animation:bloomPop .5s cubic-bezier(.2,1.6,.4,1)}
+  .bouquet-empty{color:var(--muted);font-weight:700;align-self:center}
+
+  /* ---------- Love meter ---------- */
+  .meter-card{background:var(--card);border:1px solid var(--card-line);border-radius:18px;box-shadow:var(--card-shadow);padding:26px 22px;text-align:center}
+  .meter-num{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,9vw,3rem);font-weight:700;color:var(--rose-deep);line-height:1.1;min-height:52px;display:flex;align-items:center;justify-content:center}
+  .meter-track{height:20px;border-radius:999px;background:#f2b3c6;overflow:hidden;margin:14px 0 6px}
+  .meter-fill{height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,var(--pink),var(--rose));transition:width .12s linear}
+  .meter-fill.over{animation:meterShake .3s ease-in-out infinite alternate}
+  @keyframes meterShake{from{transform:translateX(-1.5px)}to{transform:translateX(1.5px)}}
+  .meter-warn{color:var(--rose-deep);font-weight:800;margin:10px 0 0;min-height:26px}
+  .meter-note{color:var(--muted);font-size:.9rem;margin:12px 0 0}
+
+  /* ---------- Finale ---------- */
   .finale{text-align:center;padding-bottom:10px}
   .code-row{display:flex;justify-content:center;gap:14px;margin:8px 0 4px;flex-wrap:wrap}
-  .code-cell{background:var(--card);border:1px solid var(--gold);border-radius:16px;box-shadow:var(--card-shadow);padding:14px 20px 10px;min-width:96px}
-  .code-cell .num{font-family:"Cormorant Garamond",serif;font-size:2.6rem;font-weight:700;color:var(--gold);line-height:1}
-  .code-cell .word{font-weight:800;letter-spacing:.18em;font-size:.85rem;margin-top:4px}
+  .code-cell{background:var(--card);border:1.5px solid var(--black);border-radius:16px;box-shadow:var(--card-shadow);padding:14px 20px 10px;min-width:96px}
+  .code-cell .num{font-family:"Cormorant Garamond",serif;font-size:2.6rem;font-weight:700;color:var(--rose);line-height:1}
+  .code-cell .word{font-weight:800;letter-spacing:.18em;font-size:.85rem;margin-top:4px;color:var(--ink)}
   .finale .script{font-size:2.9rem;color:var(--rose);display:block;margin-top:16px;line-height:1.15}
-  .finale p{color:var(--muted);max-width:420px;margin:10px auto 0}
+  .finale p{color:var(--body);max-width:460px;margin:12px auto 0}
+  .finale .two-flowers{font-family:"Cormorant Garamond",serif;font-size:1.3rem;font-weight:600;color:var(--ink)}
 
   footer{text-align:center;padding:52px 20px 46px;position:relative;z-index:2}
-  footer .script{font-size:2.2rem;color:var(--gold);display:block}
-  footer p{color:var(--faint);font-size:.88rem;margin:8px auto 0;max-width:380px}
-  footer .fnames{font-weight:800;letter-spacing:.12em;font-size:.75rem;color:var(--muted);margin-top:14px}
+  footer p{color:#f3c2d1;font-size:.95rem;margin:0 auto;max-width:420px;line-height:1.65}
+  footer p b{color:#ff8296}
 
   @media (prefers-reduced-motion: reduce){
-    .star{animation:none;opacity:.5}
     html{scroll-behavior:auto}
     *{animation-duration:.01s !important}
   }
@@ -176,63 +282,266 @@
 </head>
 <body class="locked">
 
-<!-- Reusable illustrated flowers. Flat red spiral roses and white jasmine on stems. -->
+<!-- Reusable illustrated flowers. Flat red spiral roses and white jasmine on stems, plus closed buds. -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
+    <radialGradient id="gRoseOut" cx="50%" cy="42%" r="66%">
+      <stop offset="0%" stop-color="#f0566b"/><stop offset="55%" stop-color="#d61c2c"/><stop offset="100%" stop-color="#9c0d1d"/>
+    </radialGradient>
+    <radialGradient id="gRoseMid" cx="50%" cy="42%" r="64%">
+      <stop offset="0%" stop-color="#ff8a7a"/><stop offset="58%" stop-color="#e8303f"/><stop offset="100%" stop-color="#b3121f"/>
+    </radialGradient>
+    <radialGradient id="gRoseIn" cx="50%" cy="44%" r="62%">
+      <stop offset="0%" stop-color="#ffa08c"/><stop offset="62%" stop-color="#ef4453"/><stop offset="100%" stop-color="#c21424"/>
+    </radialGradient>
+    <linearGradient id="gLeaf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6cb87e"/><stop offset=".55" stop-color="#4c945e"/><stop offset="1" stop-color="#2f6b3e"/>
+    </linearGradient>
+    <linearGradient id="gStem" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4c945e"/><stop offset="1" stop-color="#2f6b3e"/>
+    </linearGradient>
+    <linearGradient id="gJasPetal" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#f0e0b4"/><stop offset=".45" stop-color="#fdfbef"/><stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+    <radialGradient id="gGold" cx="42%" cy="38%" r="72%">
+      <stop offset="0" stop-color="#ffdc7d"/><stop offset=".6" stop-color="#f0ad3c"/><stop offset="1" stop-color="#c07f1f"/>
+    </radialGradient>
+    <linearGradient id="gTulipR" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#a30f1e"/><stop offset=".55" stop-color="#d61c2c"/><stop offset="1" stop-color="#f0566b"/>
+    </linearGradient>
+    <linearGradient id="gDaisyP" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#f2c9d8"/><stop offset=".5" stop-color="#fdf3f7"/><stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+    <linearGradient id="gSunP" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#e07f0f"/><stop offset=".55" stop-color="#f7b733"/><stop offset="1" stop-color="#ffda4d"/>
+    </linearGradient>
+    <radialGradient id="gSunC" cx="45%" cy="40%" r="70%">
+      <stop offset="0" stop-color="#8a5a2e"/><stop offset=".65" stop-color="#6b4423"/><stop offset="1" stop-color="#42260f"/>
+    </radialGradient>
+    <linearGradient id="gLilyP" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#e75480"/><stop offset=".5" stop-color="#f7a8bf"/><stop offset="1" stop-color="#fdeef4"/>
+    </linearGradient>
+    <radialGradient id="gSakP" cx="50%" cy="88%" r="88%">
+      <stop offset="0" stop-color="#e75480"/><stop offset=".45" stop-color="#f28bb4"/><stop offset="1" stop-color="#fbdce9"/>
+    </radialGradient>
     <symbol id="rose" viewBox="0 0 60 84">
-      <path d="M30 84 C29 66 29 52 30 40" stroke="#3e7d4e" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-      <path d="M30 66 C22 62 16 62 11 66 C17 71 24 71 30 68 Z" fill="#4c945e"/>
-      <path d="M30 58 C37 53 43 53 48 56 C43 62 36 62 30 60 Z" fill="#3e7d4e"/>
-      <circle cx="30" cy="26" r="19" fill="#c22633"/>
-      <path d="M30 9 a17 17 0 0 1 12 5 c-4 1-7 0-9-2 c-1 3-4 5-7 5 c-4 0-7-2-8-5 a17 17 0 0 1 12-3 Z" fill="#d92b3a"/>
-      <path d="M30 14 a12 12 0 1 1-11 12 a9.5 9.5 0 1 0 9-9 a6.5 6.5 0 1 1-6 6.5 a3.6 3.6 0 1 0 3.6-3.6" fill="none" stroke="#7e0f1d" stroke-width="2.6" stroke-linecap="round"/>
-      <path d="M16 34 a15 15 0 0 0 9 8 M44 34 a15 15 0 0 1-9 8" fill="none" stroke="#e5566a" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M30 84 C29 66 29 52 30 40" stroke="url(#gStem)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="M30 66 C22 62 16 62 11 66 C17 71 24 71 30 68 Z" fill="url(#gLeaf)"/>
+      <path d="M29 66.5 C23 64 18 64 13.5 66.5" fill="none" stroke="#2f6b3e" stroke-width="1" opacity=".5"/>
+      <path d="M30 58 C37 53 43 53 48 56 C43 62 36 62 30 60 Z" fill="url(#gLeaf)"/>
+      <path d="M31 58.5 C37 55.5 42 55.3 46.5 56.8" fill="none" stroke="#2f6b3e" stroke-width="1" opacity=".5"/>
+      <path d="M30 38 L33.5 46.5 L42 43.5 L36 49.5 L39 58 L30 52.5 L21 58 L24 49.5 L18 43.5 L26.5 46.5 Z" fill="url(#gLeaf)"/>
+      <g fill="url(#gRoseOut)" stroke="#8f0a16" stroke-width=".8">
+        <path d="M30 47 C19 40 14 25 21 11 C25.5 16.5 28.5 19 30 20 C31.5 19 34.5 16.5 39 11 C46 25 41 40 30 47 Z"/>
+        <path d="M30 47 C19 40 14 25 21 11 C25.5 16.5 28.5 19 30 20 C31.5 19 34.5 16.5 39 11 C46 25 41 40 30 47 Z" transform="rotate(72 30 28)"/>
+        <path d="M30 47 C19 40 14 25 21 11 C25.5 16.5 28.5 19 30 20 C31.5 19 34.5 16.5 39 11 C46 25 41 40 30 47 Z" transform="rotate(144 30 28)"/>
+        <path d="M30 47 C19 40 14 25 21 11 C25.5 16.5 28.5 19 30 20 C31.5 19 34.5 16.5 39 11 C46 25 41 40 30 47 Z" transform="rotate(216 30 28)"/>
+        <path d="M30 47 C19 40 14 25 21 11 C25.5 16.5 28.5 19 30 20 C31.5 19 34.5 16.5 39 11 C46 25 41 40 30 47 Z" transform="rotate(288 30 28)"/>
+      </g>
+      <g fill="url(#gRoseMid)" stroke="#8f0a16" stroke-width=".7">
+        <path d="M30 43 C22.5 37 19 26 24 15.5 C27.5 19.5 29.3 21.2 30 22 C30.7 21.2 32.5 19.5 36 15.5 C41 26 37.5 37 30 43 Z" transform="rotate(36 30 28)"/>
+        <path d="M30 43 C22.5 37 19 26 24 15.5 C27.5 19.5 29.3 21.2 30 22 C30.7 21.2 32.5 19.5 36 15.5 C41 26 37.5 37 30 43 Z" transform="rotate(108 30 28)"/>
+        <path d="M30 43 C22.5 37 19 26 24 15.5 C27.5 19.5 29.3 21.2 30 22 C30.7 21.2 32.5 19.5 36 15.5 C41 26 37.5 37 30 43 Z" transform="rotate(180 30 28)"/>
+        <path d="M30 43 C22.5 37 19 26 24 15.5 C27.5 19.5 29.3 21.2 30 22 C30.7 21.2 32.5 19.5 36 15.5 C41 26 37.5 37 30 43 Z" transform="rotate(252 30 28)"/>
+        <path d="M30 43 C22.5 37 19 26 24 15.5 C27.5 19.5 29.3 21.2 30 22 C30.7 21.2 32.5 19.5 36 15.5 C41 26 37.5 37 30 43 Z" transform="rotate(324 30 28)"/>
+      </g>
+      <circle cx="30" cy="28" r="9.5" fill="url(#gRoseIn)"/>
+      <path d="M30 22.6 a5.6 5.6 0 1 1-5.2 5.6 a4 4 0 1 0 3.8-4 a2.5 2.5 0 1 1-2.4 2.5" fill="none" stroke="#7e0f1d" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M24.8 24.8 a6.4 6.4 0 0 1 4.2-2.8" fill="none" stroke="#ffc9b8" stroke-width="1.4" stroke-linecap="round" opacity=".85"/>
     </symbol>
     <symbol id="jasmine" viewBox="0 0 60 84">
-      <path d="M30 84 C31 68 31 56 30 46" stroke="#3e7d4e" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-      <path d="M30 70 C23 66 17 66 12 70 C18 75 25 75 30 72 Z" fill="#4c945e"/>
-      <g fill="#fdfdf8" stroke="#e6ddba" stroke-width="1.4">
-        <ellipse cx="30" cy="16" rx="6.4" ry="12"/>
-        <ellipse cx="30" cy="16" rx="6.4" ry="12" transform="rotate(72 30 28)"/>
-        <ellipse cx="30" cy="16" rx="6.4" ry="12" transform="rotate(144 30 28)"/>
-        <ellipse cx="30" cy="16" rx="6.4" ry="12" transform="rotate(216 30 28)"/>
-        <ellipse cx="30" cy="16" rx="6.4" ry="12" transform="rotate(288 30 28)"/>
+      <path d="M30 84 C31 68 31 56 30 46" stroke="url(#gStem)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="M30 70 C23 66 17 66 12 70 C18 75 25 75 30 72 Z" fill="url(#gLeaf)"/>
+      <path d="M29 70.5 C23 68 18 68 13.5 70.3" fill="none" stroke="#2f6b3e" stroke-width="1" opacity=".5"/>
+      <g fill="#f3e5bb" stroke="#d9c48d" stroke-width=".8">
+        <ellipse cx="30" cy="17.5" rx="5.4" ry="11" transform="rotate(36 30 28)"/>
+        <ellipse cx="30" cy="17.5" rx="5.4" ry="11" transform="rotate(108 30 28)"/>
+        <ellipse cx="30" cy="17.5" rx="5.4" ry="11" transform="rotate(180 30 28)"/>
+        <ellipse cx="30" cy="17.5" rx="5.4" ry="11" transform="rotate(252 30 28)"/>
+        <ellipse cx="30" cy="17.5" rx="5.4" ry="11" transform="rotate(324 30 28)"/>
       </g>
-      <circle cx="30" cy="28" r="4.6" fill="#e8c476"/>
-      <circle cx="30" cy="28" r="2" fill="#c99b3f"/>
+      <g fill="url(#gJasPetal)" stroke="#d9c48d" stroke-width=".9">
+        <ellipse cx="30" cy="16" rx="6.2" ry="12.5"/>
+        <ellipse cx="30" cy="16" rx="6.2" ry="12.5" transform="rotate(72 30 28)"/>
+        <ellipse cx="30" cy="16" rx="6.2" ry="12.5" transform="rotate(144 30 28)"/>
+        <ellipse cx="30" cy="16" rx="6.2" ry="12.5" transform="rotate(216 30 28)"/>
+        <ellipse cx="30" cy="16" rx="6.2" ry="12.5" transform="rotate(288 30 28)"/>
+      </g>
+      <g stroke="#e3cf92" stroke-width=".8" opacity=".75" fill="none">
+        <path d="M30 25 C30 19 30 12 30 6"/>
+        <path d="M30 25 C30 19 30 12 30 6" transform="rotate(72 30 28)"/>
+        <path d="M30 25 C30 19 30 12 30 6" transform="rotate(144 30 28)"/>
+        <path d="M30 25 C30 19 30 12 30 6" transform="rotate(216 30 28)"/>
+        <path d="M30 25 C30 19 30 12 30 6" transform="rotate(288 30 28)"/>
+      </g>
+      <circle cx="30" cy="28" r="5" fill="url(#gGold)"/>
+      <circle cx="27.6" cy="25.8" r=".9" fill="#b97a1a"/><circle cx="32.4" cy="25.8" r=".9" fill="#b97a1a"/>
+      <circle cx="30" cy="30.6" r=".9" fill="#b97a1a"/><circle cx="30" cy="28" r="1.1" fill="#a86d14"/>
+    </symbol>
+    <symbol id="rosebud" viewBox="0 0 60 84">
+      <path d="M30 84 C29 70 29 62 30 54" stroke="url(#gStem)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="M30 72 C23 68 17 68 12 72 C18 77 25 77 30 74 Z" fill="url(#gLeaf)"/>
+      <path d="M30 9 C38.5 16 41.5 24.5 41.5 32.5 C41.5 41.5 36.5 48 30 48 C23.5 48 18.5 41.5 18.5 32.5 C18.5 24.5 21.5 16 30 9 Z" fill="url(#gRoseMid)" stroke="#8f0a16" stroke-width=".7"/>
+      <path d="M24 23.5 a8.2 8.2 0 1 1 8.2 10.2 a5.6 5.6 0 1 0-5.2-6.2" fill="none" stroke="#7e0f1d" stroke-width="2.3" stroke-linecap="round"/>
+      <path d="M22.5 16.5 a11 11 0 0 1 5-4.5" fill="none" stroke="#ffc9b8" stroke-width="1.5" stroke-linecap="round" opacity=".8"/>
+      <path d="M19 42 C23 49 27 52 30 52 C33 52 37 49 41 42 C39 52 35 57 30 57 C25 57 21 52 19 42 Z" fill="url(#gLeaf)"/>
+    </symbol>
+    <symbol id="jasminebud" viewBox="0 0 60 84">
+      <path d="M30 84 C31 70 31 62 30 54" stroke="url(#gStem)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="M30 72 C37 67 43 67 48 70 C43 76 36 76 30 74 Z" fill="url(#gLeaf)"/>
+      <path d="M30 9 C36.5 17 38.5 25.5 38.5 34 C38.5 42 34.5 47.5 30 47.5 C25.5 47.5 21.5 42 21.5 34 C21.5 25.5 23.5 17 30 9 Z" fill="url(#gJasPetal)" stroke="#d9c48d" stroke-width="1.2"/>
+      <path d="M30 15 C28 22 28 32 30 41" fill="none" stroke="#e3cf92" stroke-width="1.1" opacity=".8"/>
+      <path d="M24.5 20 C23.5 26 23.5 33 24.8 39" fill="none" stroke="#efe0b0" stroke-width="1" opacity=".7"/>
+      <path d="M22 42 C25 49 28 52 30 52 C32 52 35 49 38 42 C37 52 34 57 30 57 C26 57 23 52 22 42 Z" fill="url(#gLeaf)"/>
+    </symbol>
+    <symbol id="tulip" viewBox="0 0 60 84">
+      <path d="M30 84 C29.5 68 29.5 58 30 48" stroke="url(#gStem)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="M30 68 C22 63 15 63 10 67 C16 73 24 73 30 70 Z" fill="url(#gLeaf)"/>
+      <path d="M30 60 C38 55 44 55 49 58 C44 64 36 64 30 62 Z" fill="url(#gLeaf)"/>
+      <path d="M30 47 C20.5 43 15.5 30 18.5 14.5 C24 18.5 28 24.5 30 31 Z" fill="#b3121f"/>
+      <path d="M30 47 C39.5 43 44.5 30 41.5 14.5 C36 18.5 32 24.5 30 31 Z" fill="#b3121f"/>
+      <path d="M30 49 C22.5 39.5 21.5 21 30 6.5 C38.5 21 37.5 39.5 30 49 Z" fill="url(#gTulipR)"/>
+      <path d="M30 43 C28.2 32 28.2 19 30 11.5 C31.8 19 31.8 32 30 43 Z" fill="#ff9d8a" opacity=".55"/>
+      <path d="M21.5 19 C20.5 27 21.8 35.5 24.5 41" fill="none" stroke="#8f0a16" stroke-width="1" opacity=".45"/>
+      <path d="M38.5 19 C39.5 27 38.2 35.5 35.5 41" fill="none" stroke="#8f0a16" stroke-width="1" opacity=".45"/>
+    </symbol>
+    <symbol id="daisy" viewBox="0 0 60 84">
+      <path d="M30 84 C29.5 68 29.5 56 30 46" stroke="url(#gStem)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="M30 68 C22 63 15 63 10 67 C16 73 24 73 30 70 Z" fill="url(#gLeaf)"/>
+      <g fill="url(#gDaisyP)" stroke="#d9a7bd" stroke-width=".7">
+        <ellipse cx="30" cy="16.5" rx="4.9" ry="11.5"/>
+        <ellipse cx="30" cy="16.5" rx="4.9" ry="11.5" transform="rotate(30 30 28)"/>
+        <ellipse cx="30" cy="16.5" rx="4.9" ry="11.5" transform="rotate(60 30 28)"/>
+        <ellipse cx="30" cy="16.5" rx="4.9" ry="11.5" transform="rotate(90 30 28)"/>
+        <ellipse cx="30" cy="16.5" rx="4.9" ry="11.5" transform="rotate(120 30 28)"/>
+        <ellipse cx="30" cy="16.5" rx="4.9" ry="11.5" transform="rotate(150 30 28)"/>
+        <ellipse cx="30" cy="16.5" rx="4.9" ry="11.5" transform="rotate(180 30 28)"/>
+        <ellipse cx="30" cy="16.5" rx="4.9" ry="11.5" transform="rotate(210 30 28)"/>
+        <ellipse cx="30" cy="16.5" rx="4.9" ry="11.5" transform="rotate(240 30 28)"/>
+        <ellipse cx="30" cy="16.5" rx="4.9" ry="11.5" transform="rotate(270 30 28)"/>
+        <ellipse cx="30" cy="16.5" rx="4.9" ry="11.5" transform="rotate(300 30 28)"/>
+        <ellipse cx="30" cy="16.5" rx="4.9" ry="11.5" transform="rotate(330 30 28)"/>
+      </g>
+      <circle cx="30" cy="28" r="7.6" fill="url(#gGold)"/>
+      <circle cx="26.8" cy="25" r="1.1" fill="#b97a1a"/><circle cx="33.2" cy="25.4" r="1.1" fill="#b97a1a"/>
+      <circle cx="30" cy="30.8" r="1.1" fill="#b97a1a"/><circle cx="25.8" cy="29.6" r=".9" fill="#b97a1a"/>
+      <circle cx="34.2" cy="30" r=".9" fill="#b97a1a"/><circle cx="30" cy="26.8" r=".9" fill="#a86d14"/>
+    </symbol>
+    <symbol id="sunflower" viewBox="0 0 60 84">
+      <path d="M30 84 C29.5 68 29.5 56 30 46" stroke="url(#gStem)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="M30 66 C22 61 15 61 10 65 C16 71 24 71 30 68 Z" fill="url(#gLeaf)"/>
+      <path d="M30 58 C38 53 44 53 49 56 C44 62 36 62 30 60 Z" fill="url(#gLeaf)"/>
+      <g fill="url(#gSunP)" stroke="#d98a12" stroke-width=".7">
+        <path d="M30 29.5 C25.6 19 25.6 6.5 30 1 C34.4 6.5 34.4 19 30 29.5 Z"/>
+        <path d="M30 29.5 C25.6 19 25.6 6.5 30 1 C34.4 6.5 34.4 19 30 29.5 Z" transform="rotate(30 30 28)"/>
+        <path d="M30 29.5 C25.6 19 25.6 6.5 30 1 C34.4 6.5 34.4 19 30 29.5 Z" transform="rotate(60 30 28)"/>
+        <path d="M30 29.5 C25.6 19 25.6 6.5 30 1 C34.4 6.5 34.4 19 30 29.5 Z" transform="rotate(90 30 28)"/>
+        <path d="M30 29.5 C25.6 19 25.6 6.5 30 1 C34.4 6.5 34.4 19 30 29.5 Z" transform="rotate(120 30 28)"/>
+        <path d="M30 29.5 C25.6 19 25.6 6.5 30 1 C34.4 6.5 34.4 19 30 29.5 Z" transform="rotate(150 30 28)"/>
+        <path d="M30 29.5 C25.6 19 25.6 6.5 30 1 C34.4 6.5 34.4 19 30 29.5 Z" transform="rotate(180 30 28)"/>
+        <path d="M30 29.5 C25.6 19 25.6 6.5 30 1 C34.4 6.5 34.4 19 30 29.5 Z" transform="rotate(210 30 28)"/>
+        <path d="M30 29.5 C25.6 19 25.6 6.5 30 1 C34.4 6.5 34.4 19 30 29.5 Z" transform="rotate(240 30 28)"/>
+        <path d="M30 29.5 C25.6 19 25.6 6.5 30 1 C34.4 6.5 34.4 19 30 29.5 Z" transform="rotate(270 30 28)"/>
+        <path d="M30 29.5 C25.6 19 25.6 6.5 30 1 C34.4 6.5 34.4 19 30 29.5 Z" transform="rotate(300 30 28)"/>
+        <path d="M30 29.5 C25.6 19 25.6 6.5 30 1 C34.4 6.5 34.4 19 30 29.5 Z" transform="rotate(330 30 28)"/>
+      </g>
+      <circle cx="30" cy="28" r="10.5" fill="url(#gSunC)"/>
+      <circle cx="25.5" cy="23.5" r="1.4" fill="#8a5a2e"/><circle cx="34" cy="23" r="1.3" fill="#3f2712"/>
+      <circle cx="30" cy="28.5" r="1.4" fill="#8a5a2e"/><circle cx="24" cy="30" r="1.2" fill="#3f2712"/>
+      <circle cx="36" cy="30.5" r="1.2" fill="#8a5a2e"/><circle cx="29" cy="33.5" r="1.2" fill="#3f2712"/>
+      <circle cx="33.5" cy="34" r="1.1" fill="#8a5a2e"/><circle cx="26.5" cy="27" r="1" fill="#3f2712"/>
+    </symbol>
+    <symbol id="lily" viewBox="0 0 60 84">
+      <path d="M30 84 C29.5 68 29.5 56 30 46" stroke="url(#gStem)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="M30 68 C22 63 15 63 10 67 C16 73 24 73 30 70 Z" fill="url(#gLeaf)"/>
+      <g fill="url(#gLilyP)" stroke="#cf5d8f" stroke-width=".7">
+        <path d="M30 45 C19.5 37 15.5 18 22.5 4.5 C27 10.5 29.3 14.5 30 17.5 C30.7 14.5 33 10.5 37.5 4.5 C44.5 18 40.5 37 30 45 Z"/>
+        <path d="M30 45 C19.5 37 15.5 18 22.5 4.5 C27 10.5 29.3 14.5 30 17.5 C30.7 14.5 33 10.5 37.5 4.5 C44.5 18 40.5 37 30 45 Z" transform="rotate(60 30 27)"/>
+        <path d="M30 45 C19.5 37 15.5 18 22.5 4.5 C27 10.5 29.3 14.5 30 17.5 C30.7 14.5 33 10.5 37.5 4.5 C44.5 18 40.5 37 30 45 Z" transform="rotate(120 30 27)"/>
+        <path d="M30 45 C19.5 37 15.5 18 22.5 4.5 C27 10.5 29.3 14.5 30 17.5 C30.7 14.5 33 10.5 37.5 4.5 C44.5 18 40.5 37 30 45 Z" transform="rotate(180 30 27)"/>
+        <path d="M30 45 C19.5 37 15.5 18 22.5 4.5 C27 10.5 29.3 14.5 30 17.5 C30.7 14.5 33 10.5 37.5 4.5 C44.5 18 40.5 37 30 45 Z" transform="rotate(240 30 27)"/>
+        <path d="M30 45 C19.5 37 15.5 18 22.5 4.5 C27 10.5 29.3 14.5 30 17.5 C30.7 14.5 33 10.5 37.5 4.5 C44.5 18 40.5 37 30 45 Z" transform="rotate(300 30 27)"/>
+      </g>
+      <g stroke="#d6336c" stroke-width="1" opacity=".55" fill="none">
+        <path d="M30 41 C29.2 31 29.2 20 30 11"/>
+        <path d="M30 41 C29.2 31 29.2 20 30 11" transform="rotate(120 30 27)"/>
+        <path d="M30 41 C29.2 31 29.2 20 30 11" transform="rotate(240 30 27)"/>
+      </g>
+      <g stroke="#c07f1f" stroke-width="1.2">
+        <line x1="30" y1="27" x2="24" y2="19"/><line x1="30" y1="27" x2="30" y2="17.5"/>
+        <line x1="30" y1="27" x2="36" y2="19"/><line x1="30" y1="27" x2="22.5" y2="24"/>
+        <line x1="30" y1="27" x2="37.5" y2="24"/>
+      </g>
+      <circle cx="24" cy="19" r="1.9" fill="#8a5a2e"/><circle cx="30" cy="17.5" r="1.9" fill="#8a5a2e"/>
+      <circle cx="36" cy="19" r="1.9" fill="#8a5a2e"/><circle cx="22.5" cy="24" r="1.7" fill="#8a5a2e"/>
+      <circle cx="37.5" cy="24" r="1.7" fill="#8a5a2e"/>
+      <circle cx="30" cy="27" r="2.6" fill="#e8a33d"/>
+    </symbol>
+    <symbol id="sakura" viewBox="0 0 60 84">
+      <path d="M30 84 C29.5 68 29.5 56 30 46" stroke="url(#gStem)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="M30 68 C22 63 15 63 10 67 C16 73 24 73 30 70 Z" fill="url(#gLeaf)"/>
+      <g fill="url(#gSakP)" stroke="#dd7ba0" stroke-width=".7">
+        <path d="M30 46 C19.5 39 15 23.5 21 9.5 C24.8 14.8 27.8 16.8 30 17.3 C32.2 16.8 35.2 14.8 39 9.5 C45 23.5 40.5 39 30 46 Z"/>
+        <path d="M30 46 C19.5 39 15 23.5 21 9.5 C24.8 14.8 27.8 16.8 30 17.3 C32.2 16.8 35.2 14.8 39 9.5 C45 23.5 40.5 39 30 46 Z" transform="rotate(72 30 28)"/>
+        <path d="M30 46 C19.5 39 15 23.5 21 9.5 C24.8 14.8 27.8 16.8 30 17.3 C32.2 16.8 35.2 14.8 39 9.5 C45 23.5 40.5 39 30 46 Z" transform="rotate(144 30 28)"/>
+        <path d="M30 46 C19.5 39 15 23.5 21 9.5 C24.8 14.8 27.8 16.8 30 17.3 C32.2 16.8 35.2 14.8 39 9.5 C45 23.5 40.5 39 30 46 Z" transform="rotate(216 30 28)"/>
+        <path d="M30 46 C19.5 39 15 23.5 21 9.5 C24.8 14.8 27.8 16.8 30 17.3 C32.2 16.8 35.2 14.8 39 9.5 C45 23.5 40.5 39 30 46 Z" transform="rotate(288 30 28)"/>
+      </g>
+      <circle cx="30" cy="22.5" r="1.3" fill="#d61c2c"/><circle cx="35" cy="25.5" r="1.3" fill="#d61c2c"/>
+      <circle cx="33.2" cy="31" r="1.3" fill="#d61c2c"/><circle cx="26.8" cy="31" r="1.3" fill="#d61c2c"/>
+      <circle cx="25" cy="25.5" r="1.3" fill="#d61c2c"/>
+      <circle cx="30" cy="28" r="3" fill="#e75480"/>
     </symbol>
     <symbol id="spark" viewBox="0 0 24 24">
-      <path d="M12 1 L14.2 9.8 L23 12 L14.2 14.2 L12 23 L9.8 14.2 L1 12 L9.8 9.8 Z" fill="#e8c476"/>
+      <path d="M12 1 L14.2 9.8 L23 12 L14.2 14.2 L12 23 L9.8 14.2 L1 12 L9.8 9.8 Z" fill="#e75480"/>
     </symbol>
-    <symbol id="moon" viewBox="0 0 100 100">
-      <path d="M63 8 A44 44 0 1 0 63 92 A35 35 0 1 1 63 8 Z" fill="#eec95e"/>
-      <circle cx="34" cy="34" r="3.2" fill="#d9a92f" opacity=".55"/>
-      <circle cx="26" cy="58" r="2.4" fill="#d9a92f" opacity=".5"/>
-      <circle cx="42" cy="72" r="2" fill="#d9a92f" opacity=".45"/>
+    <symbol id="heart" viewBox="0 0 24 24">
+      <path d="M12 21 C5 15.6 2 11.4 2 7.7 C2 4.6 4.4 2.2 7.4 2.2 C9.3 2.2 11 3.2 12 4.8 C13 3.2 14.7 2.2 16.6 2.2 C19.6 2.2 22 4.6 22 7.7 C22 11.4 19 15.6 12 21 Z" fill="#d61c2c"/>
+    </symbol>
+    <symbol id="heartp" viewBox="0 0 24 24">
+      <path d="M12 21 C5 15.6 2 11.4 2 7.7 C2 4.6 4.4 2.2 7.4 2.2 C9.3 2.2 11 3.2 12 4.8 C13 3.2 14.7 2.2 16.6 2.2 C19.6 2.2 22 4.6 22 7.7 C22 11.4 19 15.6 12 21 Z" fill="#e75480"/>
     </symbol>
   </defs>
 </svg>
 
-<div id="stars" aria-hidden="true"></div>
 <div id="fx" aria-hidden="true"></div>
 <div id="toast" role="status"></div>
 
 <!-- 1. LOCK SCREEN -->
-<div id="lock" role="dialog" aria-label="A locked garden for Aya">
+<div id="lock" role="dialog" aria-label="A locked page for Ayoush">
   <div class="lock-inner" id="lockInner">
-    <svg class="lock-moon" aria-hidden="true"><use href="#moon"/></svg>
-    <div class="lock-script script">this little garden is</div>
-    <h1>For Ayoush</h1>
-    <p class="lock-sub">Only one person has the key. Tap the three numbers that say what is in my heart.</p>
-    <div class="hint-row" aria-label="Hint">
-      <span class="hint-chip">I = <b>1</b></span>
-      <span class="hint-chip">LOVE = <b>4</b></span>
-      <span class="hint-chip">YOU = <b>3</b></span>
+    <span class="lock-corner tl" aria-hidden="true"><svg><use href="#rose"/></svg><svg><use href="#jasmine"/></svg></span>
+    <span class="lock-corner tr" aria-hidden="true"><svg><use href="#jasmine"/></svg><svg><use href="#rose"/></svg></span>
+    <div class="lock-hearts" aria-hidden="true">
+      <svg class="h1"><use href="#heart"/></svg>
+      <svg class="h2"><use href="#heartp"/></svg>
+      <svg class="h3"><use href="#heartp"/></svg>
+      <svg class="h4"><use href="#heart"/></svg>
     </div>
+    <div class="lock-garland" aria-hidden="true"><svg><use href="#rose"/></svg><svg><use href="#jasmine"/></svg><svg><use href="#tulip"/></svg><svg><use href="#rose"/></svg><svg><use href="#sakura"/></svg><svg><use href="#jasmine"/></svg><svg><use href="#lily"/></svg></div>
+    <div class="pair pair-lock" aria-hidden="true"><svg><use href="#rose"/></svg><svg><use href="#jasmine"/></svg></div>
+    <h1>Wait. This is only for one girl</h1>
+    <div class="lock-script script">For Ayoush</div>
+    <div class="lock-rule" aria-hidden="true"><svg><use href="#spark"/></svg></div>
+    <p class="lock-sub">I locked this page because what's inside is not for everybody. It's for one girl. The most beautiful one I know. If that's you, sweetie, you already know the code. And yes, I picked this code very much on purpose. Don't give me that look.</p>
     <div class="dots" id="dots" aria-hidden="true">
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
     </div>
     <div class="lock-msg" id="lockMsg" aria-live="polite"></div>
+    <p class="hint-title">Your hint. Try not to blush:</p>
+    <div class="hint-row" aria-label="Hint">
+      <span class="hint-chip"><b>6</b>, nice and innocent</span>
+      <span class="hint-chip"><b>7</b>, still innocent</span>
+      <span class="hint-chip"><b>69</b>, okay, this one is not innocent</span>
+    </div>
+    <p class="hint-line">Put them together in that order: 6, 7, 69. Yes, that 69. I know. Stop smiling and type it, gorgeous.</p>
+    <img class="meme67" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAIEAYMDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9U6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAqvJNHAjO7LGi/wAb1yvjz4l6D8PdN+1arfJHjpEj/M9fJnxL+OviD4kwt5LPougu3yw7/ndf9qsZ1OQD2P4v/tW6L4HmNhoqJrOor97y3+VK9e8D63J4i8JaPqdwixz3dnDcOif3nWvzq8MeGP8AhKvEltZW8Xn+a2zZHX6N+EtHPh/wzpWms3mfZLeOHf8ARazp1JTKN6iiiuokKKKKACiiigAooooAKKKKACiiigAooooAKKKKAPnb48/GnxV8J/FNn9jgt7jSLhd3Iqp4N/bL0fWrxbfVtOlsd/yedC+9N1dN+0/4TTXPAgv4o0eWyfO7/Zavz68SfaNH1Vtm6N0+euGpOUAP1f0PXbDxFZrdafdpdW7fxpWpX5afDj9oDWvAN3G1rqE6B/vpv+R6+v8Awl+1/oOpadB/aFtdR3X8WzbtrSFU05D6Morm/CvjnRvGNt9o0q+iuE/iT+Ja6StkzMKKKK0AKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKo6hqtnpVo13d3MVrbJ96SZtqigC26Zr56/aD/AGobH4cBtE0Lbf6+/wAmyP5vKrlPj5+1/pljZyaB4Gu/7R1V/kl1G3X5Lf8A3a+XbOw/s22bUL6Vr/V7ht/nTvuZKzlIDqvO1jxHfz+IPFF4927/AHYXfdWXepNrN+sW79x9yKGqP9pNOi72+T+5Xqnwc8DTeJvENnFF+8nb73+xDXmT982R7R+zV8Jl0a2/tu4gR5EbZB/8VX0gOlUNH0qHRtOt7K3XZDCuxRWhXfShymIUUUV0AFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAGT4m0hdb0DUdPf7lxAyV+fXjzwwr/aYZYl8+Jmh37K/RuvkH4/+HE0Tx7cOUH2a+Tzlx61z1EB8OeMNKbQ7x0iXzKh0HxU1i6/NXrXirwxDqtzO7rXjfifw22jPv8Anrz5wNrnsXgb4u32h3K3FvfSwTp/HHX1j8Nf2s4LtFt/EaN/s3MCV+Zltrc1i/3n2V1GleP5rXbs/d1pCoHIfsvpOvWGvWSXOn3UV3A38aPV+vyx+Hv7QOteC7lbiy1CWD/Y/gevc9G/bY8U3pKmysC394ptruhUiZzgfb1FfHlj+2rqrf67T7H8CRTPFX7aeqWmmyJp9lafam6O+7itiT6+uLqG0j3zyLCnq7Yrh9Y+OngnQ7hre6123Ei/3Pmr4A8TfGbxh40vJ5dS1qWS1/ufdWuN1jxJ5kyq87yVt7Mz5z9H1/aS8Ayfc1jz/wDrnC1ULj9qLwTC22OS5mb0SKvz10rxP5CM6T+W/wDcq5pXiRUeeV5Fo9mTzn6ReGfjV4V8TbFivvsszf8ALO4G0120Vwlym6N1dP7yNX5i2fjOG13PueSf+GGuy8J/HLWtLZWgu57GNf7j7qznArnP0PqB7qKBN0rrEP8AbavgrxF+1R4qnDRrrEihP44o1rhP+F06lqULfa9Vurt3/wCekzVJofolqfxD8O6Om661e1j/AO2tQWHxS8KakNsGt2u7+677TX5pf8Jask299/n7vv1pJrdxPM0sUr1AH6a6fr+m6kcWt9bzt6RyhqvhhIK/LnR/H+raPrDS28txG6L9+N694+Hv7YGpadCsWt7dST++/wArUosD7Rorw62/bA+HclsjXV9PA7fwfZ2NOuf2w/hraQtK+qz/APgM1VcD23d82Kr3uoW+nwNNczxQQr955H2gV8RfEX/gpFZW3nW/hPRXbH/L5d9Pyr5n+IX7VHjL4m/utT1OX7K//LtA+1aoD7n+Ln7avhLwP5+n6K/9tav/AOQkavjbx/8AGzx18c9S+z3V9LHau3/HtB8sVec6J4SuPEe3ULiVoLLd800ldlc6rDo6fYtHi+T+KZPv1nOrGkEISma1n4et/Dlh9n3effP88r0fx/frm7PVf9JZHaX5/wDnpXZeHtH/ALYmgSJvv/e/2K8udXnOqEDrPhp4YXXJp5bhfLtYfnZ3r7R+CngqHQtKbU2g2T3ar5WU+ZI68i+DvgS3vdXtNKX57GFd8qSfx19VQosabEXy0SuihS+2ZTJ6KKK9AyCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAK8V/aY8O/bvDNnqSRblsHy/ste1VheMtGXxF4X1LTW/5eYGSs5gfnb4hRtNf/W+ZvrmdS02x1iz+zy7N9dx4q0G4kuWR/8AX27bGryvWP8ARLn/AG0rGcAPO/GfgybSn/dfvErgbl2tfk/1de5Ta9a337q427K5Pxt4DWT/AEi3/wBQ61y8ptc5/wAMX+/d5rfIi10D+KltNSgeGfy9n3a4nesCLF/cqZLZpE+0O3lolbQpkzmeoar4nhgm82L7kvzrVF/E/wBqT71cvDf/AG7RG/v2ky/J/svWHquseQjRI1epEwO8m8bf6B9n3Vlpf/bnWWZn2JXmNnqVx533q6aG8uH/AHUTeZvonUFCB01zrFuj/wCjt89Os0uJHV93yPWLpum+Rc7rirE2t+RcuiNWPtTTkOuTW1getabxgsFts/v15bNra+cvzfPTv7V8x1+aj2och2Cal89zcP8AcrFfxC32n5GqH7e06Txfwba5/wC0/wCmb/4Erl5zTkPRLPWF2K7t89Tf8Ja32lkt5PL/AL1cK+q+XZs+6sO28SeRNv3fO9Z85Vj1yz8T+ZZ3Mrsm9KxZvHK2j73/AOA1gvef8Urv/jlauJvL9v7SgSX/AFCLRzhY9Wfxh9utvNf92iVzfifxPcT233m2fw1m2GpQ6r+6iZkdF+5srSh8NtrDrF/f+7U+1D2ZyNg82q3KxJ+8d22KkdexeGPAf9h2y3esbd/8Nt/E9XrDw9pPgPbFaWcU+obd8s33tlZvifxJdQQrcRRfa9Rm+6n9yqnig9kaWq6w0m1Lj9xBD/qoY6teHptQ1LdFFB5EH9/+/Xnaf21532i43b3/AII0rtPDE2oSIsTrLHvb/drz5z5zq5OQ9K0HwrYzw/wfav8Afr17wN4Jt9KTzZdsbyrXnfgDwxN532t93/xde3WCfbqkmZ6t8CLCKPWdXYJsEUcSJXtteY/BbRGtdOu79v8Al5dUT/dWvTq9ih8JwhRRRXQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABTX6U6mv0oA+Hviinl+MNe2L/y9N/q6+d/EmiXUl/PLt/cV9mfH74eto+sf2xbpvsr5v3v+xJXz34k0fen3fkSuUDwHW/DzQJ8jPUdn4kmgs/7Pu/3lr/f/uV2mvabM9yyf3K52/8ADaon+kN5H+3SOg8z16wm025ZH+4/+qesn+0mj2o7fJ/EldpqU1r/AMeVwyyWrt8r/wByuT1jR2sd8L/vP9v+/WsTI1NBvFtdV8p3/cXHyN/wOudmtm865il3+fCzJVrTYWvrBZf9W8LbK6rVbBftkF6i/wDH9Cr/APAv4q6ucg89T9xW5pUyxuru1VdVhWCZkf7lWLOwae2glSs5mcDavNVhg+d2/h31y82qtfXO9KveIbBvs3/AdlZOmp5ls3y/P9yuWczq5TQdGksPtCL5lXtN0e4keB3/AI93/jlaiaO0e2FPuRQq9bVhcr/Zvz/fS3mes+cox7CZYEuZt3+xWKjrI7f7bVm3OpTJZ3MT/wCs+WprCFn2u/8AdqSyS/3fZm2VzP75Jlrtti713/cesm2sPteqr5Sfxf8AjtAE2vX7Qf2ZaRfcSFd1V7/bInz7d9WNbtlne5vU/wCWPyLWKiTT7Xf7/wDcrnnMDW0F/sN4z/31rrNE1i4kv1itP3k+6uP0rTZr65WJN/n/APTOvQrO2h8OI3lfvNRf+P8AuVBrAuX+pfYUZPnknf71Q6JN5nnv/wAt3/jqFNKa6TzZWffWxpsK2P8ADXFOZtA2tEh+Tzf9Y+7+Ou00FG1LUoIns2jT+KsPw9DNs81Ivk/uV7B4Y0dbS2WW4i2O9ECZzOs8PWEMFmqbfLfbXaeHNHbWNVsdHt/9dcN87p/Av8VcvbW375fKby99e7/A7wjJZW1zrF6mya4/dQf9ca7qVP3jlmeqadYQ6bZwW1uuyGJdqirlFFe0coUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAZXibw/aeJtFudPvFDQzLt+lfCvjnR7rwl4kvtFuP3kduzIj19+V8p/tVaPa2vjDSruL/j6uLdtyf39lY1APnPWLZd+/bXmvjzUvL/AHX+sSuy8W37Wu5P9X/frzP7ZNqNzOk0XmJ/fkrOAHmupWDSTM7t+4roLCH+1dN/se4+/Eu+Cb/2WuutvA327c9u3mP/AHKo3OjtY3lt8vlpt+/WpZyuiaatjN9kuPufc/4FVq5m8vRJ0uPv2M2//gL/AHq1PFtsv7jULRX2S7kl/wB6ud16bzEs5UXy0voWt5/9hqo1ON8VTNBcsm6u88GQwz+G4JZf4N1ef+J0adIHf78O1K7Cw1L+zdB/7Ys9ROZnCBqPYLrL7E+5WOmm+Rf3kX9ybZWx8JZm1LUrn7R9z5dtbUOief4kvv8Ar4rA2gVYYWktvk++9VXhaC8tkf8A1fksmyvSLbwM39q6fbp+8+9WL8WtK/4RlLX+/UBM8phsFvprl9vyJtrQttN/gWuyvPCv9lWDOjf8fe2Zq5HWJl02/giT+Nd9c85mkCjqr+RN8n8C07wYnmX9zL/z727PXN6rftd3M/8A33XTeHpodN8MXl7/AKy6u/3K/wDAKPslElzCsjrb+U+x231j6q62Opb0XzH+41dF51va2dtcS/vLp4dkUNSaPo8OnQtrGofvET51RP42qDUr2fneHLZbvyv+JpfL+6T+5DVOz1KaxuW/5bv/ANNKvalfzTvPd3Dfv3+f/ZSm6boLajtuJV8uD+/WDIgepeDP7PuobV5d8moy/wDfKV31t4Ahn+eWVZP+udeR6I66dtit/wC99+vVNB1hfsypFK9YmxpJbLa3/wBki+4ld9ZwzXzskX7yCJfmrN0rSvPSDZF5bu333rvPDng+TUdVtLKyvJY5riZUfZWkIc8jlmeufBf4d2+sWVtr2pxPIjf6iF/u/wC9XucKLGioi7EWoNJ02HSbGC0t02QwLsQVcFe7ThyROEWiiitwCiiigAooooAKKKKACiiigAooooAKKKKACiiqOp6lb6PaTXdzKkFtbrvmlfoq0AWlf/ZxS5r5a8QftBeL/H+sz2Hw/sVtNPibZ/aV0m5n/wBr/ZWqyWXxkk+f/hPLdN/3v3K/JXTHDyOGeJifV1FfKP2D4xfx+P7f/vzR9g+MX/RQbf8A8Bqv6rMr61E+rqK+UfsHxi/6KDa/+A1H2H4xf9D/AG//AH5o+qyD61E+rsV8Z/H7xauo/Hi50+4b9xpOmr8n++1bX9q/Gjw+63EXiW11rZ962eFa+efEniHUtZ8eeIdd1iJbC6vrfY0Oz7jI1ctfC1OU2hXhM4/xzr0Os6xcpF+7TdXN6bYK95s/v1Ye2We8nuP77b63PD1tawTb5a4+Q2Kf2C60qbzbff5dbn9m2/iqHZLF5F8n3nT+Om6lqXl3K+V+8T+5Wx4P/wBK8/evl1qWcDc+GJo0vLd4vvrs/ef+hV5TrFtNd6Jqdpt8u6h/fKn+596vrbW9EhfTWl8r59v36+afiFu0DW1u9vybvm/26DU81tkbXJoP9v5P+BV3GpaD5mjrEn3/ACawfCumrJr1ylv+8tXm86KvZptHb+zfNdfLT5XX/drmmVyHN/CLR/8ASZ0iT7i16RYaD5esXMv+se4b7lU/g/ojfbL5/wCBFZ6+mvAHwrW7htr24X94kK/J/wCRKZnOZzvgzwB/xOJ7i4i8vyv4/wC/Xhvxv0SbUtSni2+ZPEy195WfhWGCFnRfnf71eG/EL4aLJc6neyr8/wB+o5yj5n8SQ+R5qSp/qbdfkrw+8RtV1tk/1iV7p8cr9dKubm3i+/cV5L4V0S4+0r8v31rGZtA43XvJgvFsv9W6L/33W9D+/v7bTIl8u10y3/fun956yfFsMNp4tW7dvMSL52/4BW5ommzTw21lE/l3uot9oupv/ZayNy94b0ptc1L+0LhfL060+7/u1pWE3/CVa2zRK0drDuSCH+4tdxD4bm/s2C3t08u1T+P+/RbaI2jOz2+yON/vVExRM228N2qWH9oXrJ8n/LtWbqV+2pOu392n3FRP4K6R7BrtNktTJpUNon+qSuU3OVhhaOZf9iu28N36x/61vk/irn7mH5/9+pIX8j7lSB9CfD3WIfEepLb2UXnpD9599fYfwm8FWem6bDqvyvdXC/wf8sq/OLwB8QrrwdftLZbI5HavtP8AZ8+MEOsstvLujtbj7vmf8smr0MPP3jiqwPpaimp9wU6vaOEKKKKACiiigAooooAKKKKACiiigAooooAKKZS/LQA08mvn79rvxBPa+E9K0KJwi6reYuP+uK9a98e5jj++618x/tcXcU+reElilWTaZy2x/aunC8s60Tnr80aRm+GLy18M6JBZW/7tEXe3+21a3/CW15Kmqzf3qP7Vm/vV9H7DnPm/b8h61/wlv+21OTxV5n8T1yPw68H6p4/1X7Pbt5FlD/r7mvb3+F3grwtbRf2xeb3/AL93c7d//Aa4a06cPcO6nCVQ8+/4Sv8A2qj/AOEq8v8Aiau/1L4L+HNf0p7jQLxrR3+68E3mRM1fP3ia01Hwtq8mm35SC5i/h/v/AO1VUZRraQCrzUj0L/hLV/v15T8bNKsdcs01OL93dfclem/2xN/erJ8Sak0+lTo9dvsNDiVU8NhtmrctrBpE+es+5/cJ8n96ui8Kw/bpmR9kiV8nOHvn01P4DPuYWgTeitWp4Gv2d51dnjSuqubCGeHZtSOnaD4bhtbnfKvyVianUTQrJoMv/LT5flr5T+NjwvDLE6/PD8+yvrab7PHZt5X7vevzV8j/ALRUP2S5aXb8m6uaczaJyfwWTz0VJV+5NX2B4S+HX/CT6Oqy/c27F/8ARlfNPwH+y/6NK61+g3wuS3fR4IkXy/lrHmNzD+HvwWt/DiNs2Sec1e0aPYfZNqIqbEXY1SQwrGmyrUPSsalQjkLDw/JXN+IdHhnhbfs+7XVI/wAlZOpfvIWT+/WcCz89/wBofwlNd+Nt6f6jbvrh7bTVsbDfu+dF2V9SfH7wxD9ma42+Y6N83+7XzbryeRD5T/8ALVd9WXCB4D45Rf7Yi3/c++yf367z4RWE2s3jXcq+XBu315r42dpNYZH/AIPkr274Faa08Nnd7f4fmSgD2Cw0S48mB9yxwbflSSuV8SXkNi+yJWn/ANxK9gudY03RrNPtEXmP/uV4z4z8WzX1z9k0+xigg/3KkIHMw6xqE83zqnkf7FdBC++H56j0q8Z4fns1k/4BWxZpdSTLvgXyN1Ych1nO3lhNInmxL8iVT8nzK67XpmtN0KL8lc+m2s5gYNtbTfb/AN19/dX0N8DZmgtp7SWVo53+5/sV5Hpqaa94rpvjn/i8yvSPACTWOpI8TffZa0pHJVP0O8D6qdY8MadcM/mO8Xzv/tV0Nef/AASl8zwDbnO/96/9K9Ar6CPwnnhRRRWgBRRRQAUUUUAFFFFABRRRQAUUUUAeAQ+Ntasbr/R9Tlktf7k/zVNqXi3Wtch8p9QlgR/+fT5a83tvEkMCLvrpNN163dFdK+c+sSPvPqFH+Qr6ro99v81Ly4kd/wDno7V5D8VIWg1XSHeV5Hfzvk/74r3LUtehTa/9yvEfjTfwz63octu33/Or0Msn/tUDxs2w/s8HMxUmp32ystJqc83yNX6Qfk6hqfbHwU0W38LfC/TZ8fPcR/bZ393r5x1VPEXxa8TXmoWmn3V9um+VE+5EtfWXh22i1D4fadaxNsgm05UDp/uCvC/Fnx5s/hvcy+GvCul2c8GmfupZZ3wrMv3q+Zpylzy5T6GtCPJE5/RJfiF8HoZ5V0qeCyuPvfa08+JP++Pu1yXjX4g6h47vILrUorWOaFdiPAm3etfRXwf+Ndn8U0u9NvbZLTVIV3tCnzLKn96vFf2hvANv4I8SW17p8Xl6dqe51hj/AOWUyfersw9T997/AMRy16f7r3Dzb7T71R1ib/Q5/wDdqPzqz9Ym/wBDavbnP3TzKcDznW9VtbS2fzZUjfbvqjoPxC0/Spl2Xi/P/wA864vXtKutVmud+/Zuaubs/AzR6rvRvuV8LiJ8kj6+l8B6J4t/aZt4L9tPt4HjnT+N6zb/AParuPCKQJdq8m9d614D8ZtHutH8cwK+7ZMv365X4u3+y/s4v7kOysYT5ypwPrLRP22NF1F2TUJ/siV0niS58P8AxY8PLLZXi38Ev8cdfndZ3MMCTeam/wA1dn+5Wx4Y8ea14OuVl0rUJbfY33N/ytROkaQmfdfw68Er4V1KC0t23wS7tqf7VfcHwu1Ly9Htk2/fVa+D/gp8VrP4taErLssfENp88tt/fZP4lr68+HXidX022SX/AF+3Y1cM4Fc59FW0yunyNTt+yuH0rWN/8Vb0OpNI/wA9Yzpm50iTfJVO5mqH7evk/erLv9VVN9EAPKfje/8AxIbn5a+R/EMyzw7/AONF2V9TfGnWIY9Bufl/5YtXyLsmvr/7P/Buo5y4Hgutw3Gq69OiRNI/nbEr6m+DPhVtD0qB7j93Htri9V0rSdDSfULtorBE+88lcrqX7ZOi6An2LT4n1JE/jRK2hCVQmcz62vIbWdGmi2T/AC/KleT63DqEd5sisYJE/v8A8VfKOu/tXeOtSvLmXSnS3tYl3/u/7tdF4J/aT17xVtS9VZ7qL72z+P8A2q09nKETOEz6U02G6k2/6H5f/sldFNDdWtn5sv7z+69eF+Ff2gVjs7lL5vPfzvJ37PuV1ifGNbuz8pJ08h1+4/3XrmOrmNTWNV+3TbH+4lVYdsab65PSvGFrqVy32iX+L/vuuwh+zyWe/wDgrCcCoFe2vG+0/JHL9779eueDHVEWX/drxV3aDUle3Z/I/uV6h8Or/fui/g+/RTJkff3wMeM+BImT7nnvXoZ6CvLv2e7jzPA8i/3Lhq9RPQV9BS+FHlzHUUUVoAUUUUAFFFFABRRRQAUUUUAFFFFAH5tP4wW7dU3JGlXrP4i29r8jy+Xs/j319L69+x14B1HR3t7KyksLr+G5jmZn3V8lePPgPdeBNe+xa3P/AGba/wDLK5/hl/3Wr5eeFlSPvaGa0q/uG9YfEW61/WNlvE8lqn3nesv4kXPmX+kf9tqz7C2td/laZv8AIT/ls/8AHTfH+jzaM+gyyzvP5u75K78p/wB6gcmdT58FMak3yU57n5KzUmo8+v04/ID7v/Zy8cweMPhxp9u0ifbdMX7JOn+591q+YPit4B1fwf421Nbq2lktbi4kmguY03K6v81cr8PviVrHw211dS0qT7/yS20n3ZV/2q+mdH/bC8J6jZqmtafe2k235kjhWda8B0quHnzwPT541o8kznf2UPAmqR+I7nxLe28trZJbyW8Tzpt81n2VL+2F4ht3vPD+jxMjzQ7riT/Y/hWrHi39szS47ZrfwvpEtxP/AAzX37qJa+Y9b8TXniXVLnUtSnlur24bfJM9aUaVSpV9tMKk4wp+xgOeaqOqzf6BP/u015t9Z+sTf6BP/u1689jzqfxmpqvwT8RX2lWd7p9jFdwTQrN8j/NXmqeHtQ0bWPK1WxlsH/i8+HbX2F4Pv1sfDekPcS+Y/wBlh2p/wGtq80fTfHFs1vqenRXcD/J86fcr83q1+ecz9Ihg4+yhOB+cP7T/AIbm/wCEes9TiXzHRtm+vnvxnYf2zpVnqEX7x9vzV+lHxm+A/wDZtm2iXG670jUf+POZ0+aJv7tfn34w8Mah8NdVvNM1CJ/su7ZSpTPMqwkeOzWzQfdqHZ89dBquiNv+0Wkvn2r1T/sqaP53ir0uY5eQ7T4LeKpvBfj/AEO9ilaOD7QsMqf31ev1M8Np/odtLbt+4evyJ0ewun1izS3il3+cv8Ffs58CvDf9q/DTSJX/AHk/2dd1ZFHRaDczR/e+5XaWdzUdn4V8v+Fq0k0GaN99ZTNIkLzVj6lcqUb/AHa3ptKuNlc3rGlXEiVyG55f8SLlX0S83/3Wr5p8Q63a+C/D0+sX33EX7n99q+lPGGmt9jnS4X5NrV+d/wC1n4/a7vLTQrWX5IWZ56ap85cJnmvxd+IWseMblXu5WjtXb5YU+7XmO+um1L/iY6bbS/3K5t/v16VL3DlqGhpd5NaP+6/jVoq6z4aTNpWq3Mu37kOyuJswz3KKnz/7CV2DzNpWlfZ/+Xq4b5v9ipqGUTpPAkLeI/EN38zPA8zf7tdpeaa32lrJ2b5PuulaXwH8HtY+HrnU7iB/3y/unrUv9Na0v/n+/urz5nqGL/Y99p1nvdW+T+OvXPh14h/tHRGtLh/LukXf+8qHStNh1ywaJ18z5a6Lwf8ABPXpJll0+zuJ0/uQQ7q2hhatX4InJPERpfGR/b2gfyvKWSu08B3/AJepLsX7/wB6q7/BDxV9saX+ytS+f+D7M1dF4S+HXirw5qq3beHtSu9n8H2Zq0hltUz+uUj7f/Zz/wCRa1Db8n+kf+y16/v9q+SfAvxz8VeCtHNivw31J9zM+/e1dF/w054t/wCia6j/AN/j/hXqwwtSETgniqZ9KUZr5pf9qjxHbo8tx8O9QjgT7z7zXo3wz+P/AIa+I0q2UUr6brH/AEDrv5Xb/d/vU505wLhXjM9TopkZ3IKfWJsFFFFABRRRQAUUUUAFFFFAHgLftMfbZd2maG09r/BNPNt3L/epvirxZ4d+K3hK90fxPpUto7qzReZ82xv9lq5DwxptvJYLLFWlf6rb6b8nyyO9eD7eX2z7L+zcP9g+c9B+FFuk2+LULyCf/pvNVr4qeFdQsfDdjcSzpqUGnTffRPmRXr0C50RfEGttdxff/uVuWeiQ3cM9pdwfI67GST+OssJV9lV5zXF0PrFL2J8wpN935qd9p969Q8Sfs66taXLP4aZb+1/htrqba6f7rVys3wc8dI+z/hHJZP8AcmX/AOKr9EpY+hOHPzn5jVy2vSn8BzP2n3o+0+9dInwZ8dP9zw1P/wB/o/8A4qj/AIUz4+37P+Ean/7/AEf/AMVW31zD/wA5j9TxH8hze+jfW9N8MfGUD7JdDlj2fe/fL/8AFVm/8If4ijT59Il/7/LS+uUP5w+pYj+Qp+e1U7/zrvbaRL5j3HyVrP4V8QfcfT/I/wCu8y13Hg/4ew6NcwXeoS/a751+T+6leZiszpQjPkPQweU4ipVhzw906rQbb7LDAiq3kRKqK9eteDIV3r8nmVxulWFvGmx1eNK9M8MPY2iK8T18Jf3z9D5PZw5Dgf2pba4/4VdePbr/AKVbzQywbP8Ae218f3/hX/hY1gtvrukPPO//AC2RPmr9CPHnh6Hx34VvtN3eXPND+6f/AGq8v+Ffwo1CD/kJ2awTo3zTJ/HXqUoc587iviPhu/8A2CW1WZn0eDVIIN1egfCj/gnjffbGm1DT5ZH2/K93X6SaJo8NjD5W1NldRD5Me3/YrScOQ4bnxvon7CWj6bc213LBbxzpXuHhjwxDoaLYxRJHBD8i16pcp+5+RWrj5nVJm/v1UCh32NfSpk8n7m2rmmw+ZD5rtTUeF7ysZFQIfs0Oz7tZN/oiz/w/JXXeSrpVO8RdlYFnkvjPwZb32mzptr84/jx+xhcR63dahZPPsmbe29N3zV+rF5CsiMm2vO/ij8OtSks/tFk3nwff8mnewH4q+KvhR4m8AOyXemSz2T/xwJXBzWFr533biD/fr9QPH+j6hJpU9vcaYsk6N9zya8P1Xwf5j7/+EetY3/6bpW0KpJ8b2EKo/wDoUEs8/wDf2V6h8N/ghrXi65+26hA0Fl/fk/jr2RHutD+e38PadA/990qneeJ9enh2IyWH/XpWc5lQOm8SeIdF8HaCuiRN5DouxUSvNbbUm1l2TzWkk/h8yob/AEe4vn824laR/wC+71vaJpq7FT+OsofGDZ9Lfs6/De1nhtrjUEfyNvnS7/4/7q19ZWet29jbJb26xQQJ9xI/lr53+Gl//ZXh6BE/jVUrrv8AhJJq/QKVD91CMD4+rX56vMexf8JOv96mv4qh/vVw/wAO9IuPH2u/2al59kfyWm3um6vTv+GfNQ/6GCL/AMBqyqTjSdpmsIymZP8AwlUNH/CVL/z0Wtb/AIZ7vj/zHov/AAG/+yrlPiR8OLr4e6EupPqsV2jTRxbPJ20Qq05y5AnCUI85r/8ACTr/AHvM/wCB15v8UdEtbq2XXdH/AOJbrdi3nJNa/Lv/ANqsN/EM396obzW2eznR/uOtdn1c5VVPr74P+Mh478A6VrD/APH1LHsn/wCui/K1duteG/sq6rawfC+KCW5iSf7dcfI7/N96vaIr+3n+5LE//A6+Xq8sJ8h9JSvyFyim7xRvFSaDqKqPfQp9+aMfjTP7Tsv+fyD/AL+LQPlZeoqql7FOP3ciSf7j1Y3igLDqKKKBHwxo/iprHSoLS43Rvbr/AK5P46zfE/iG4nhaWJmkSr2paU1ik9vLF5c6NsbzK5PWPtH2adP4P79fLzPtqdWUPgOo+CfiFtc1horjfs+5+8/vV7Elsu/emz5K+b/h1rf9j6qrp+7SH52r1bTfHn2tP7m//npWPwHZDmnLnPUIXWfb5S/cqZ4f468z8E/Eix1W8nt3vPMnSb7lejPqXkWzXDunkIu9vMqoEVFLmM/Ur9Uhbe3l/wC3vrlU8Z2Mb+UmoL8lef6x4nuviFr06I3kaXC37qGP+P8A3q6Lw94YXfBs+5VXKhSUybW9Ya6/1V59/wD2KxUTy0+789ekXmiafHpWx18u6/hfZXO/2J86vSmzSyPMfE81xdzbFXy9n8dN0r/iTwte6nfeXAn/AD3/AI69G1XwlC/zv/B89fOcOt/8J58QlTd/xJ9PbyYv7v8AvVNjU9+8N3NxrO1kibyP+mlevaDYLBbK9xE1cHoNzp+nIuyVJ6uXnj9ZHa3i+59z93Tgc84c56Nf+JNH0q2X7ReW8b/wpvVq59PH+mo+yKXy0/v7K+b4dVXStYvPNZpP3zfPI9cfr3j+4nuZ7jd5fzfcrohipQOOpgOf3Jn19rHxs0HQ4WuLvUPuL8yR/eevNdb/AGmdY8TXLW+hL/Ztlt/133pXr5P1LxJda5qW/c9ejeCUaDyHl+5ROvKoZ08BQpfGe7eEvEmtXUyvLfXUjv8AeeSZq9UTclnBK8/mTv8A368f0fxhp9rCsXleXIn8daV58QodRvILRJfL8r52f/Zq6XOXiIYecfcPdrC52Wfzy/JULzeXN5qNXit/8ddNtU2eb9z/AJ6Vj6P+0Vp99ftaef5f93fXdM+ehSlM+lLa/wD3NZOsa2sCLvZK83s/jHo89hse+WST/fry34kfHu1tb9Et/wB+m3+/WXIdVPCTmfR1tcrdzKnyfertNnn2ao6+ZXwLbfG/VvOWVLxIK9q8AftRefZra6r5X2r+GbfROBtXy2rCPOdJ8adHtfJ3xaf5n950Svl/xzczWkOz+yJdif8ALZ03K/8AwJK+2n1XSdcsFliVZIHX7m+vL9e8K6fG7PZLLYb2+ZI/uf8AfNQeMfD+t6xDqqbJdP8A+/b1xN49rA7JbxSxp/cnSvrzxV8AftXn3dkqb3+ffa/K1eQzfCu4sbnZer9vg3fM7ptlSgo8Newad/nib5/79d14b8H/ALmCVNlekXnhLQdKs/tG1vk/5YyfNWTD4wsbTbEkC+R/fjp0wex23hiby7BUra+2Vyvh6532G/8A2v8A2atj7TX6Xh/ggfC1Ie+dBo/ifUNDuftGn30tpdbdm+B62P8Aha/ir/oYb/8A7/Vw/wBpp1t519NBb26+ZPKypEn99qJwh8cwhOX2D6M/Z/v/ABR4x8Rz3t9rN/caVZffSSb5Hm/u079p/wAeK95Y+GrfbJs/0i5/3v4Vr0Twtptl8FPhY0t23/HpC11dH+9J/dr471vxDceINVvNQu28y6u5vOb/AGP9mvHoQjVxHOenXnyUuQkeZahmm/ctVHzqbNc/I1e/znkQgd98KLD7doLeU37/AO0N8lekaboN0if6+WOT/pm9ed/BDUrWx8PTy3Df8tm216xo+twyQs6bPnr8uxk/9omfr2Aw/tMLA2LDxfrWjwrEl20iJ/BP81U5vGesXVz/AKRqEvk/3E+WsXVfEkKJ8n365ubxOs8LfMtcn1iR6f1Cn/Idhf6ks6NsZ3/66PWXCi/flWuVtvFX77Zu/wDH61P7e8xF2Vz+1mP6vCBtecsdz+6ZoP7vlvtrqNB+ImqaBNF5sr6lZfxo/wB9P92uJ3/Ir/36vQozw/uq6IVZwMauHpTh759F6brVrqljDdwTL5My7l+lFeZ+DYb3/hG7Tyl/d/Pt/wC+2or1PayPl/qqNL4m/B+Hxiv22ynWw1D+IunyS/71eCa98AfGkcLbNMin/wCuEy19lUx62nh4VDmp4qdI/NjVbC48MTTxXETQXUP+thk+9XMw6xfX15/rZY/+udfo745+E/hn4hIjaxYJJcJ92dDtcf8AAq8b8Qfscaem+bQNZnt7r+GG6RXSvLq4KX2D2qGZfzngnhjQVkf7a7pBOnz7/wDare1j4l3Go6PP4ft5fM875JZo/wC7TfGvhPxD8PrWey1K0aDeuxbmP/VP/wACrH8K6Uto8Gz958tcPJKmev8AWPaRuTeHt2narZ2SMkaOv367ibxDNp0O/wDuVxfifR2tLn7Rbt+/h+7WLf8AirWntmR2i/39lae6ZQnI67WPidNGjROzxzou/wCevSNHvIU0exe7lSN3h3t89fJeseJP7DRpdQbzHebf/wDY1D/wtrUtRmV3bzN/3Yf7lZHoU/fPdPj38VLHTfCt54c0S88zV9QXyW2f8slrxXR/DFxoej20qLLGjsrt/e20eG/DF1qN417cfvJJm3s9euX6fZbBU+SSgznP7BtJMqJ5sTfuHrznxJ4q8jUvtcX3Lf8A55/x1HMk0kzIm/Zt/wCWdVbb4e6l8RtbttE0pZYLVG33V5s+WJa1SnV9yBh7WNL35zOHvNeup90sTeZvrN/tJrpPnWvfr/8AZ70XRofJfXrqSf8A6aWytWXbfs/K9z5sOrt9l/6aW3zV1fUKpxf2tSPLdE0pZLld6/fr2DQfAGsa/tTTLN/I2/65/lSuk8N+CdH8MIu+J9SnT/ltPXZWfiFoHV7eV4ERfub67qWA/nPJxGZc/wABR8E/DHT/AAXcz6hdyy3eouv3/wCGub+KPhhfE9hP9nZrS92t5U0H8FdteeLbidNjqkn+3XE+JPFs1jbTv5UWxP466vq/IedDETnI+Ode8W+IPB2pT2mtyvPB/fk+9XPp8V7fZPLbp86L8vl123xv8SLrn2yVFSed/wDnmleS/C7R/PmvrjUNPe0gRvl8/wDjrn5PePr8J8J2Xgzxh4g8QJ9ovf8ARIN37ry/467CG2mgTfLL5lY9tcw/8sl2In8FXE1JXmVN1dUIch388aZvWc1bHhWG6vtes7S3/ePM3y1noi2Nnvf+P7tekfArw82o+J4Jfk/dfPvrlqEVa/7o+stH8N+XpUCf6idF+apv+EVV0+e7Tf8A7dCXMN1D5Ms7xulQzara6VD87PJXEfGT+IydV01tK+RJU2f7FcPr2lafqP8Ax8RJHPu+/J8tdFrHiS31ib5N0dO0fRLjUbaeX/lgnyf79AoQ+wea3/wx0/VU2xTtHv8A4403LXF6l+zY11c/urmCCPd9+OveLmZdGfZ5CRp/0zrHudShvnZrdvnT7yVip8jPVjg/cPnPR0+wpPb7vM8lmTf/AMCrQ8+ufs5m+03n/XxN/wChPVzzq/UaX8KB+c1YfvZmok1e7/sseAP+En8VT+Irhf8AQtJbZF/de4/+xr5287/ar6d+Hv7Svgb4c+CrbRLC21aea3j+Z3tvllkauPF8/LyQHQ5VL3yX9rb4i77+x8JWTfc23d5/7KtfOf2yo9e8T3HibXtS1i7b/Sr6Zpm/2P8AZrP8+ujD0uSnyk1Z88jU+2VC838dZvnU2ab5K6TCnud18Or/AMvwxs/jS4Z9lNvPiXqGh62yXH7iCb/xyqfgPw3cX3hJr1Lzy0+0TJsrJ1Kwtf8Aj31Nv3D/AHZkf7lflWP/AI8z9mwE+TCwOiufiXDdps89ZP8AbqinjlbV9m7zKk+Gn7P1x8Rtea30efz9ORv39/Inyxf/AGVfWekfsk/Dyx0eCyl02S7dF+a7kdt71z0sHKqOvm1Ol7h8kJ4qWS5+Rvv1uWfipoIW3tX1DB+yR8O4XV/7PuX2f37lq6bTfgD4E0obYvD1rJ/13+aur6hI5J51S/kPk7TfHizvsibzH/uV6t4D8LeIvFtxA/2N7Gy/juZ02/8AfNfQ+m+FNI0dFSy021tNn/PCFVrV4X2rqo4Hl+I83EZtKrHkhEzdN0a10uwgtIFXyoV2r8naitL/AIBRXp8kTw7yJ6KKKZAU3YKdRQB4f+1Np7XvgmxQf6v+0F3f98vXz5DYf2cjJX2f418K2njTw3c6RdplXHyN/cb+Fq+SviF4P1zwBc+VqFtLPa/w38CfK9ePiqXvc57WDxHu8hyOq3LT/I//AH3WDf3Njs8pJWknf+CpNZ1iH7NvT92/9+vSf2efghqPifxNbeItatGj0K3/AHsUM6f8fDVxwpc53TxHs4nyZ4tsG8a+JGS3b/RbRdivv++1aXgbwfcf2qqTfcSv1dTwpo8cW1dLs9n/AF7rXhHx5+EdnpzweJ9I0uJERdt5DBDt/wCBV0VMHyR5zOhmXvch4vYeHodKtvkX+GuT1ia6SdnRvMT+5XRaxr3kbtjfJ/sVwOq+IWkm2IvmPN8iJH8zPXHyHdOr9s6LwY82v63bafFB5e9t8r/3Fr6a0H7PBbfZLeJYET7uz+OvP/B/wruPh54b0rU9T3R6vq252T/nku1Nq123h59iM9fV4DD8lPnPk8fiOeRzfi228u/nri7+a43/AOteNE/ufx16Z4qs/tSedXA39t5kNejOB5cDmdV8W3ECbE/74qjD4w8z/VL5mxfmT+KrV/pXmVjvojb96f6yuWZ1nWaV4nh1VP3SvG/9ySuP+J2m6hqWlTvZbpNn8EdWrO5vrGb97BF5H+x96t621i1ntlf5oP8AYdKznMuE/ZyPmd3tbX53i8yf+5XN3ly2pXP7qLy0r6qv/B/hnxH88tnb+f8A30TbXnPiT4JzWjtLp7RSJ/c31j7h9FSzGPKeLu/kQ7EWtjwxpSveK9wr7K6iz+FGtXVzs+wvXbW3wcvoLBpbiWK02f7f3KJzK+uRPP7yZr68WKL+D7qV9SfBDw2vh/R99wiee6rXk/gnwHax37S3H7zZ/HIle0Q3/wDZUMCW+yT5a4ZzMqlf2h215Mz/AOqqnDbeZ/rfv1l2esNOmyLfJJ/frU02Fp33y7645nnFqHw2t39yKus8PWDQJ9nT7kX3qh0qHyPkStyGZbFG+X7/APHWczqwvxHnvjO2WSZnT93sry28dkufN+aNP78dezeJ3sZ4Z02/P/uV5vqsNvs+T7lc0tD6CH7zQ+bb+FtK17U7SVf+XhnX/bV/3lO875K9I8W+BrfXE+0W8vkXqfItcD/wiXiDzmiTT1n2fxwTV9tg8zpzpck5nwWPymrCrzwgU960JNsq8ngzxE77E0iWT/tstaUPwr8bXX+q8PTyf9c5lr1PrlL+c8v6niP5DB+0+9G+uoT4LePv4/Dlx/3+j/8AiqP+FNePv+hcuP8Av9H/APFUfXKX84fU8R/IcvvqG5uVghZ3rrk+DPjqT5P+Ecl/8CV/+KruPBn7PF1BfrqHih7efyvuWFo+75v9quXEZlh6UTbD5ZiKtX4Cn4G8H6l/wgFnaXGoQaaku6bY/wB756w7/wCFGn/bIEe+urt93zeQ/wB+vaNV0rz3ZIoPMrH03R4fDGsfa7jZ57/eT+5X5/Vn7WfOfqVKhyUuQ9b03x9onw58P2Oi+GtDlkghhX+Dyl3f/FUW37Sslpdqmt6H9ktf4poZt2ysCw1i31FNlYvi2wt/sDO7ffrWOKkcUsvocvvn1LpmoW+q2EV7ayrPbSrvikT+7V8dK80+AMzT/C7RN8vn7FZN/wDwKvS696Pwnx848shaTFLRWhImKKWigAooooAKKKKACq11aRXcLRXESTQt95HXdVmigDmf+Fe+G/tP2j+wdM+0r/H9mWuhjj2qKfsFOrPkAKr3MEd1C0UqeYjfeWrFFaAeNeKf2W/Bvia5a4WC602R/vJaTbVq34G/Zt8E+BLxL20037dqCfdvL5/NdP8Adr1qisfZRNfaSOX8c+E08V6JJaj93cxfPBN/davCvDf7+b979/bX031FfMj/APEq8SX1v/cuGSvUwvxWOCpE0NShaRNn/LOuNv7Dy3bZXbXKXCf7lZcyLP8AfX567SDgbnTfnqF9KWuqvNN+dqzZoW/u1xVIG8Tm5tKWq76V5ddJ5P8As0fZvM/hry5wLOXh03yPnRKme2aui+xr/do+xr/drnmbHPwo0fzp9+o7yGa73I7P8/3krpobBauf2OrpWM5lwh7xseFfhvp9r4e+23H7+6f+D+GKuV8WpNA7eVF5ez7vyV0lh4qutDtp7S4i/cfcV/8AZrndb8YafPD9neD9+/8Az0rz580z6vD+yhE5Gw+JbeHLzZqEXn2v+x95K9c8N+PPDOq232i3vPn+/XzH4zhmndnRfkrg9K1u40a/b5njT+5vrP2kjWeEpVfgPvq28eaLG7fvWk2f3ErobDxLousWn+j6hFJ/s/daviDQfHk1pfwO8r7P467ZNSh1LxDZvE2xPOXc8b7Wo9qVDB8h9IeIdO8+znlt4vk/v14/4hv5tK/eyxP5Cfe8uuws/iFDJefZJWSNP7iVR8Q3Om6jbTo8qR1nz853QhyHk9//AMTyH7bp955kDt99Hq14bmuLV/3q+Z/wCvM9H8SN4O+Ir6fLL/xIdRm2N/sM/wB1q+kNN8KraQ79r+W9Ymkjn32z/wDTN/4a3NE1ua02/aLzy9n8dWk0ddm91+Sukh0fT59K8q3VJJ/4q3uc9kY7+M9P85Um1D95XVabfwz7fKbzN/8AHvrzXXvCq79jqnyVh+HvFV14A16CK4l8zS5m2Mj/APLL/aWiDYpwge9InmfcqvM/lo/9+pvtPlw+a7fJ/frzHxV8TtPtdStrK3vPMeZtjUpipHbfZv3yv/f+9Xifxj8STad4k+zxfc3bPkrsLzx+sD/JL9z/AJ5vXkvjzVW1nVWd/uO29XpFfBLnOq8N69dQQq8rPGlXte15tSs2srfd8/3ppK5XR3m8lUZvM3/367DR9BuNVvLa1t4t91cNsVK6YQ/kOKrX5z6a+ACBPhdoaL0UP/6E9ekjrXPeDNBh8M+HLHS4ceXbw7P+BfxV0I619BH4D4yp8Y6iiitCQooooAKKKKACiiigAooooAKKKKACiiigAooooAaOhrwn4y6RJpfiSHUoY/3N7D8/+8le8VwvxZ8P/wBueD7nYGee3/exbK0pT5JGc/hPMNB1VdS0352ST+9/sUXOmr9+3auF8MWa6NeNLbyvJa3Df6mf+CuwSZv+udescsCrNDVOawWStCaZaozX8MnyJ/BXLMZVfTfLqH7BVxJl3/PVh3XZ8lcc4G8JmX9jpvk1qeT5lO+y+9cM4HSZaQ/PWlDDQ8OyrFtWI+cmSw3p86+ZXI+LfgzY+I7n+0LeV9Nvdv3/ALy13UNXIfkrl5DqhOR84694A1jw+jRXtm/kf8/MfzK9eO63pX75nRfkr9Aodsn+tXzP9iSuD8c/Bbwz4qTekT6bdP8AemtP4/8AgNc84HqUsZyHxP8Ab5rRNiVpWGvXEEyyuz70r6Ah/ZIt/tO+XxHLJA/8H2aneKv2XdB0rR/NfXL2S6dtipsX565fZHqf2lE4Xwr4n/0xbh/3iXHzrN/cau8vLmH7M0srLs27/v153f8Awv8AEHwzv59H1rT5Ug/1tteRp8kqt/tf3qdbeck2yXdJsrS3sjbn+se/A4/WPDFxrGgtcPFLJPuZ1d/vIu6vePgn8WtP1zwnZ6LrE/ka9Yrsbz/+Wq/3qw4UW701otvzuteQ+IfD11o+qrd27eXPE2+sjqhM+rPEmqw/8I3fXFlKsjwrv+SvPdN+JdxOnlRSyyT/AH9leEp8V9S012dG8vevzJVzQfEja5CtxaS+W6N9xP8A0GlzBU9yJ9FW2tzX0K7/AOOuD17dqupX1u7JOkXyVn2fifXntliRoo/9vZW94Y0dY3a4lbzJ3+dnrbniefzyLmm/Eu6g0qDQruVoHRdizVz/AIk0FYJvt1uySXX9+neKtN893dP3f+5XSeBvAHij4m2cENlbeXBF8kt5P8sS/wDxVZwhKch/WPZx5zx1NVvrG/ZHZ9m7/lpXYeHtEvvFtzbW9lA13dO37qFP46+k/D/7G/h8bZte1C61K5/iSB/LWvYPBfw48O+BIfK0XTYrT5drTfed/wDgVelSwfP8Z5WIzPn+A+adC/Z58aP5Xm2NvaJ/feZfkr6B+HPwksvBUbXEj/bdTf71yf4f92vQqfXoQoRpnizxEpjU6U6iiuo5wooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACo5YkmiZHGUYc1JRQB8ueL/DN14O165ilgaPTnm/cTbPl21Cmqrs8r+OvpjVdGtNcs3tb2BbiBv4Hrwrx98G7rw5HNdaTHJqVh97yM/NFXZCsY8pyE1/5lUZnptnuns/ORaq3O6tJmBafUlgpyaqsjr/frlbmb+/VH+0mtH81HrlnUiXCB6Yl/wDxUf2kv9+vDfE/xUuND2xQ/fer0PifxVPZrevoN7JauvyzR2zbXrln75tA9kS58/7laFs9eC23xO1DSoWe90+8tE/vyWzLVHQfj2u/ZcN8+75axnA0PphJl/vU59SWBN7uleM23xXhungdGT56mm8Yfbvn81axmWewTeJIfl2NVi21Lz68v03VfPSBN9dNbaqtjZtd3DeRAn9+uWZvznXXOqrpVs13cMsaJUnw38LX3jvX08Ragvl6Lbt/osMn8bf3q5/wH4YuPi3rCXVwssfhi0b/AMCGr6RtrOGwhjt7eNYIEXaqJXVQpfbMZzKut6Ja6/pc9lexLPazLsZHSvz++I+nX3gXxfqGgXFmvnW8n7qbf/rYf4Wr9FCmK+ef2qfhFceLdEg8RaPA8+r6au2SGH71xH6VWKpc8TqwuI9lI+adEmupLnfcN5af3EroNS8Nw6rZ73/eV57oniTy38l/3bo2z567zR9bWSFURv8Av49eLyH0kKn2zwXxh4GuJ9YaK3V49/yUeCdHuPB2trp9xFL9iuPk87Y3yNX6C/Ab4VW8Vq+varYr9quP9QkyfdX+9Xs39iae6Mn2G12f9cVrqp4Pn9882vmUvgPzws7mxkhVPN8t/wC5W5ptyyfJF+7Suk/aB+DOqeCvFVzruj2Mt3oNw3nP5abvs7f3a4XStYhkTf8A6x/7iVjOlySOiniIziddNpq6jDX0f+zPbNB8NERuv2qXbXh/w++H3iLx9cqsVnLYaX/FfzptX/gNfW3hnw5a+GNEttMtE2W1uuxRXoYanaVzz8ZVjOPIjZpaKK9Q8cKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArE8YarHofhvUL5/+WULVt1558e9f0Twp8KNf1jX9Tg0fS9Pg86W6nOAvOAAOrMxOAoySSAASaAPOPDHh02ukBroM0s489yeBGGr5s+OX7Zvwp+Gt3cWNlqDeLNYjyrW2jhZYkb0eYkIPcKWI7ivj39pj9uXxd8cRJoGjSz+GfBKr5RsLeTbNfD+9cMOoP8AzzB2jvuIzXUfs3/8EyviZ8cbS01vXSvgDwtOA8d1qcLPeXCHo0VtlTg9mdkBBBG4VrKd9gVNLWRj+Lv+CgninVpHXQvDOkaNATwbppLqUfjlF/8AHa84vf2t/ideF9uuw26t/DFYQYH/AH0hr9U/hz/wSs+BfgqCFtY03U/Gl8oy02r3zxx7u5EcOwY9m3fU17Jpn7H3wP0mJY4PhN4QdV6G50eC4P4mRWJ/GsOVF3iuh+GUn7Rvju6vYLm81SG+aF1dUms4ghI6ZCqK+nfAf/BXL4k+GLW2sdY8IeFtb0+3XaqwRTWk2P8AeDuo/wC+K/S7Uf2O/gdqkbxzfCfwiitwTbaTDAfwKKpH4V5b41/4Jdfs/wDi6JxaeHL/AML3DdbjRdTlB/BJjIg/BarYd49jzL4ff8FWPgx4+VLDx14Vv/B7zYEkrwLqFov1eMCT/wAhVc/aO+CvgDxj8Iz8T/hReW19awHzzPo9wHjfHUccqw6FTyD1FfNf7W3/AATCb4A/DnXfiB4d8bDWNA0rynm07U7Xy7pVkmSIbZEJVzmRScqnANS/8EkPEd5qfxL8d/D26neXw3rPh+S+ltS2VW4imhRXA7EpM4OOuFz0GATStdHF3HxhsfA/hu21PUJZZZpSVgtYsb5SOvXoBkZPv3rBh/bd8mQk+DTIOx/tTb/7RNc/+3H8JL34J/GxvDdzIslq1il5ZlPu+S8sgB/NCPwr6q/ZL/4JofDD48/s9+EfHev674ts9X1dLhp4dNvLVLdTHcyxLsV7Z2HyxgnLHkn6Vl7OMlqEUkrs8e0n/gonHpezPw787b663j/23qXxR/wUd/4SLS4rKP4efY1Q53DW9+fqPs4r66/4c5fBj/oZvHf/AIH2X/yJR/w5y+DH/QzeO/8AwPsv/kSj2UL3sXzq1jxvw9/wWMt/DmjWWnW3waVY7aNEynibbu2jGcfYzitX/h9d/wBUa/8ALo/+469P/wCHOXwY/wChm8d/+B9l/wDIlH/DnL4Mf9DN47/8D7L/AORK0SS2J908w/4fXf8AVGv/AC6P/uOmN/wWqz/zRv8A8uj/AO469S/4c5fBj/oZvHf/AIH2X/yJR/w5y+DH/QzeO/8AwPsv/kSmHuny940/4KN+BvHN+1/ffAf7Lfs257mw8VeSz/XFnzXUfAz9v34OWXi6zh8UfDbU/D9lIwQatLrH9rC3z/E8fkRNtHcruPoDXvP/AA5y+DH/AEM3jv8A8D7L/wCRK/Pr9uj9njw5+zJ8bIvB/he91S/0x9KgvjLq8sck293kBGY40G35Bj5c9eaz9nHsaKd9Ln7y6dd2uoWFvdWM8c9jcRrNDPCwZJEYAqykcEEEEEVdr5+/YEvp9R/Y8+GEtzK0si6a0IZjkhEnkRB9AqqPwr6BrQ5yJ4EkHzru+tYqeB9Ajm84aLYLN/f+zrW/RWfLECFLdI02IuxafT6K0AKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooARmCKWYhVAySTwBX4hf8FDf2wbn9ov4jy+HdBvCPh74euHislib5NQnGVe6b1HUJ6LzwXIr9Bf+Cmvx7l+DP7Ot1pWmTmHxB4vkbSLdkbDxW5XNzIP+AER5HIMyntXwJ/wTL/Zph+OXxrbxDrlp9o8KeEPLvZo5FzHc3ZJ+zwnPBUFWkYc8IARhqC46an09/wAE8v8AgnvY+FtK0v4n/E3TEu/EFyqXWjaFeR5TT0PKTzIesx4KqfuDBPz/AHP0WoooJbuFFfCn7c3/AAUdg+A+p3PgT4fRWur+N41xfahcDzLbSyRkJtB/eTYOcE7V4zuOVH5k+Ifi78Z/2htcljvvEPivxnfS5f8As+zeaWNQf7lvENiD2VQKClFs/ohor+dKT4GfGPwx/p8nw+8c6TtG/wC0tot5Dgeu7YPzro/AX7ZHxy+EV6sel/EHXkWBtrafq8xvYVx1XypwwX8ADQHKfrt/wUe/5Ms+JX/XGy/9Lrevz+/4I/f8nR6z/wBitd/+lNrUfxQ/4Ka6r8c/2cfF3w68Z+FLaDXNUht0t9Z0eQpAzR3MUp8yFySuVjPzKx5I+UCrn/BHiwuJ/wBpfxDdJExt7fwvcLJJj5VLXNttGfU4P5H0oHa0WV/+CwWf+GotFz/0Ktrj/wACbuvv/wD4Jv8A/Jlfw1/65Xv/AKX3FfCf/BYzw9f2n7QfhXWpLdxpl94bitoLnb8jSxXM5kQH1USxk+ziov2b/wDgqR/wz58FfDXw/wD+FZf2/wD2Mk6/2j/b/wBm87zJ5Jv9X9mfbjzMfeOcZ74oBq8dD9h6K/MP/h9d/wBUa/8ALo/+46P+H13/AFRr/wAuj/7joJ5Wfp5RX5h/8Prv+qNf+XR/9x0f8Prv+qNf+XR/9x0Bys/TyivIP2V/jrqn7R3wktPHWo+Ef+ENt7+4lSxtDqH2xp4EO3zi3lR7cuHAGDwoOea9foJCvxd/4K5EH9q2DBzjw7Z5/wC/k9fsnr2uWPhjQ9R1jVLlLPTdPt5Lu6uJDhYokUs7H2Cgn8K/nw+KfjTxB+1l+0dqOrWtvJPq3irV0tNMsmPMUbMIraL22oEBPTgmguO5+y3/AAT3/wCTNvhl/wBeU3/pTNX0RXH/AAg+HFl8IPhf4X8F6e5ltdE0+KzExGDKyr88hHYs25j/AL1dhQQFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQB+MP/BWv4lv4v8A2mIfDMUxay8K6XDbGLOVFxMPPkYe5R4FP+5X31/wTY+FMfww/ZQ8LzPD5epeJd+vXbEcsJsCH8PJWI/Un1r8if2qdcuPHn7U3xLu0PnSXPiW8tYOfvIkxhi/8dRa/oF8J+H4PCXhbRtDtcC20yyhsosDHyRoEX9FFBpLRJGrXln7UHxhX4C/Abxj42XYb3T7MrYo4yGupGEcAI7jzHUkegNep18sf8FCPgx44/aF+GvhbwD4Jtoi99rsd1qN9dS+Xb2ttFDL80h5JBd0IVQWJXgcHAQtz8N9U1S71vU7vUdQuZby/u5nuLi4mYs8sjMWZ2J6kkkk+9e5+AP25vi98JvDdvoHgjWtL8KaRCAPs+n6DYkykDG+R5IWeRz3ZmJPrX6M/Bz/AIJLfCjwTZwT+Nri/wDH2rgAyLLK1nZK3+zHEwc/8Ccg46DpX0Npn7IXwQ0m3EMHwm8HSIBjN1osFw3/AH1IrH9aDRyR+UXh7/gqt+0Bosyvea1o+vKDkx6hpESK3sfI8s/ka9a0v/gpP8MPjdBFpHx9+Dmm38LjyzrOlxi4aHPdUfEsQHqkpb0Ffdfif9hj4CeLbd4b34W6Bbqwxu0uA2DD6GAoRXyZ8d/+CPek3dlcal8JvEU9hfKC40PX382CT/ZjnUBk9g4fJ6sBQK8WUbb/AIJlfBX9oS1j8VfBv4q3Fl4dmb95aeQNRFux58v5njliOP4Zdzd6+zf2YP2UPBn7KvhO50rwyJ77Ub9lk1HWL7BuLplB2jgAKi5bao6ZOSSSa/E7wr4w+Kv7F/xela3F94R8U6c4S9027UmG6j67JUB2yxMOQwJHIZWBwa/az9kz9qfw7+1V8OV13S1Gn65ZFYNY0Zn3PaTEZBB/ijfBKt3wQeVIAKVzsPjR8DPBf7QHg9/DfjbR49VsN3mwyBjHPbS4wJIpByrc/QjggjivlKT/AII6fBd3Zh4k8dRgnIVdQs8D25tCa+66KCbtHwl/w5y+DH/QzeO//A+y/wDkSj/hzl8GP+hm8d/+B9l/8iV920UDuz86/id/wSz+Afwo+HviHxhrXirx3Hpmi2Ul5MBqNkGfaMhF/wBE+8zYUDuWFfmh8HPhfqHxq+K/hvwToyslzrV8luHPz+RFndJK2MZCRhnPspr9G/8AgsF8fP7O0Hw98JNLucT6gV1fWQh6QIxFvE3+84ZyOo8pD3rO/wCCPfwD2x+Ivi7qlty27RtGLr24a5lH47IwR6SigtNpXZ+kPg/wnpvgTwpo/hzRrcWuk6TaRWVrCP4Y41CqD6nA5Pc1sUUyWVIInkkdY40BZnY4CgdSTQZHwt/wVm+Pf/Cv/gxZfD7Tbny9Z8XyEXIRvmjsIiDJn03vsT3USCvnb/gkT8BP+Eu+Jmr/ABP1O236Z4ZQ2enF1+V76VMMw9fLiJz7zIR0r5w/a/8AjVdftM/tH69run+be6c1wuk6FbxgsWto2KRbV65kYtJj1lIr9qf2VPghB+z18CPC3gxUT+0Le3+0anKnPm3knzzHPcBjsB/uotBo9FY9booooMwooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP51dHA1z9pqxEnzi88Xpu3d996M5/Ov6Kq/nVU/8Iv+00DP+7/s7xfmT/Z8u95/lX9FVBcgoopGYIpZiAoGST2oIFor8Qv2y/28PG3x0+IOq6L4V12+0T4f2lw1rY2WlzNC2oKpK+dMyHc+88hCdoG3jOSfB77wP8WPhZBF4nvfD/jPwhCXUx6zPZXdku4/dImKrye2DQXyn9GtFfn1/wAEyv22PEHxlub/AOG3j7UDqviGxtTe6Xq82POu4FIEkUp/jkXcrBurLu3crk/oLQS1Y+dv20v2R9G/am+G88CQw2njfTImk0XVSACH6/Z5D3ic8c/dJDDoQfyD/ZY+OGtfsnftB2GrXiXFnaQXTaV4i01wQxt9+2ZWX+/Gw3gf3kA6E1/QLX4k/wDBVH4YQfD79qe91OyhENn4psIdYKoMKJ8tFN+JaLefeSgqPY/bG0u4b+1hubeVJ7eZFkjljOVdSMgg9wQalr54/wCCfvj6b4i/sjfD2+upDLeWVo+lTFjk/wCjSNCmT3JjSM/jX0PQQFZ3iPxDp/hLw9qeuatcrZ6XpttJeXVw/wB2KKNSzsfoATWjXwV/wVs+Pn/CC/CLTvhxplzs1fxZJ5l4Eb5o7CJgSD3HmSbVHqqSCgaV2fmr8RvFniP9rX9o6/1O2gefWvFurpbafaMc+TGzCK3iJ7BECAn/AGSa/e74P/DLTPg18MPDXgrR1H2HRbJLVZNuDK45klI/vO5Zz7sa/MT/AIJC/AP/AISf4g618U9Ttt2n+HVOn6YXXh72VP3jj/rnE2P+26ntX62UFSfQK+Sv+CmHx7/4Ux+znf6VYXPk+IvF5bSLTa2HSArm5lH0jOzI5DSqe1fWtfhV/wAFGvj3/wALx/aP1eKxufO8OeGM6Np+1so7Ix8+Udjuk3AEdVRKBRV2dT/wS1+An/C1/wBoFPFOo23m6B4LRNQYuuVe9YkWyfUFXl+sQ9a/ayvnP9gb4Cf8KA/Zy0DTr228jxFrI/tjVty4dZpVG2I+nlxhEI6bgx719GUBJ3YUUUUEhRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAfz3/tkeGpPA/7V/xQsQGhYa/cX0XYqs7faEx+EoxX73/DvxXF478AeGfEkDK8OsaZbagjL0IliVx/6FX5Nf8ABX74YSeGfjzofjOKLFl4n0tY5JAOtzbERvn/ALZNb/kfSvsj/glz8XIviR+y9pmizTiTVvCVw+kzoT83k5Mlu2PTY2wf9cjQaPVJn19XC/HnVJ9D+BvxE1G1ZkubPw5qNxEy9Q6W0jAj8QK7qsbxn4bh8ZeD9d0C4bZb6rYT2MjeiyxshP5NQZn4R/8ABP8A8P2fib9sT4ZWd9GksCX8t2FcZHmQW8s0Z/B41P4V+137SHh+z8U/s/fEjS7+NJLa48PX4O8ZCsIHZHHurBWB7ECvwf8Ah34p139lb9ojTNXvtNY614Q1do7zT3YxmTYWjmjDY43IXAbB6g4Nfd3x+/4Ky+DfH3wY8TeGPCHhbxFa6/rmnS6abjVFgjgtlmQpI6skrsxCs2PlXnBoNWm2fJ//AATq1SfSv2y/hu8DMDNc3Nu4H8SPazKQfzz+FfvTX4n/APBKj4YXvjX9qWw8RLA7aV4Us5765nIOwSyxvBCmf7xMjOB6RN6V+2FBMtwr8qP+C0UMS+NPhfKAPPbT71WPfaJIiv6lq/Vevxv/AOCvnjmHxD+0dpHh+3kDr4f0SKOdQc7J5neUj2/dmE/jQKO59e/8EkZJH/ZPZXztTxBeKn+7siP8ya+06+W/+CZ/hCXwl+x34MaePyrjVXutTZT/AHZJ3EZ/GNYz+NfUlAnuR3NzFZ28s88iQwRIXkkkYKqKBkkk9ABX8/H7VHxhv/2of2j9c17T0mvLe8u00vQrRQSxtkby4FVezOSXI/vSNX6kf8FQPj5/wqD9nq48Pafc+V4h8Zs+lwhWw6WgAN1J9NrLH/22z2r4k/4JUfAP/hZ3x2k8aalbeZoXgxFukLr8sl++RAv/AAAB5OOhRPWguOiufqZ+zH8FbX9n34H+FvBMARrqythJfzx9JruT55nz3G8kDPRVUdq9SoooMzwH9uT49D9nv9nbxFrtrceR4g1Bf7K0fBwwupQR5g940DyfVAO9fk1/wT6+Ap+Pf7SGiQX9v9o8O6Cf7a1UuMo6RsPLiPY75CgI7rv9K9F/4KsfHv8A4Wb8d4/BenXHmaH4MRrVwjZWS+fBnb/gACR89Cj+tfbf/BL/AOAn/Cof2ebfxDqFt5XiDxmyapMWXDpaAEWsf02lpP8AttjtQabI+w6KKKDMKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA+bP+CgP7Pcv7Qn7PGrWOmW32jxPojf2vpKqPnkkjUiSEevmRlwB0LBM9K/LH9gX9pwfsz/G6C41eZ4/B+uqun6yuCRCM/urjHrGxOe+xpMAkiv3hr8iP+Cl/7Edz8PfEd/8AFfwVp5k8JanL5usWNsn/ACDblj80oA6QyMc+isSOAygBcX0Z+uVrdQ3ttFcW8qT28yCSOWJgyOpGQwI4II5yKlr8ef2FP+Cjs3wTsrPwF8SGudS8ERny7DVIlMtxpQJ+4y9ZIR2A+ZOgDDCj9avBnjjw98RPD9trnhjWrHXtIuBmO80+dZYye4yDwR3U8juBQS1Y8B/af/YA+HP7Tmqf29fG68M+LdgjfWNKC5uAowonjYYkwMAMNrYAG7AAHzjpH/BFrRYdRV9U+Kt/eWG75oLTRUt5SPQSNNIAffZ+FfpRRQF2jzv4G/APwX+zt4LTwz4K0v7DZl/NuLiVvMuLuXGDJLJ/EfbgAcAAcV6JRXmPxw/aR+Hv7O+gPqfjXxBb2EhQvb6bEwkvbs+kUIO488bjhR3YUC3N34u/FXQfgp8Otb8Z+JLkW+l6XAZWXIDzP0SJAeru2FA9T6Zr8DY4/FX7Xn7R2APM8SeNNZJOAWS2V25Pr5cUY/BY67j9r/8AbM8U/ta+K4ITDJo/g+xmP9l6BE5clzkCaYj78pBwMcKCQvVi36Cf8E2P2KLj4G6DJ8QfGtl5HjjWLfyrWwmX59LtGwSGHaaTA3DqqgLwS4oNF7qufZ/g7wrYeBvCWi+HNKj8nTNIsobC2j/uxRIEUfkorYor5x/b++O7/AP9m3X9RsZjDr+skaLpbocNHLMrb5R6FI1kYH+8F9aDPc/Kj/goD8ej8fv2j9bubC4Nx4d0M/2NpIQ5V0jY+ZKPXzJC7A912DtX60/sP/AQfs8/s7+HdBurcQ+IL5f7V1jIwwupQCYz/wBc0CR/8AJ71+VX/BOD4B/8Lw/aO0u5v7bzvDnhbbrN/uXKO6N/o8R7HdJhiD1WNxX7o0Fy7BXl/wC0x8aLT9n/AOCHinxtcFGuLC1KWMEnSe7f5IEx3G9gTjooY9q9Qr8mf+Cvnx7/AOEi8daH8KtMud1joCjUtVVG4a8lT90h90ibd/239qCUrs+WP2XPhBqH7UP7R+h6BqEk15Bf3j6nrt4xJY2yt5k7s3ZnJ2A/3pFr+gi2tobK2it7eJIIIkEccUahVRQMAADoAO1fBX/BI/4Cf8IV8KNT+JOp22zVfFUnkWJdfmjsImIyO48yUMT6iOM96++qByd2FFFFBIUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAVDeWcGoWk9rdQR3NrOjRSwzIHSRCMMrKeCCCQQamooA/M79qz/AIJNrql7eeJfgvNBaSSlpZvCl9Lsi3Hn/RZTwo/6ZyEKOzAYWvgkSfF/9lTxayBvE/w41vPIzLai4A/8cmT/AL6U1/RPVDW9A0zxLp8lhq+nWmq2Mn37a9gWaJvqrAg0FqXc/Fbwr/wVX+PvhyBIrzVdF8R7BgPqulIGP1MBjz9a6Wf/AILCfGuaHYmh+CYGxjzI9Oui315uSP0r9G/EX7CnwC8UytJe/C7QoWY5P9nI9kPygZBWBD/wTc/Zxgl8xfhtEWznD6vfuPyM5FA7x7H5c+Ov+CkX7QHjqCS2bxs2g2sgwYtCtIrRh9JQplH4PXGfC/8AZq+Mf7Tuum/0XQNX1z7XJm48Ras7pbE92e5l4cjuFLN6A1+3Hg/9k/4N+Apkm0P4aeGrW5QgpcyafHPMh9pJAzD8DXq6qEUKoCqBgADAAoFzW2Pjj9kL/gm94T/Z5ubTxR4onh8Y+PIsPFO0f+hae3rAjDLOP+ejc9Nqpzn7IoooJbuFfKH/AAUj/Z41/wDaC+A0MPhWBr7xD4fv11SDT0Pz3cflukkaDu+GDAd9hA5Ir6vooBaH83ug+PPiN8FbzUdN0XxF4o8B3crqL2zsL6506R2TIXzUVlJK5bG4cZPrWz/w1J8Z/wDorvjv/wAKW9/+O1/RTRQXzeR/Ot/w1J8Z/wDorvjv/wAKW9/+O1vfAr9n74i/tcfFK3jjj1bUor26WXWfFOoeZMkEZP7yWSZ875MZ2qSWY/iR/QXRQLmMvwv4a07wZ4a0rQNIt1tNK0u1isrWBekcUahUX8ABWpRRQQFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQB//Z" alt="The 67 meme: a grey-and-white kitten with two hands holding up the numbers 6 and 7, and a big 67 underneath" width="387" height="516">
+    <div class="lock-jokes">
+      <p>Fun fact: there is <b>no deep meaning</b> behind 67. I just wanted to hear you say it out loud and start giggling. Mission accomplished, probably.</p>
+      <p>Warning: this code was picked by a boy with <b>zero self-control</b> and one very beautiful distraction. Yes, sweetie. The distraction is you.</p>
+      <p>Scientists checked, by the way. 67 + 69 = <b>one gorgeous girl blushing at her phone</b> in public. The science is completely made up, but the blushing is real.</p>
+      <p>And no, you cannot change the code. It's <b>permanent</b>. Like us. Now stop laughing and type it, gorgeous.</p>
+    </div>
     <div class="pad" id="pad">
       <button class="key" data-k="1" aria-label="1">1</button>
       <button class="key" data-k="2" aria-label="2">2</button>
@@ -243,10 +552,12 @@
       <button class="key" data-k="7" aria-label="7">7</button>
       <button class="key" data-k="8" aria-label="8">8</button>
       <button class="key" data-k="9" aria-label="9">9</button>
-      <button class="key util" data-k="clear" aria-label="Clear">C</button>
+      <button class="key util" data-k="clear" aria-label="Clear">Clear</button>
       <button class="key" data-k="0" aria-label="0">0</button>
       <button class="key util" data-k="back" aria-label="Delete last number">&#9003;</button>
     </div>
+    <div class="lock-rule lock-rule-foot" aria-hidden="true"><svg><use href="#heart"/></svg></div>
+    <p class="lock-foot" style="margin-top:10px">Made by Rakib. For Ayoush, and only Ayoush.</p>
     <div id="unlockMsg" aria-hidden="true">
       <span class="big script">I love you, Aya</span>
       <span class="small">The garden is open. Come in.</span>
@@ -257,74 +568,96 @@
 <main class="wrap">
 
   <!-- 2. HERO -->
-  <section class="hero">
-    <svg class="hero-moon" aria-hidden="true"><use href="#moon"/></svg>
-    <span class="script">under the same moon</span>
-    <h1>Good evening,<br><span class="name">Aya</span></h1>
+  <section class="hero tint t-hero">
+    <h1>You are so far from me, and still you are the closest person to my heart.</h1>
+    <span class="script">Aya, I love you.</span>
     <div class="hero-names">RAKIB <b>&amp;</b> AYOUSH</div>
-    <p>I am far away in Bangladesh and you are in Syria, but tonight we are looking at the same sky. So I planted you a small garden here, one that never sleeps.</p>
+    <p>Sweetie, I didn't want to say this in a normal text and let it get lost between other messages. So I built you a whole place. Everything here is yours. The roses, the jasmine, every word. Take your time. Read it slowly. I meant every line.</p>
+    <div class="btn-row">
+      <a class="btn btn-rose" href="#letter">Read my letter</a>
+      <button class="btn btn-line" id="heroShower" type="button">Shower me with flowers</button>
+    </div>
     <div class="hero-flowers" aria-hidden="true">
       <svg><use href="#rose"/></svg>
+      <svg><use href="#tulip"/></svg>
       <svg><use href="#jasmine"/></svg>
-      <svg><use href="#rose"/></svg>
-      <svg><use href="#jasmine"/></svg>
+      <svg><use href="#sakura"/></svg>
       <svg><use href="#rose"/></svg>
     </div>
     <div class="orn" aria-hidden="true"><svg><use href="#spark"/></svg></div>
   </section>
 
-  <!-- 3. SHORT LETTER -->
-  <section aria-label="A short letter">
+  <!-- 3. STICKY NOTES -->
+  <section class="tint t-notes" aria-label="Little notes for Aya">
+    <div class="notes">
+      <div class="note n1">
+        <p>You are so gorgeous that sometimes I just stare at my phone like an idiot. No shame. It's your fault.</p>
+        <span class="sig">True story</span>
+      </div>
+      <div class="note n2">
+        <p>Distance is hard, I won't lie to you. But then you smile at me through a screen and I forget why I was sad.</p>
+        <span class="sig">Rakib</span>
+      </div>
+      <div class="note n3">
+        <p>Every good thing that happens to me, my first thought is: I have to tell Aya. Every bad thing too. It's you. It's always you.</p>
+        <span class="sig">Rakib</span>
+      </div>
+      <div class="note n4">
+        <p>I'm not going anywhere. Read that again slowly. Not. Going. Anywhere.</p>
+        <span class="sig">A promise</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. LOVE LETTER -->
+  <section id="letter" class="tint t-letter" aria-label="A letter for you">
     <div class="sec-head">
       <span class="script">a few words</span>
-      <h2>A Small Letter</h2>
+      <h2>A letter for you</h2>
     </div>
     <div class="letter">
-      <p>Aya, I made this little place for you. When you miss me, come here. I am always thinking of you.</p>
-      <p>Study hard, smile lots, and get better soon. I love you, today and every day.</p>
-      <p class="sign"><span class="script">Rakib</span></p>
+      <p>My dear Aya,</p>
+      <p>Okay. Deep breath. I'm not a big writer, you know me. My texts are short, I say things simply. But some things I can't say in two lines, so sit down, sweetie, this one is long.</p>
+      <p>I love you. I know I say it every day, but today I want you to really feel it. I love your voice when you talk to me. I love how you care about me in small ways that nobody else even notices. I love that with your whole busy week. Classes from morning to afternoon. You still find time for me, every single day. You never make me feel far. Not once.</p>
+      <p>And can I say it plainly? You are gorgeous, Aya. Not 'pretty for a photo' gorgeous. You, on a normal day, tired from classes, hair however it is, no effort at all. That you is the most beautiful girl I know. Sometimes I look at you and I honestly forget what I was about to say. That's not a line. That happens to me all the time.</p>
+      <p>You make my normal days good. When I'm tired, talking to you fixes me. When something good happens, you're the first person I want to tell. When something bad happens, you make it small just by being there. You are my peace. You are my favourite part of every day. I don't say that lightly.</p>
+      <p>I'm not perfect. Sometimes I'm busy, sometimes I reply late, sometimes I say the wrong thing. But listen to me: what I feel for you is not small and it is not temporary. I choose you. Every day I wake up and I choose you again. That will never change.</p>
+      <p>One day this distance ends. One day there's no screen between us and I can say all of this looking at you, not at a phone. Until that day I'll love you from here. Loudly, honestly, with my whole heart. And after that day, I'll love you from right beside you.</p>
+      <p>You are loved, Aya. Not a little. Not sometimes. Always. By me.</p>
+      <p class="sign">Forever yours, <span class="script">Rakib</span></p>
     </div>
   </section>
 
-  <!-- 4. HER WEEK -->
-  <section aria-label="Her week at university">
+  <!-- 5. HOW BEAUTIFUL YOU ARE -->
+  <section class="tint t-beauty" aria-label="How beautiful you are">
     <div class="sec-head">
-      <span class="script">kalamoon university</span>
-      <h2>Your Week, Aya</h2>
-      <p>Every lecture, day by day, so I can think of you at the right hour, wherever I am.</p>
+      <span class="script">read this slowly</span>
+      <h2>How beautiful you are</h2>
     </div>
-    <div class="week">
-      <div class="day">
-        <h3>Saturday</h3>
-        <div class="cls"><span class="sub">Anatomy 3</span><span class="time">11:00 to 14:00</span></div>
-        <div class="cls"><span class="sub">General Chemistry</span><span class="time">14:00 to 16:00</span></div>
-      </div>
-      <div class="day">
-        <h3>Sunday</h3>
-        <p class="free-note">No classes today. Rest well, read something you love, and think of me a little.</p>
-      </div>
-      <div class="day">
-        <h3>Monday</h3>
-        <div class="cls"><span class="sub">Organic Chemistry</span><span class="time">08:00 to 10:00</span></div>
-        <div class="cls"><span class="sub">Cell (Cytology)</span><span class="time">12:00 to 14:00</span></div>
-      </div>
-      <div class="day today">
-        <h3>Tuesday <span class="tag">TODAY</span></h3>
-        <div class="cls"><span class="sub">General Chemistry Lab</span><span class="time">08:00 to 10:00</span></div>
-        <div class="cls"><span class="sub">English Language 3</span><span class="time">10:00 to 12:00</span></div>
-        <div class="cls"><span class="sub">Anatomy 3 Lab</span><span class="time">12:00 to 16:00</span></div>
-      </div>
-      <div class="day">
-        <h3>Wednesday</h3>
-        <div class="cls"><span class="sub">Genetic and Molecular Biology</span><span class="time">08:00 to 11:00</span></div>
-        <div class="cls"><span class="sub">Cell Lab</span><span class="time">12:00 to 14:00</span></div>
-      </div>
+    <div class="prose">
+      <p>You love hearing this from me, so here it is properly. Not once, not quickly. Slowly, and as many times as I can fit on one page.</p>
+      <p>Aya, you are so gorgeous. I need you to understand. I'm not saying it because you're my girlfriend and I'm supposed to say it. I'm saying it because it's simply true, and I think it every single time I see you. You are the most beautiful girl I know. Not one of them. The most beautiful.</p>
+      <p>Your smile. Sweetie, your smile can take the worst day I've had and turn it completely around. I've tested this many times. It works every time.</p>
+      <p>And your face, Aya. I look at your face for so long. There is something magical about it, I swear. I open your photo just to look for one second, and ten minutes later I am still there, staring. Magical. That is the only word I have for it.</p>
+      <p>And it's not only when you dress up. It's you in the morning. It's you tired after a long Anatomy day. It's you serious, concentrating, with your notes in front of you. Even then, especially then, I look at you and think: how did I get this lucky?</p>
+      <p>So when you feel unsure about how you look, come back here and read this again. My eyes don't change their mind. You are beautiful, you are gorgeous, and you are mine. And I will tell you that until you believe it as much as I do.</p>
     </div>
-    <p class="week-note">9 classes in all, <b>18 credits</b>. One busy week, and I am proud of you every single day of it.</p>
+    <div class="mini-cards">
+      <div class="mini"><p>Your smile. My favourite thing in the world. One smile from you and my whole mood changes. You have no idea what it does to me.</p></div>
+      <div class="mini"><p>Your face. I could look at you all day and not get bored. Actually I've tried. The day ended, I was still not bored.</p></div>
+      <div class="mini"><p>You, just being you. No effort, no dressing up, just you being natural. That's my favourite version. The real you is the gorgeous one.</p></div>
+    </div>
   </section>
 
-  <!-- 5. OUR SONG -->
-  <section aria-label="Our song">
+  <!-- 6. STUDIES PRAISE -->
+  <section class="tint t-study" aria-label="For my hardworking girl">
+    <div class="study-card">
+      <p>You work so hard, Aya. Anatomy is not easy. Organic Chemistry is not easy. And you still show up every day and you do it. I see you, and I am so proud of you.<span class="coffee">Anatomy, but coffee first.</span>That is the rule. Study hard, gorgeous. I am right here, cheering for you, every single day.</p>
+    </div>
+  </section>
+
+  <!-- 7. OUR SONG -->
+  <section class="tint t-song" aria-label="Our song">
     <div class="sec-head">
       <span class="script">play it and think of me</span>
       <h2>Our Song</h2>
@@ -332,49 +665,153 @@
     <div class="song-frame">
       <iframe src="https://www.youtube-nocookie.com/embed/-0RUAQAMUac" title="Sherine, Tebaa'n Tebaa'n" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
-    <p class="song-cap"><span class="script">Tebaa'n Tebaa'n</span>Sherine sings it, and every word of it is true from me to you.</p>
+    <p class="song-cap"><span class="script">Tebaa'n Tebaa'n</span>This one is yours now. I picked it because the words say exactly what this whole page is trying to say.</p>
+    <p class="song-cap song-arabic" lang="ar" dir="rtl">&#1607;&#1602;&#1608;&#1604;&#1603; &#1578;&#1576;&#1575;&#1593;&#1575;&#1611; &#1578;&#1576;&#1575;&#1593;&#1575;&#1611;&#1548; &#1573;&#1610;&#1607; &#1571;&#1587;&#1576;&#1575;&#1576; &#1594;&#1585;&#1575;&#1605;&#1610; &#1576;&#1580;&#1605;&#1575;&#1604;&#1603;</p>
+    <p class="song-cap">'I'll tell you, one by one, the reasons I'm in love with your beauty.' That is literally this whole website, sweetie.</p>
   </section>
 
-  <!-- 6. DOCTOR REMINDER -->
-  <section aria-label="A gentle reminder">
+  <!-- 8. DOCTOR REMINDER -->
+  <section class="tint t-doctor" aria-label="A gentle reminder">
     <div class="doctor">
-      <svg aria-hidden="true"><use href="#jasmine"/></svg>
-      <p><span class="d-head">One small reminder</span>Today is Tuesday, 24 November. Do not forget the doctor at your university, Aya. Your anatomy professor. For your headache. Get better soon. I am praying for you.</p>
+      <span class="doctor-pair" aria-hidden="true"><svg><use href="#rose"/></svg><svg><use href="#jasmine"/></svg></span>
+      <p>Today is Tuesday, 24 November. Do not forget the doctor at your university, Aya. Your anatomy professor. For your headache. Get better soon. I am praying for you.</p>
     </div>
   </section>
 
-  <!-- 7. FLOWER GARDEN AND FINALE -->
-  <section aria-label="The night garden">
+  <!-- 9. THE REASONS IT'S YOU -->
+  <section class="tint t-reasons" aria-label="The reasons it's you">
     <div class="sec-head">
-      <span class="script">roses and jasmine, always in bloom</span>
-      <h2>Your Night Garden</h2>
-      <p>Red roses for my love and white jasmine for your smile. They bloom here every night, just for you.</p>
+      <span class="script">one by one</span>
+      <h2>The reasons it's you</h2>
+      <p>The full list doesn't fit on one website. Or a hundred. But the song says tell them one by one. So here we start.</p>
     </div>
-    <div class="garden" aria-hidden="true">
-      <svg class="scene" viewBox="0 0 640 240">
-        <path d="M0 208 Q160 188 320 202 T640 200 V240 H0 Z" fill="#2e6b3e" opacity=".28"/>
-        <path d="M0 222 Q200 206 400 218 T640 216 V240 H0 Z" fill="#2e6b3e" opacity=".4"/>
-        <g stroke="#3e7d4e" stroke-width="3" fill="none" stroke-linecap="round">
-          <path d="M40 226 q3-16-2-26 M52 228 q-2-14 3-24 M600 228 q-3-15 2-25"/>
-        </g>
-        <use href="#rose" x="30" y="118" width="72" height="100"/>
-        <use href="#jasmine" x="105" y="132" width="64" height="90"/>
-        <use href="#rose" x="180" y="126" width="66" height="92"/>
-        <use href="#jasmine" x="252" y="118" width="72" height="100"/>
-        <use href="#rose" x="330" y="134" width="62" height="86"/>
-        <use href="#jasmine" x="398" y="124" width="68" height="94"/>
-        <use href="#rose" x="472" y="118" width="72" height="100"/>
-        <use href="#jasmine" x="548" y="134" width="62" height="86"/>
-      </svg>
+    <div class="reasons">
+      <div class="reason"><span class="rnum">1</span><p>Your heart. You care about people properly. Not for show. The way you treat others is the first thing that made me fall for you. Everything after was just confirmation.</p></div>
+      <div class="reason"><span class="rnum">2</span><p>Your beauty. Reason number two, and honestly it could fill this whole page alone. You are so gorgeous, Aya. I never get used to it. I hope I never do.</p></div>
+      <div class="reason"><span class="rnum">3</span><p>Your mind. Six subjects, practicals, past papers. And still the most interesting person to talk to. Smart looks so, so good on you.</p></div>
+      <div class="reason"><span class="rnum">4</span><p>Your hard work. Notes by hand. Past papers solved. Revision after revision. You don't wait for good things to come to you. You go and earn them. I admire you so much for that.</p></div>
+      <div class="reason"><span class="rnum">5</span><p>Your patience. Loving someone far away is not easy, and you do it with so much trust and patience. I notice. I don't take one day of it for granted.</p></div>
+      <div class="reason"><span class="rnum">6</span><p>Just&#8230; you. No big explanation for this one. If I met you a hundred times, in a hundred different lives, I'd choose you a hundred times. That's it. That's the reason.</p></div>
     </div>
-    <button class="garden-btn" id="flowerBtn" type="button">Tap for flowers</button>
-    <p class="garden-hint">One tap, and the whole sky rains flowers for you.</p>
   </section>
 
-  <section class="finale" aria-label="What the numbers mean">
+  <!-- 10. LOVE-NOTE MACHINE -->
+  <section class="tint t-machine" aria-label="A note from me, whenever you need one">
+    <div class="sec-head">
+      <span class="script">from my pocket to you</span>
+      <h2>A note from me, whenever you need one</h2>
+      <p>Bad day? Exam stress? Missing me? Tap the button. I left you a whole pocket full of these.</p>
+    </div>
+    <div class="machine">
+      <div class="machine-display"><p class="placeholder" id="noteText">your note is waiting. tap the button.</p></div>
+      <button class="btn btn-rose" id="noteBtn" type="button">Give me a note</button>
+    </div>
+  </section>
+
+  <!-- 11. TAP-TO-BLOOM GARDEN -->
+  <section class="tint t-garden" aria-label="A little garden of promises">
+    <div class="sec-head">
+      <span class="script">roses and jasmine</span>
+      <h2>A little garden of promises</h2>
+    </div>
+    <div class="pair pair-gap" aria-hidden="true"><svg><use href="#rose"/></svg><svg><use href="#jasmine"/></svg></div>
+    <p class="bloom-intro">your favourites. roses and jasmine. i did not forget. each flower is hiding a reason. tap them all. they bloom just for you.</p>
+    <p class="bloom-count" id="bloomCount">0 of 5 promises opened</p>
+    <div class="blooms">
+      <button class="bloom" type="button" data-flower="rose" aria-expanded="false">
+        <svg aria-hidden="true"><use href="#rosebud"/></svg>
+        <span class="bloom-tap">tap to bloom</span>
+        <span class="bloom-open" hidden>
+          <span class="bloom-always">for you. always</span>
+          <span class="bloom-note">your smile. it walks into the room before you do. and it fixes my whole mood.</span>
+        </span>
+      </button>
+      <button class="bloom" type="button" data-flower="jasmine" aria-expanded="false">
+        <svg aria-hidden="true"><use href="#jasminebud"/></svg>
+        <span class="bloom-tap">tap to bloom</span>
+        <span class="bloom-open" hidden>
+          <span class="bloom-always">for you. always</span>
+          <span class="bloom-note">your brain. anatomy, genetics, chemistry. you take the hardest subjects. and you don't back down.</span>
+        </span>
+      </button>
+      <button class="bloom" type="button" data-flower="rose" aria-expanded="false">
+        <svg aria-hidden="true"><use href="#rosebud"/></svg>
+        <span class="bloom-tap">tap to bloom</span>
+        <span class="bloom-open" hidden>
+          <span class="bloom-always">for you. always</span>
+          <span class="bloom-note">your heart. you are kind in a way that makes everyone around you softer. and happier.</span>
+        </span>
+      </button>
+      <button class="bloom" type="button" data-flower="jasmine" aria-expanded="false">
+        <svg aria-hidden="true"><use href="#jasminebud"/></svg>
+        <span class="bloom-tap">tap to bloom</span>
+        <span class="bloom-open" hidden>
+          <span class="bloom-always">for you. always</span>
+          <span class="bloom-note">your laugh. my favourite sound in the world. better than any song.</span>
+        </span>
+      </button>
+      <button class="bloom" type="button" data-flower="rose" aria-expanded="false">
+        <svg aria-hidden="true"><use href="#rosebud"/></svg>
+        <span class="bloom-tap">tap to bloom</span>
+        <span class="bloom-open" hidden>
+          <span class="bloom-always">for you. always</span>
+          <span class="bloom-note">your hard work. labs. studying when you are tired. i see all of it.</span>
+        </span>
+      </button>
+    </div>
+  </section>
+
+  <!-- 12. BOUQUET BUILDER -->
+  <section class="tint t-bouquet" aria-label="Let me build you a bouquet">
+    <div class="sec-head">
+      <span class="script">one by one</span>
+      <h2>Let me build you a bouquet</h2>
+      <p>Roses and jasmine, one by one. Tebaa'n tebaa'n. Until your hands are full. Tap the button and watch.</p>
+    </div>
+    <div class="bouquet-box">
+      <div class="bouquet-flowers" id="bouquetFlowers">
+        <span class="bouquet-empty" id="bouquetEmpty">your bouquet is empty. for now.</span>
+      </div>
+      <button class="btn btn-rose" id="bouquetBtn" type="button">Add a flower for Aya</button>
+      <p class="bouquet-msg" id="bouquetMsg" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- 13. LOVE METER -->
+  <section class="tint t-meter" aria-label="How much does Rakib love Aya?">
+    <div class="sec-head">
+      <span class="script">the honest answer</span>
+      <h2>How much does Rakib love Aya?</h2>
+      <p>Measured carefully, with science*</p>
+    </div>
+    <div class="meter-card">
+      <div class="meter-num" id="meterNum">Press the button to measure</div>
+      <div class="meter-track"><div class="meter-fill" id="meterFill"></div></div>
+      <p class="meter-warn" id="meterWarn" hidden>Warning: this meter was not built for numbers this big.</p>
+      <div class="btn-row" style="margin-top:16px">
+        <button class="btn btn-rose" id="meterBtn" type="button">Measure it</button>
+      </div>
+      <p class="meter-note">*Not science. Just honesty with a button.</p>
+    </div>
+  </section>
+
+  <!-- A secret note, for her eyes only -->
+  <section class="tint t-reasons" aria-label="A secret note for Ayoush">
+    <div class="sec-head">
+      <span class="script">for your eyes only</span>
+      <h2>One little secret</h2>
+    </div>
+    <div class="prose">
+      <p>You remember the number you were giggling about at the door, gorgeous? 69. Well, here is my secret: one day I want us exactly like that, you and me, face to face, turned fully toward each other, nothing held back, because I don't only want to look at you, sweetie. I want to see your inner world, all of it, the parts of you nobody else will ever get to see. Don't blush now. You typed the code. You knew what you were unlocking.</p>
+    </div>
+    <div class="pair pair-gap" style="margin-top:16px" aria-hidden="true"><svg><use href="#rose"/></svg><svg><use href="#jasmine"/></svg></div>
+  </section>
+
+  <!-- 14. FINALE -->
+  <section class="finale tint t-finale" aria-label="What the numbers mean">
     <div class="orn" aria-hidden="true"><svg><use href="#spark"/></svg></div>
     <div class="sec-head" style="margin-top:26px">
-      <span class="script">the key to this garden</span>
+      <span class="script">the key to this page</span>
       <h2>What 143 Means</h2>
     </div>
     <div class="code-row">
@@ -383,36 +820,25 @@
       <div class="code-cell"><div class="num">3</div><div class="word">YOU</div></div>
     </div>
     <span class="script">I love you, Aya</span>
-    <p>One word, four letters, three letters. That is the whole secret, and now this garden is yours to visit any time, day or night.</p>
+    <p>Today, tomorrow, on exam days and on quiet Sundays. When you are in Organic Chemistry this morning and in Anatomy later today, and when you are home revising at midnight. Study hard, gorgeous. Shine like you always do. And never forget: I am here, I am yours, and I am proud of you every single day. I love you, Aya. Me. Rakib. Always.</p>
+    <div class="pair pair-gap" style="margin-top:18px" aria-hidden="true"><svg><use href="#rose"/></svg><svg><use href="#jasmine"/></svg></div>
+    <p class="two-flowers">The red rose and the white jasmine. Rakib and Aya. Two different flowers, one garden, together always.</p>
+    <div class="btn-row">
+      <button class="btn btn-rose" id="finaleShower" type="button">Tap for flowers</button>
+      <a class="btn btn-line" href="#letter">Read the letter again</a>
+    </div>
   </section>
 
 </main>
 
 <footer>
-  <span class="script">forever yours, Rakib</span>
-  <p>Made under the same moon, from Dhaka to Kalamoon, for the girl who makes every day brighter.</p>
-  <div class="fnames">FOR AYOUSH, WITH LOVE</div>
+  <p><b>Rakib &amp; Ayoush.</b> Made by Rakib, for Ayoush. With roses, jasmine, and 143 reasons that are all the same reason: you.</p>
 </footer>
 
 <script>
 (function(){
   "use strict";
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* Twinkling star field */
-  var starsBox = document.getElementById("stars");
-  var starCount = reduceMotion ? 26 : 74;
-  for (var i = 0; i < starCount; i++){
-    var s = document.createElement("span");
-    s.className = "star" + (Math.random() < 0.22 ? " gold" : "");
-    var size = (Math.random() * 2.2 + 1).toFixed(1);
-    s.style.width = size + "px"; s.style.height = size + "px";
-    s.style.left = (Math.random() * 100).toFixed(2) + "%";
-    s.style.top = (Math.random() * 100).toFixed(2) + "%";
-    s.style.setProperty("--tw", (Math.random() * 2.6 + 2.2).toFixed(2) + "s");
-    s.style.setProperty("--td", (Math.random() * 3).toFixed(2) + "s");
-    starsBox.appendChild(s);
-  }
 
   /* Soft WebAudio chime, created on first tap only */
   var actx = null;
@@ -435,11 +861,12 @@
     if (actx && actx.state === "suspended") actx.resume();
   }
 
-  /* Flower and star pieces for bursts and showers */
+  /* Flower and spark pieces for bursts and showers */
   var fx = document.getElementById("fx");
   function piece(kind, size){
     var d = document.createElement("div");
-    var sym = kind === "spark" ? "spark" : (Math.random() < 0.52 ? "rose" : "jasmine");
+    var pool = ["rose", "jasmine", "tulip", "lily", "sakura", "daisy", "rose", "jasmine"];
+    var sym = kind === "spark" ? "spark" : pool[Math.floor(Math.random() * pool.length)];
     d.innerHTML = '<svg viewBox="0 0 60 84" aria-hidden="true"><use href="#' + sym + '"/></svg>';
     if (sym === "spark") d.firstChild.setAttribute("viewBox", "0 0 24 24");
     d.style.width = size + "px";
@@ -463,23 +890,27 @@
       (function(el){ setTimeout(function(){ el.remove(); }, 1300); })(p);
     }
   }
-  function shower(){
-    var n = reduceMotion ? 8 : 30;
+
+  /* A few tiny flowers bursting from a single tap point */
+  function miniBurst(cx, cy){
+    if (reduceMotion) return;
+    var n = 8;
     for (var i = 0; i < n; i++){
-      var p = piece("flower", 22 + Math.random() * 26);
-      p.className = "fx-fall";
-      p.style.left = (Math.random() * 96) + "vw";
-      p.style.setProperty("--dur", (3.4 + Math.random() * 2.4).toFixed(2) + "s");
-      p.style.setProperty("--del", (Math.random() * 0.9).toFixed(2) + "s");
-      p.style.setProperty("--drift", (Math.random() * 90 - 45).toFixed(0) + "px");
-      p.style.setProperty("--spin", (Math.random() * 300 - 150).toFixed(0) + "deg");
-      p.style.setProperty("--swayd", (1.3 + Math.random() * 1.1).toFixed(2) + "s");
+      var p = piece("flower", 12 + Math.random() * 11);
+      p.className = "fx-burst";
+      p.style.left = cx + "px"; p.style.top = cy + "px";
+      var ang = (Math.PI * 2 * i) / n + Math.random() * 0.6;
+      var dist = 38 + Math.random() * 72;
+      p.style.setProperty("--dx", Math.cos(ang) * dist + "px");
+      p.style.setProperty("--dy", (Math.sin(ang) * dist - 22) + "px");
+      p.style.setProperty("--rot", (Math.random() * 260 - 130) + "deg");
+      p.style.setProperty("--sc", (0.7 + Math.random() * 0.6).toFixed(2));
       fx.appendChild(p);
-      (function(el){ setTimeout(function(){ el.remove(); }, 7200); })(p);
+      (function(el){ setTimeout(function(){ el.remove(); }, 1300); })(p);
     }
   }
 
-  /* Toast at the very bottom of the screen */
+  /* Toast at the very bottom of the screen, with playful shower lines */
   var toast = document.getElementById("toast"), toastTimer = null;
   function showToast(msg){
     toast.textContent = msg;
@@ -487,9 +918,300 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(function(){ toast.classList.remove("show"); }, 2600);
   }
+  var showerLines = [
+    "roses and jasmine. everywhere. all for you",
+    "wait. i keep dropping them. there are too many",
+    "another one. of course."
+  ];
+  var showerIdx = 0;
+  /* Full, layered blooms drawn only for the shower. Many kinds, so one tap
+     rains a whole mixed garden: roses, jasmine, tulips, daisies,
+     sunflowers, lilies, cherry blossoms, peonies and lavender, in romantic
+     colours. Every bloom is shaded with soft gradients, darker at the
+     petal bases, light catching the tips, so they read as real flowers,
+     not flat shapes. Gradient ids are made unique per flower. */
+  var svgUid = 0;
+  function leafGrad(id){
+    return '<linearGradient id="' + id + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6cb87e"/><stop offset="1" stop-color="#2f6b3e"/></linearGradient>';
+  }
+  function roseBloomSVG(pal){
+    pal = pal || { o:"#c8102e", m:"#e02333", i:"#f0566b", l:"#ffb0a0", h:"#d61c2c", s:"#8f0a16", s2:"#7e0f1d" };
+    var u = "r" + (++svgUid);
+    var defs = '<defs>'
+      + '<radialGradient id="' + u + 'o" cx="50%" cy="40%" r="68%"><stop offset="0%" stop-color="' + pal.i + '"/><stop offset="55%" stop-color="' + pal.o + '"/><stop offset="100%" stop-color="' + pal.s + '"/></radialGradient>'
+      + '<radialGradient id="' + u + 'm" cx="50%" cy="40%" r="66%"><stop offset="0%" stop-color="' + pal.l + '"/><stop offset="58%" stop-color="' + pal.m + '"/><stop offset="100%" stop-color="' + pal.s + '"/></radialGradient>'
+      + '<radialGradient id="' + u + 'i" cx="50%" cy="42%" r="64%"><stop offset="0%" stop-color="' + pal.l + '"/><stop offset="60%" stop-color="' + pal.i + '"/><stop offset="100%" stop-color="' + pal.o + '"/></radialGradient>'
+      + leafGrad(u + "l") + '</defs>';
+    var outer = "", mid = "", inner = "", i, a;
+    for (i = 0; i < 5; i++){
+      a = i * 72;
+      outer += '<path d="M50 52 C36 41 33 15 50 2 C67 15 64 41 50 52 Z" fill="url(#' + u + 'o)" stroke="' + pal.s + '" stroke-width="1.4" transform="rotate(' + a + ' 50 52)"/>';
+      mid += '<path d="M50 52 C39 42 37 23 50 13 C63 23 61 42 50 52 Z" fill="url(#' + u + 'm)" stroke="' + pal.s + '" stroke-width="1.2" transform="rotate(' + (a + 36) + ' 50 52)"/>';
+      inner += '<path d="M50 52 C42 45 41 31 50 24 C59 31 58 45 50 52 Z" fill="url(#' + u + 'i)" stroke="' + pal.s + '" stroke-width="1" transform="rotate(' + (a + 14) + ' 50 52)"/>';
+    }
+    return '<svg viewBox="0 0 100 100" aria-hidden="true">' + defs
+      + '<path d="M12 76 C25 71 35 76 41 87 C28 92 16 87 12 76 Z" fill="url(#' + u + 'l)"/>'
+      + '<path d="M88 76 C75 71 65 76 59 87 C72 92 84 87 88 76 Z" fill="url(#' + u + 'l)"/>'
+      + outer + mid + inner
+      + '<circle cx="50" cy="50" r="11" fill="url(#' + u + 'i)" stroke="' + pal.s + '" stroke-width="1.3"/>'
+      + '<path d="M50 42.5 a7.5 7.5 0 1 1-7 7.5 a5 5 0 1 0 4.8-5 a3 3 0 1 1-2.9 3" fill="none" stroke="' + pal.s2 + '" stroke-width="2.1" stroke-linecap="round"/>'
+      + '<path d="M43.5 43.5 a8.6 8.6 0 0 1 4.5-3.2" fill="none" stroke="' + pal.l + '" stroke-width="1.6" stroke-linecap="round" opacity=".8"/>'
+      + '</svg>';
+  }
+  function jasmineBloomSVG(){
+    var u = "j" + (++svgUid);
+    var defs = '<defs>'
+      + '<linearGradient id="' + u + 'p" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#f0e0b4"/><stop offset=".45" stop-color="#fdfbef"/><stop offset="1" stop-color="#ffffff"/></linearGradient>'
+      + '<radialGradient id="' + u + 'c" cx="42%" cy="38%" r="72%"><stop offset="0" stop-color="#ffdc7d"/><stop offset=".6" stop-color="#f0ad3c"/><stop offset="1" stop-color="#c07f1f"/></radialGradient>'
+      + leafGrad(u + "l") + '</defs>';
+    var back = "", front = "", veins = "", dots = "", i, a, rad;
+    for (i = 0; i < 6; i++){
+      a = i * 60;
+      back += '<path d="M50 50 C42 32 42 12 50 1 C58 12 58 32 50 50 Z" fill="#f3e5bb" stroke="#d9c48d" stroke-width="1.3" transform="rotate(' + a + ' 50 50)"/>';
+      front += '<path d="M50 50 C44.5 37 44.5 22 50 13 C55.5 22 55.5 37 50 50 Z" fill="url(#' + u + 'p)" stroke="#e0cd96" stroke-width="1.1" transform="rotate(' + (a + 30) + ' 50 50)"/>';
+      veins += '<path d="M50 47 C50 36 50 24 50 15" fill="none" stroke="#e3cf92" stroke-width="1" opacity=".7" transform="rotate(' + (a + 30) + ' 50 50)"/>';
+    }
+    for (i = 0; i < 5; i++){
+      rad = (i * 72 - 90) * Math.PI / 180;
+      dots += '<circle cx="' + (50 + Math.cos(rad) * 4.6).toFixed(1) + '" cy="' + (50 + Math.sin(rad) * 4.6).toFixed(1) + '" r="1.7" fill="#ffe9a8"/>';
+    }
+    return '<svg viewBox="0 0 100 100" aria-hidden="true">' + defs
+      + '<path d="M16 82 C27 77 36 80 42 89 C30 94 20 91 16 82 Z" fill="url(#' + u + 'l)"/>'
+      + back + front + veins
+      + '<circle cx="50" cy="50" r="7.5" fill="url(#' + u + 'c)" stroke="#c07f1f" stroke-width="1.2"/>'
+      + dots
+      + '<circle cx="50" cy="50" r="2.2" fill="#b97a1a"/>'
+      + '</svg>';
+  }
+  function tulipSVG(main, dark, light){
+    var u = "t" + (++svgUid);
+    var defs = '<defs>'
+      + '<linearGradient id="' + u + 'g" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="' + dark + '"/><stop offset=".55" stop-color="' + main + '"/><stop offset="1" stop-color="' + light + '"/></linearGradient>'
+      + '<linearGradient id="' + u + 's" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="' + dark + '"/><stop offset="1" stop-color="' + main + '"/></linearGradient>'
+      + leafGrad(u + "l") + '</defs>';
+    return '<svg viewBox="0 0 100 100" aria-hidden="true">' + defs
+      + '<path d="M14 84 C26 76 36 78 44 88 C32 95 19 93 14 84 Z" fill="url(#' + u + 'l)"/>'
+      + '<path d="M86 84 C74 76 64 78 56 88 C68 95 81 93 86 84 Z" fill="url(#' + u + 'l)"/>'
+      + '<path d="M50 94 C32 85 24 60 29 30 C39 41 45 44 50 44 Z" fill="url(#' + u + 's)"/>'
+      + '<path d="M50 94 C68 85 76 60 71 30 C61 41 55 44 50 44 Z" fill="url(#' + u + 's)"/>'
+      + '<path d="M50 94 C39 81 37 50 50 22 C63 50 61 81 50 94 Z" fill="url(#' + u + 'g)"/>'
+      + '<path d="M50 86 C46.5 68 46.5 48 50 33 C53.5 48 53.5 68 50 86 Z" fill="' + light + '" opacity="0.75"/>'
+      + '<path d="M35 44 C33 58 34 72 38 84" fill="none" stroke="' + dark + '" stroke-width="1.6" opacity=".4"/>'
+      + '<path d="M65 44 C67 58 66 72 62 84" fill="none" stroke="' + dark + '" stroke-width="1.6" opacity=".4"/>'
+      + '</svg>';
+  }
+  function daisySVG(petal, edge, light){
+    var u = "d" + (++svgUid);
+    var defs = '<defs>'
+      + '<linearGradient id="' + u + 'p" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="' + edge + '"/><stop offset=".5" stop-color="' + petal + '"/><stop offset="1" stop-color="' + light + '"/></linearGradient>'
+      + '<radialGradient id="' + u + 'c" cx="42%" cy="38%" r="72%"><stop offset="0" stop-color="#ffdc7d"/><stop offset=".6" stop-color="#f0ad3c"/><stop offset="1" stop-color="#c07f1f"/></radialGradient>'
+      + '</defs>';
+    var petals = "", i;
+    for (i = 0; i < 12; i++){
+      petals += '<ellipse cx="50" cy="25" rx="7.5" ry="21" fill="url(#' + u + 'p)" stroke="' + edge + '" stroke-width="1.1" transform="rotate(' + (i * 30) + ' 50 50)"/>';
+    }
+    return '<svg viewBox="0 0 100 100" aria-hidden="true">' + defs + petals
+      + '<circle cx="50" cy="50" r="11.5" fill="url(#' + u + 'c)" stroke="#c07f1f" stroke-width="1.4"/>'
+      + '<circle cx="46" cy="46" r="1.8" fill="#c07f1f"/><circle cx="54" cy="47" r="1.8" fill="#c07f1f"/><circle cx="50" cy="54" r="1.8" fill="#c07f1f"/><circle cx="43" cy="52" r="1.4" fill="#c07f1f"/><circle cx="57" cy="53" r="1.4" fill="#c07f1f"/>'
+      + '</svg>';
+  }
+  function sunflowerSVG(){
+    var u = "s" + (++svgUid);
+    var defs = '<defs>'
+      + '<linearGradient id="' + u + 'p" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#e07f0f"/><stop offset=".55" stop-color="#f7b733"/><stop offset="1" stop-color="#ffda4d"/></linearGradient>'
+      + '<radialGradient id="' + u + 'c" cx="45%" cy="40%" r="70%"><stop offset="0" stop-color="#8a5a2e"/><stop offset=".65" stop-color="#6b4423"/><stop offset="1" stop-color="#42260f"/></radialGradient>'
+      + '</defs>';
+    var petals = "", i;
+    for (i = 0; i < 16; i++){
+      petals += '<path d="M50 50 C43.5 33 43.5 15 50 4 C56.5 15 56.5 33 50 50 Z" fill="url(#' + u + 'p)" stroke="#d98a12" stroke-width="1.1" transform="rotate(' + (i * 22.5) + ' 50 50)"/>';
+    }
+    return '<svg viewBox="0 0 100 100" aria-hidden="true">' + defs + petals
+      + '<circle cx="50" cy="50" r="16" fill="url(#' + u + 'c)" stroke="#4e2f16" stroke-width="1.5"/>'
+      + '<circle cx="44" cy="44" r="2" fill="#8a5a2e"/><circle cx="56" cy="43" r="2" fill="#3f2712"/><circle cx="50" cy="52" r="2" fill="#8a5a2e"/><circle cx="42" cy="54" r="1.7" fill="#3f2712"/><circle cx="58" cy="55" r="1.7" fill="#8a5a2e"/><circle cx="50" cy="41" r="1.6" fill="#3f2712"/><circle cx="47" cy="60" r="1.6" fill="#3f2712"/><circle cx="55" cy="60" r="1.5" fill="#8a5a2e"/>'
+      + '</svg>';
+  }
+  function lilySVG(main, dark, light){
+    var u = "l" + (++svgUid);
+    var defs = '<defs>'
+      + '<linearGradient id="' + u + 'p" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="' + dark + '"/><stop offset=".5" stop-color="' + main + '"/><stop offset="1" stop-color="' + light + '"/></linearGradient>'
+      + '</defs>';
+    var petals = "", stam = "", i, a, rad, x2, y2;
+    for (i = 0; i < 6; i++){
+      a = i * 60;
+      petals += '<path d="M50 54 C36 36 34 10 50 2 C66 10 64 36 50 54 Z" fill="url(#' + u + 'p)" stroke="' + dark + '" stroke-width="1.2" transform="rotate(' + a + ' 50 52)"/>';
+      petals += '<path d="M50 50 C47 36 47 20 50 10" fill="none" stroke="' + light + '" stroke-width="2" transform="rotate(' + a + ' 50 52)"/>';
+    }
+    for (i = 0; i < 5; i++){
+      rad = (i * 72 - 90) * Math.PI / 180;
+      x2 = 50 + Math.cos(rad) * 13; y2 = 50 + Math.sin(rad) * 13;
+      stam += '<line x1="50" y1="50" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" stroke="#c07f1f" stroke-width="1.6"/><circle cx="' + x2.toFixed(1) + '" cy="' + y2.toFixed(1) + '" r="2.4" fill="#8a5a2e"/>';
+    }
+    return '<svg viewBox="0 0 100 100" aria-hidden="true">' + defs + petals + stam
+      + '<circle cx="50" cy="50" r="3" fill="#e8a33d"/>'
+      + '</svg>';
+  }
+  function blossomSVG(main, edge, pale){
+    var u = "b" + (++svgUid);
+    var defs = '<defs>'
+      + '<radialGradient id="' + u + 'p" cx="50%" cy="88%" r="88%"><stop offset="0" stop-color="' + edge + '"/><stop offset=".45" stop-color="' + main + '"/><stop offset="1" stop-color="' + pale + '"/></radialGradient>'
+      + '</defs>';
+    var petals = "", stam = "", i, rad, x2, y2;
+    for (i = 0; i < 5; i++){
+      petals += '<path d="M50 52 C36 42 32 20 40 8 C44.5 14.5 47.5 16 50 16 C52.5 16 55.5 14.5 60 8 C68 20 64 42 50 52 Z" fill="url(#' + u + 'p)" stroke="' + edge + '" stroke-width="1.2" transform="rotate(' + (i * 72) + ' 50 52)"/>';
+    }
+    for (i = 0; i < 6; i++){
+      rad = (i * 60 - 90) * Math.PI / 180;
+      x2 = 50 + Math.cos(rad) * 8; y2 = 50 + Math.sin(rad) * 8;
+      stam += '<circle cx="' + x2.toFixed(1) + '" cy="' + y2.toFixed(1) + '" r="1.8" fill="#d61c2c"/>';
+    }
+    return '<svg viewBox="0 0 100 100" aria-hidden="true">' + defs + petals + stam
+      + '<circle cx="50" cy="50" r="3.4" fill="#e75480"/>'
+      + '</svg>';
+  }
+  function peonySVG(deep, mid, light){
+    var u = "p" + (++svgUid);
+    var defs = '<defs>'
+      + '<radialGradient id="' + u + 'o" cx="50%" cy="42%" r="68%"><stop offset="0%" stop-color="' + light + '"/><stop offset="55%" stop-color="' + mid + '"/><stop offset="100%" stop-color="' + deep + '"/></radialGradient>'
+      + '<radialGradient id="' + u + 'i" cx="50%" cy="42%" r="66%"><stop offset="0%" stop-color="#ffffff"/><stop offset="55%" stop-color="' + light + '"/><stop offset="100%" stop-color="' + mid + '"/></radialGradient>'
+      + leafGrad(u + "l") + '</defs>';
+    var outer = "", inner = "", i, a;
+    for (i = 0; i < 7; i++){
+      a = (i * 360 / 7).toFixed(1);
+      outer += '<path d="M50 55 C34 47 28 26 38 11 C44.5 19.5 47.8 21.5 50 21.5 C52.2 21.5 55.5 19.5 62 11 C72 26 66 47 50 55 Z" fill="url(#' + u + 'o)" stroke="' + deep + '" stroke-width="1.1" transform="rotate(' + a + ' 50 52)"/>';
+      inner += '<path d="M50 53 C40 47 36 32 43 21 C47 26.5 49 28 50 28 C51 28 53 26.5 57 21 C64 32 60 47 50 53 Z" fill="url(#' + u + 'i)" stroke="' + deep + '" stroke-width=".9" transform="rotate(' + ((i * 360 / 7) + 25).toFixed(1) + ' 50 52)"/>';
+    }
+    return '<svg viewBox="0 0 100 100" aria-hidden="true">' + defs
+      + '<path d="M12 78 C25 72 36 77 42 89 C28 94 16 89 12 78 Z" fill="url(#' + u + 'l)"/>'
+      + '<path d="M88 78 C75 72 64 77 58 89 C72 94 84 89 88 78 Z" fill="url(#' + u + 'l)"/>'
+      + outer + inner
+      + '<circle cx="50" cy="50" r="8.5" fill="url(#' + u + 'i)" stroke="' + deep + '" stroke-width="1"/>'
+      + '<circle cx="46.5" cy="47" r="1.6" fill="' + deep + '"/><circle cx="53.5" cy="47.5" r="1.6" fill="' + deep + '"/><circle cx="50" cy="53.5" r="1.6" fill="' + deep + '"/>'
+      + '</svg>';
+  }
+  function lavenderSVG(){
+    var u = "v" + (++svgUid);
+    var defs = '<defs>'
+      + '<linearGradient id="' + u + 'b" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#7a5cc0"/><stop offset="1" stop-color="#c3aef0"/></linearGradient>'
+      + leafGrad(u + "l") + '</defs>';
+    var buds = "", i, y, off;
+    for (i = 0; i < 5; i++){
+      y = 26 + i * 8.5; off = 7.5 - i * 0.7;
+      buds += '<ellipse cx="' + (50 - off) + '" cy="' + y + '" rx="4.6" ry="8" fill="url(#' + u + 'b)" transform="rotate(-24 ' + (50 - off) + ' ' + y + ')"/>';
+      buds += '<ellipse cx="' + (50 + off) + '" cy="' + (y + 3) + '" rx="4.6" ry="8" fill="url(#' + u + 'b)" transform="rotate(24 ' + (50 + off) + ' ' + (y + 3) + ')"/>';
+    }
+    return '<svg viewBox="0 0 100 100" aria-hidden="true">' + defs
+      + '<path d="M50 98 C49 72 49 48 50 24" stroke="#3e7d4e" stroke-width="3" fill="none" stroke-linecap="round"/>'
+      + '<path d="M50 84 C40 76 30 75 22 80 C30 88 42 88 50 86 Z" fill="url(#' + u + 'l)"/>'
+      + '<path d="M50 76 C59 68 69 67 77 71 C70 79 59 80 50 78 Z" fill="url(#' + u + 'l)"/>'
+      + buds
+      + '<ellipse cx="50" cy="15" rx="5" ry="9.5" fill="url(#' + u + 'b)"/>'
+      + '</svg>';
+  }
+  /* The shower's mixed garden: every kind in romantic colours. Each shower
+     deals a shuffled deck of these, so all kinds rain down together. */
+  var showerKinds = [
+    function(){ return roseBloomSVG(); },
+    function(){ return roseBloomSVG({ o:"#e75480", m:"#f07ba0", i:"#f9b7cb", l:"#ffd3e0", h:"#e75480", s:"#a31d4d", s2:"#8c1440" }); },
+    function(){ return jasmineBloomSVG(); },
+    function(){ return tulipSVG("#e75480", "#c22a5c", "#f7a8bf"); },
+    function(){ return tulipSVG("#d61c2c", "#a30f1e", "#f0566b"); },
+    function(){ return tulipSVG("#9b7ed9", "#7a5cc0", "#c3aef0"); },
+    function(){ return tulipSVG("#f5a07c", "#e07f4f", "#fbc4a6"); },
+    function(){ return daisySVG("#ffffff", "#ddd0b8", "#ffffff"); },
+    function(){ return daisySVG("#f7a8bf", "#dd7ba0", "#fdeef4"); },
+    function(){ return daisySVG("#c3aef0", "#9b83d9", "#efe8fc"); },
+    function(){ return sunflowerSVG(); },
+    function(){ return lilySVG("#ffffff", "#d9c48d", "#f0e3bb"); },
+    function(){ return lilySVG("#f28bb4", "#cf5d8f", "#f9c6da"); },
+    function(){ return lilySVG("#ffb38a", "#e07f4f", "#ffd9c2"); },
+    function(){ return blossomSVG("#f9c6d8", "#e58bb0", "#fdeef4"); },
+    function(){ return blossomSVG("#f7a8bf", "#dd7ba0", "#fbdce9"); },
+    function(){ return peonySVG("#c22a5c", "#e75480", "#f9c6da"); },
+    function(){ return peonySVG("#a30f1e", "#d61c2c", "#f9b7cb"); },
+    function(){ return lavenderSVG(); }
+  ];
+  function showerFlowerEl(size, kindIdx){
+    var d = document.createElement("div");
+    d.className = "shower-flower";
+    d.innerHTML = showerKinds[kindIdx % showerKinds.length]();
+    d.style.width = size + "px";
+    d.style.height = size + "px";
+    return d;
+  }
 
-  /* Lock screen keypad. Secret code: 143 */
-  var CODE = "143";
+  /* One tap = one full-screen pile: 190 big flowers of many kinds rain
+     down together. Each flower is dealt a slot in a stratified spread,
+     one per equal slice of the screen width, jittered inside its slice,
+     so they always scatter across the whole width and never bunch into
+     one clump. About half fall straight through the screen; the rest land
+     at random heights all over it, so for a moment the whole screen is a
+     thick pile of flowers, edge to edge, top to bottom. Sizes, speeds,
+     drifts, spins and delays all vary, and every flower fades away so
+     the page is clear again in seconds.
+     Driven with the Web Animations API (plain numbers computed in JS), so
+     nothing depends on CSS variables inside keyframes. */
+  function shower(){
+    var COUNT = 190;
+    var vw = window.innerWidth || 360;
+    var vh = window.innerHeight || 640;
+    var already = fx.getElementsByClassName("shower-flower").length;
+    if (already < 320){
+      var deck = [];
+      while (deck.length < COUNT){
+        for (var k = 0; k < showerKinds.length; k++) deck.push(k);
+      }
+      for (var s = deck.length - 1; s > 0; s--){
+        var j = Math.floor(Math.random() * (s + 1));
+        var tmp = deck[s]; deck[s] = deck[j]; deck[j] = tmp;
+      }
+      for (var i = 0; i < COUNT; i++){
+        var size = 46 + Math.random() * 74;
+        var p = showerFlowerEl(size, deck[i]);
+        var x = ((i + Math.random()) / COUNT) * vw - size / 2;
+        var maxX = Math.max(vw - size, 0);
+        if (x < -6) x = -6;
+        if (x > maxX + 6) x = maxX + 6;
+        var drift = (Math.random() * 150 - 75) * (reduceMotion ? 0.3 : 1);
+        var spin = (Math.random() * 420 - 210) * (reduceMotion ? 0.3 : 1);
+        var dur = 4000 + Math.random() * 1600;
+        var del = Math.random() * 700;
+        p.style.left = x.toFixed(0) + "px";
+        if (p.firstChild) p.firstChild.style.animationDuration = (1.3 + Math.random() * 1.1).toFixed(2) + "s";
+        fx.appendChild(p);
+        var startY = -size - 14;
+        var endY = vh + size * 0.4;
+        var lands = Math.random() < 0.5;
+        var landY = Math.random() * Math.max(vh - size, 10);
+        if (p.animate){
+          if (lands){
+            p.animate([
+              { transform: "translate3d(0," + startY.toFixed(0) + "px,0) rotate(0deg)", opacity: 0, offset: 0 },
+              { opacity: 1, offset: 0.05 },
+              { transform: "translate3d(" + (drift * 0.6).toFixed(0) + "px," + landY.toFixed(0) + "px,0) rotate(" + (spin * 0.7).toFixed(0) + "deg)", opacity: 1, offset: 0.5 },
+              { transform: "translate3d(" + drift.toFixed(0) + "px," + (landY + 12).toFixed(0) + "px,0) rotate(" + spin.toFixed(0) + "deg)", opacity: 1, offset: 0.76 },
+              { transform: "translate3d(" + drift.toFixed(0) + "px," + (landY + 16).toFixed(0) + "px,0) rotate(" + spin.toFixed(0) + "deg)", opacity: 0, offset: 1 }
+            ], { duration: dur, delay: del, easing: "cubic-bezier(.3,.5,.6,1)", fill: "both" });
+          } else {
+            p.animate([
+              { transform: "translate3d(0," + startY.toFixed(0) + "px,0) rotate(0deg)", opacity: 0, offset: 0 },
+              { opacity: 1, offset: 0.06 },
+              { opacity: 1, offset: 0.8 },
+              { transform: "translate3d(" + drift.toFixed(0) + "px," + endY.toFixed(0) + "px,0) rotate(" + spin.toFixed(0) + "deg)", opacity: 0, offset: 1 }
+            ], { duration: dur, delay: del, easing: "cubic-bezier(.3,.5,.6,1)", fill: "both" });
+          }
+        } else {
+          p.style.opacity = "1";
+          p.style.transform = "translate3d(0," + endY.toFixed(0) + "px,0)";
+        }
+        (function(el, ms){ setTimeout(function(){ el.remove(); }, ms); })(p, del + dur + 450);
+      }
+    }
+    showToast(showerLines[showerIdx % showerLines.length]);
+    showerIdx++;
+  }
+
+  /* Lock screen keypad. Secret code: 6769 */
+  var CODE = "6769";
   var entry = "";
   var dotsBox = document.getElementById("dots");
   var dots = dotsBox.children;
@@ -498,9 +1220,10 @@
   var lockInner = document.getElementById("lockInner");
   var unlocked = false;
   var teases = [
-    "Not quite. Count the letters in my heart, Aya.",
-    "Hmm, close, but the garden stays shut. Try the hint again.",
-    "That was not it. I, LOVE, YOU. You know this one."
+    "Nope. Wrong numbers. Remember, it ends with the one that makes you blush.",
+    "Hmm, not it. Six, seven, and then… come on, sweetie, you know.",
+    "Still wrong, gorgeous. Are you avoiding the 69 on purpose?",
+    "That was not it. Deep breath. 6. 7. 69. In that order. No blushing."
   ];
   var teaseIdx = 0;
 
@@ -524,6 +1247,7 @@
     lockMsg.textContent = "";
     var r = lockInner.getBoundingClientRect();
     burst(r.left + r.width / 2, r.top + r.height / 2);
+    window.scrollTo(0, 0);
     lockInner.classList.add("faded");
     var um = document.getElementById("unlockMsg");
     um.classList.add("show"); um.setAttribute("aria-hidden", "false");
@@ -532,7 +1256,7 @@
       document.body.classList.remove("locked");
       setTimeout(function(){ lockEl.style.display = "none"; }, 750);
       window.scrollTo(0, 0);
-    }, 1900);
+    }, 950);
   }
   document.getElementById("pad").addEventListener("click", function(ev){
     var btn = ev.target.closest(".key");
@@ -541,23 +1265,165 @@
     var k = btn.getAttribute("data-k");
     if (k === "clear"){ entry = ""; lockMsg.textContent = ""; paintDots(); chime(392, 0, 0.25, 0.04); return; }
     if (k === "back"){ entry = entry.slice(0, -1); paintDots(); chime(330, 0, 0.25, 0.04); return; }
-    if (entry.length >= 3) return;
+    if (entry.length >= 4) return;
     entry += k;
     paintDots();
     chime(500 + parseInt(k, 10) * 36, 0, 0.35, 0.055);
-    if (entry.length === 3){
+    if (entry.length === 4){
       if (entry === CODE){ setTimeout(unlock, 180); }
       else { setTimeout(wrongCode, 220); }
     }
   });
 
-  /* Flower garden button */
-  document.getElementById("flowerBtn").addEventListener("click", function(){
+  /* Flower shower buttons */
+  function showerWithChime(){
     ensureAudio();
     chime(659.25, 0, 0.4, 0.05);
     chime(880, 0.1, 0.5, 0.05);
     shower();
-    showToast("Flowers for you, Aya. Every single one.");
+  }
+  document.getElementById("heroShower").addEventListener("click", showerWithChime);
+  document.getElementById("finaleShower").addEventListener("click", showerWithChime);
+
+  /* Love-note machine: eight pocket notes in his voice */
+  var pocketNotes = [
+    "smile, sweetie. your smile is my favourite thing. it can fix any bad day. i tested it. many times.",
+    "i miss you. that is the whole note. i just miss you a lot.",
+    "good luck on your exam. you studied hard. you know this. go and shine, gorgeous.",
+    "drink some water. eat something properly. rest a little. then study. almost a doctor's orders.",
+    "your laugh. i can hear it in my head right now. best sound in the whole world.",
+    "you are doing so well, aya. even on the hard days. especially on the hard days. i am proud of you.",
+    "get better soon, sweetie. rest properly and do not rush it. i am praying for you.",
+    "small reminder: you are loved. a lot. by me. every single day. okay, that is all. carry on."
+  ];
+  var noteText = document.getElementById("noteText");
+  var lastNote = -1;
+  document.getElementById("noteBtn").addEventListener("click", function(){
+    ensureAudio();
+    chime(587.33, 0, 0.35, 0.045);
+    var idx = Math.floor(Math.random() * pocketNotes.length);
+    if (idx === lastNote) idx = (idx + 1) % pocketNotes.length;
+    lastNote = idx;
+    noteText.textContent = pocketNotes[idx];
+    noteText.classList.remove("placeholder");
+  });
+
+  /* Tap-to-bloom garden */
+  var openedCount = 0;
+  var bloomCount = document.getElementById("bloomCount");
+  var blooms = document.querySelectorAll(".bloom");
+  for (var b = 0; b < blooms.length; b++){
+    blooms[b].addEventListener("click", function(){
+      if (this.classList.contains("open")) return;
+      ensureAudio();
+      chime(659.25, 0, 0.35, 0.045);
+      chime(987.77, 0.09, 0.4, 0.04);
+      this.classList.add("open");
+      this.setAttribute("aria-expanded", "true");
+      var flower = this.getAttribute("data-flower");
+      this.querySelector("use").setAttribute("href", "#" + flower);
+      this.querySelector(".bloom-tap").hidden = true;
+      this.querySelector(".bloom-open").hidden = false;
+      openedCount++;
+      bloomCount.textContent = openedCount + " of 5 promises opened";
+      var r = this.getBoundingClientRect();
+      burst(r.left + r.width / 2, r.top + 60);
+    });
+  }
+
+  /* Bouquet builder, with a playful line under the bouquet on every tap */
+  var bouquetFlowers = document.getElementById("bouquetFlowers");
+  var bouquetEmpty = document.getElementById("bouquetEmpty");
+  var bouquetMsg = document.getElementById("bouquetMsg");
+  var bouquetCount = 0;
+  function bouquetLine(n){
+    if (n === 1) return "One flower. A good start. But you deserve a garden.";
+    if (n === 3) return "Three already. It's becoming a bouquet, sweetie.";
+    if (n === 6) return "Half a dozen. Smell that? Roses and jasmine. Your favourites.";
+    if (n === 9) return "Nine! My hands are getting full and I'm not stopping.";
+    if (n === 12) return "A full dozen. Twelve flowers for the most beautiful girl I know. And I'd build you a hundred more.";
+    if (n < 12) return "That's " + n + " flowers for you. Keep going, sweetie.";
+    return n + " flowers and counting. I told you, the pocket is bottomless.";
+  }
+  document.getElementById("bouquetBtn").addEventListener("click", function(ev){
+    ensureAudio();
+    chime(523.25 + (bouquetCount % 5) * 40, 0, 0.3, 0.04);
+    if (bouquetEmpty) bouquetEmpty.remove();
+    var sym = bouquetCount % 2 === 0 ? "rose" : "jasmine";
+    var s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    s.setAttribute("viewBox", "0 0 60 84");
+    s.setAttribute("aria-hidden", "true");
+    s.style.transform = "rotate(" + (Math.random() * 22 - 11).toFixed(0) + "deg)";
+    var u = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    u.setAttribute("href", "#" + sym);
+    s.appendChild(u);
+    bouquetFlowers.appendChild(s);
+    bouquetCount++;
+    bouquetMsg.textContent = bouquetLine(bouquetCount);
+    bouquetMsg.classList.remove("pop");
+    void bouquetMsg.offsetWidth;
+    bouquetMsg.classList.add("pop");
+    var bx = ev.clientX, by = ev.clientY;
+    if (!bx && !by){
+      var r = this.getBoundingClientRect();
+      bx = r.left + r.width / 2; by = r.top + r.height / 2;
+    }
+    miniBurst(bx, by);
+  });
+
+  /* Love meter: climbs to 100, then keeps going far past it */
+  var meterBtn = document.getElementById("meterBtn");
+  var meterNum = document.getElementById("meterNum");
+  var meterFill = document.getElementById("meterFill");
+  var meterWarn = document.getElementById("meterWarn");
+  var meterRunning = false;
+  meterBtn.addEventListener("click", function(){
+    if (meterRunning) return;
+    ensureAudio();
+    meterRunning = true;
+    meterBtn.disabled = true;
+    meterWarn.hidden = true;
+    meterFill.classList.remove("over");
+    var start = null;
+    var DURATION = 3000;
+    var TARGET = 1000000;
+    function step(ts){
+      if (!start) start = ts;
+      var t = Math.min((ts - start) / DURATION, 1);
+      var value;
+      if (t < 0.38){
+        value = Math.floor(100 * (t / 0.38));
+      } else {
+        var u = (t - 0.38) / 0.62;
+        value = Math.floor(100 * Math.pow(TARGET / 100, u * u));
+      }
+      if (value > 100){
+        meterWarn.hidden = false;
+        meterFill.classList.add("over");
+      }
+      meterNum.textContent = value.toLocaleString("en-US") + "%";
+      meterFill.style.width = Math.min(value, 100) + "%";
+      if (t < 1){
+        requestAnimationFrame(step);
+      } else {
+        meterNum.textContent = TARGET.toLocaleString("en-US") + "%";
+        meterFill.style.width = "100%";
+        chime(783.99, 0, 0.5, 0.05);
+        chime(1046.5, 0.12, 0.6, 0.05);
+        shower();
+        meterRunning = false;
+        meterBtn.disabled = false;
+      }
+    }
+    if (reduceMotion){
+      meterNum.textContent = TARGET.toLocaleString("en-US") + "%";
+      meterFill.style.width = "100%";
+      meterWarn.hidden = false;
+      meterRunning = false;
+      meterBtn.disabled = false;
+    } else {
+      requestAnimationFrame(step);
+    }
   });
 })();
 </script>
